@@ -2,4 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-
+.swiper-pagination-bullet {
+    width: 112px !important;
+    height: 4px !important;
+    border-radius: 1px !important;
+}
+.swiper-pagination-bullet-active {
+    background-color: #C53720 !important;
+}

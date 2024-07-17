@@ -1,0 +1,31 @@
+[
+    {
+      "id": 1,
+      "title": "ARE AWESOME",
+      "tagline": "NEXTJS 13 & SWIPER SLIDER",
+      "image": "/landing-background.jpg",
+      "buttons": [
+        {
+          "id": 1,
+          "text": "",
+          "link": "",
+          "type": ""
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "GIVE IT A SHOOT",
+      "tagline": "IF YOU LIKE IT",
+      "image": "/landing-background-second.jpg",
+      "buttons": [
+        {
+          "id": 1,
+          "text": "",
+          "link": "",
+          "type": ""
+        }
+      ]
+    }
+  ]
+  
