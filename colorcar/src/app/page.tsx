@@ -1,15 +1,15 @@
 import Header from "./ui/header/Header";
-import DemoSlider from "./ui/utils/SliderSwiper";
+import DemoSlider from "./ui/components/SliderSwiper";
 
-import dataSlider from '@/app/_data/slider-data.json'
+import dataSlider from "@/app/_data/slider-data.json";
 
 export default function Home() {
   return (
     <>
-      <Header/>
+      <Header />
       <main>
         <div>
-          <DemoSlider data={dataSlider}/>
+          <DemoSlider data={dataSlider} />
         </div>
       </main>
     </>
