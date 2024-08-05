@@ -1,0 +1,96 @@
+.section {
+    padding: 88px 0 98px 0;
+    background: radial-gradient(24.05% 24.05% at 50% 56.14%, rgb(14, 14, 14) 0%, rgb(14, 14, 14) 100%);
+    position: relative;
+
+}
+
+.section::before {
+   content: '';
+   width: 100%;
+   height: 100%;
+   left: 0;
+   top: 0;
+   position: absolute;
+   background: url('/servicesBg.png');
+   background-repeat: no-repeat;
+   background-size: cover;
+   opacity: 0.03;
+}
+
+.item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 21px;
+    padding: 40px;
+    max-width: 605px;
+    margin-bottom: 40px;
+    position: relative;
+    transition: all 0.3s ease;
+    background: linear-gradient(90deg, #c53720 0%, rgba(197, 55, 32, 0) 100%);
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    clip-path: polygon(10% 0%, 100% 0%, 100% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 100%, 0% 25%);
+}
+
+.itemImage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#1D1D1D;
+    padding: 13px 25px;
+    border: 4px solid #C53720;
+}
+
+.itemImage:last-child {
+    padding: 34px 28px;
+}
+
+.listImage {
+    position: relative;
+    z-index: 1;
+}
+
+.listImage::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: -22px;
+    position: absolute;
+    background: url('/serviceMechBg.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.listImage::after {
+    content: '';
+    width: 170px;
+    height: 155px;
+    left: 0;
+    top: 65%;
+    position: absolute;
+    background: url('/servicesRect.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+}
+
+.afterBlock {
+    position: relative;
+}
+
+.afterBlock::after {
+    content: '';
+    width: 85px;
+    height: 80px;
+    left: 60%;
+    top: 0;
+    position: absolute;
+    background: url('/servicesRect.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    transform: rotate(35deg);
+}

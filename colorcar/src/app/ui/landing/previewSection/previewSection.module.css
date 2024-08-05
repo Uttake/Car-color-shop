@@ -1,0 +1,51 @@
+.previewSection {
+   position: relative;
+   background-color: white;
+   width: 100%;
+   padding: 88px 256px;
+}
+
+.previewSection::before {
+   content: '';
+   width: 100%;
+   height: 100%;
+   left: 0;
+   top: 0;
+   position: absolute;
+   background: url('/landing-background-second.jpg');
+   background-repeat: no-repeat;
+   background-size: cover;
+   opacity: 0.15;
+}
+
+.previewItem {
+   position: relative;
+   overflow: hidden;
+   cursor: pointer;
+   z-index: 100;
+}
+
+
+.previewItem:hover .hoverItem {
+   opacity: 1;
+   visibility: visible;
+   display: flex;
+   flex-direction: column;
+   top: 0;
+   left: 0;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   height: 100%;
+   gap: 66px;
+   background-color: rgba(0, 0, 0, 0.8);
+   z-index: 1;
+   transition: all 0.3s ease;
+}
+
+
+.hoverItem {
+   position: absolute;
+   opacity: 0;
+   visibility: hidden;
+}
