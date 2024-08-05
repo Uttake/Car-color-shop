@@ -8,7 +8,7 @@ type MainButtonType = {
 
 const MainButton = ({title, fontSize} : MainButtonType) => {
   return ( 
-    <Button colorScheme='transparent' variant='outline' color='white'  border='2px' borderColor='red' borderRadius='2px'>
+    <Button colorScheme='transparent' variant='outline' color='white'  border='2px' borderColor='red' borderRadius='2px' className='px-5 py-3'>
       <span className={fontSize}>
         {title}
       </span>

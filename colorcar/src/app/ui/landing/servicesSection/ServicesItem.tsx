@@ -7,13 +7,11 @@ type servicesItems = {
     id: string,
     title: string,
     subtitle: string,
-    href: any
 }
 const ServicesItem = ({item} : {item: servicesItems}) => {
   return (
     <div key={item.id} className={s.item}>
        <div className={s.itemImage}>
-       {item.href}
        </div>
        <div>
         <h2 className='text-lg font-bold text-white mb-4'>

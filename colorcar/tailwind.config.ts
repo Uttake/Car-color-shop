@@ -11,7 +11,9 @@ const config: Config = {
       base: 'max-w-6xl m-auto'
     },
     extend: {
-      
+      colors:{
+        alphablack:'rgba(14, 14, 14, 0.6);'
+      }
     },
   },
   plugins: [],
