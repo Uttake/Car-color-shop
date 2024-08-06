@@ -22,7 +22,7 @@ const FooterContact = () => {
                 <h3 className=' text-base text-white'>{item.title}</h3>
             </div>
         ))}
-        <MainButton title='ЗАКАЗАТЬ ЗВОНОК' fontSize='text-xs'/>
+        <MainButton title='ЗАКАЗАТЬ ЗВОНОК' fontSize='text-xs' color='text-white' maxW='max-w-[176px]' hgt='h-[40px]'/>
     </div>
   )
 }

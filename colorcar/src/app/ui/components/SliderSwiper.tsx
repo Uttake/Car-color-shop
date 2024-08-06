@@ -1,44 +1,22 @@
-"use client"; // <===== REQUIRED
+"use client";
 
 import React from "react";
-
-// Swiper components, modules and styles
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+import MainButton from "./MainButton";
 
 interface Slide {
   id: number;
   title: string;
   tagline: string;
   image: string;
-  buttons: ButtonProps[];
-}
-
-interface ButtonProps {
-  id: number;
-  type: string;
 }
 
 interface DemoSliderProps {
   data: Slide[];
 }
-
-interface ButtonProps {
-  id: number;
-  text: string;
-  link: string;
-  type: string;
-}
-
-const SliderButtons: React.FC<{ buttons: ButtonProps[] }> = ({ buttons }) => {
-  return buttons.map(({ id, link, text }) => (
-    <a target="_blank" key={id} href={link}>
-      <span>{text}</span>
-    </a>
-  ));
-};
 
 const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
   return (
@@ -46,12 +24,12 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
       <div className="h-full w-full">
         <Swiper
           pagination={{ type: "bullets", clickable: true }}
-          // autoplay={true}
-          // loop={true}
+          autoplay={true}
+          loop={true}
           modules={[Autoplay, Navigation, Pagination]}
           className="h-[620px]"
         >
-          {data.map(({ id, image, tagline, title, buttons }) => (
+          {data.map(({ id, image, title}) => (
             <SwiperSlide key={id}>
               <div
                 className="h-full w-full absolute left-0 top-0 "
@@ -61,20 +39,11 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
               ></div>
               <div className="h-full w-full absolute left-0 top-0 bg-black opacity-20"></div>
               <div className="relative z-10 h-full flex items-center justify-center">
-                <div className="absolute left-4 top-1/3">
-                  {tagline && (
-                    <p className="text-md sm:text-xl lg:text-3xl font-semibold text-white">
-                      {tagline}
-                    </p>
-                  )}
-                  <p className="text-3xl sm:text-6xl lg:text-8xl font-bold text-white">
+                <div className="absolute top-[19.3%] left-[20%]">
+                  <p className="text-5xl mb-12 sm:text-6xl max-w-[586px] lg:text-8xl font-bold text-white">
                     {title}
                   </p>
-                  {buttons.length > 0 ? (
-                    <p className=" bg-gray-800 inline-block px-9 py-2 rounded-full text-white mt-10 lg:mt-20">
-                      <SliderButtons buttons={buttons} />
-                    </p>
-                  ) : null}
+                  <MainButton title='ПЕРЕЙТИ В КАТАЛОГ' fontSize="text-sm" color="text-white" maxW="max-w-[216px]" hgt="h-[52px]"/>
                 </div>
               </div>
             </SwiperSlide>

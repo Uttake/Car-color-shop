@@ -1,8 +1,7 @@
 [
     {
       "id": 1,
-      "title": "ARE AWESOME",
-      "tagline": "NEXTJS 13 & SWIPER SLIDER",
+      "title": "НАДЕЖНЫЕ, КАЧЕСТВЕННЫЕ АККУМУЛЯТОРЫ",
       "image": "/landing-background.jpg",
       "buttons": [
         {
@@ -15,14 +14,13 @@
     },
     {
       "id": 2,
-      "title": "GIVE IT A SHOOT",
-      "tagline": "IF YOU LIKE IT",
+      "title": "НАДЕЖНЫЕ, КАЧЕСТВЕННЫЕ АККУМУЛЯТОРЫ",
       "image": "/landing-background-second.jpg",
       "buttons": [
         {
           "id": 1,
           "text": "",
-          "link": "",
+          "link": "ПЕРЕЙТИ В КАТАЛОГ",
           "type": ""
         }
       ]

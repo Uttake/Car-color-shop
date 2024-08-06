@@ -20,7 +20,7 @@ const PreviewItem = ({item} : {item: previewItem}) => {
         <h3 className='text-2xl font-medium text-center text-white'>
             {item.title}
         </h3>
-        <MainButton title='Заказать онлайн' fontSize='text-sm'/>
+        <MainButton title='Заказать онлайн' fontSize='text-sm' color='text-white' maxW='max-w-[216px]' hgt='h-[52px]'/>
     </div>
     </div>
   )
