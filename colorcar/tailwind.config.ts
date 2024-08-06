@@ -8,12 +8,13 @@ const config: Config = {
   ],
   theme: {
     wrapper: {
-      base: 'max-w-6xl m-auto'
+      base: "max-w-6xl m-auto",
     },
     extend: {
-      colors:{
-        alphablack:'rgba(14, 14, 14, 0.6);'
-      }
+      colors: {
+        alphablack: "rgba(14, 14, 14, 0.6);",
+        "orange-brdr": "#C53720",
+      },
     },
   },
   plugins: [],
