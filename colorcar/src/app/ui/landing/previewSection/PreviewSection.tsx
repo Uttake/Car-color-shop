@@ -7,7 +7,7 @@ const PreviewSection = () => {
     <section className={s.previewSection}>
       <div className="max-w-6xl m-auto">
       <Title title='Автотовары: аксессуары, расходники и многое другое' color='#1d1d1d'/>
-      <h3 className='text-[#1d1d1d] text-2xl text-center font-medium mb-9'> PROAuto - это специализированный интернет магазин востребованных товаров для автомобилей. </h3>
+      <h3 className='text-[#1d1d1d] text-2xl text-center font-medium mb-9 md:text-lg'> PROAuto - это специализированный интернет магазин востребованных товаров для автомобилей. </h3>
       <PreviewList/>
       </div>
     </section>

@@ -29,7 +29,7 @@ const ServicesData = [
 
 const ServicesList = () => {
   return (
-    <div className='flex justify-between'>
+    <div className='flex justify-between flex-wrap xl:justify-center'>
        <div>
        {ServicesData.map(item => (
         <ServicesItem item={item}/>

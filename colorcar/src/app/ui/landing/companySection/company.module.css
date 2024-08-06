@@ -54,3 +54,11 @@
     transform: rotate(-45.5deg);
     z-index: -1;
 }
+
+
+@media (max-width: 1130px) {
+    .section {
+       padding-right: 20px;
+       padding-left: 20px;
+    }
+ }

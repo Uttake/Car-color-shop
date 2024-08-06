@@ -37,7 +37,7 @@ let previewData = [
 
 const PreviewList = () => {
   return (
-    <div className='flex flex-wrap gap-6'>
+    <div className='flex flex-wrap gap-6 justify-center'>
       {previewData.map(item => (
         <PreviewItem item={item}/>
       ))}

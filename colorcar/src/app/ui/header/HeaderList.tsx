@@ -1,5 +1,6 @@
 import React from "react";
 import HeaderLink from "./HeaderLink";
+import Hamburger from "../components/Hamburger";
 
 type headerList = {
   title: string;
@@ -14,13 +15,14 @@ const HeaderList = () => {
     { title: "КОНТАКТЫ", href: "/contacts" },
   ];
   return (
-    <div>
-      <ul className="flex gap-3">
+    <nav>
+      <ul className="flex gap-3 xl:hidden">
         {lists?.map((item, i) => (
           <HeaderLink item={item} key={i} />
         ))}
+          {/* <Hamburger /> */}
       </ul>
-    </div>
+    </nav>
   );
 };
 

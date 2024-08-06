@@ -32,7 +32,7 @@ const infoData = [
 
 const InfoList = () => {
   return (
-    <ul className='flex'>
+    <ul className='flex flex-wrap justify-center'>
         {infoData.map(item => (
             <InfoItem item={item}/>
         ))}

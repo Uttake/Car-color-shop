@@ -40,7 +40,7 @@ const footerData = [
 
 const FooterList = () => {
   return (
-    <div className='flex justify-between basis-[60%]'>
+    <div className='flex justify-between basis-[60%] flex-wrap md:basis-full md:gap-6'>
         {footerData.map(item => (
             <FooterItem item={item}/>
         ))}

@@ -1,5 +1,6 @@
 import React from 'react'
 import s from './infoItem.module.css'
+import clsx from 'clsx'
 type InfoItem = {
   title: string,
   href: any
@@ -7,7 +8,7 @@ type InfoItem = {
 
 const InfoItem = ({item}: {item: InfoItem}) => {
   return (
-    <li className={s.infoItem}>
+    <li className={clsx(s.infoItem, 'xl:basis-[34%]')}>
       <div className={s.infoBlock}>
       {item.href}
        <h2 className='text-white text-base text-center'>

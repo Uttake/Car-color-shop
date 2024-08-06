@@ -2,7 +2,7 @@
     padding: 88px 0 98px 0;
     background: radial-gradient(24.05% 24.05% at 50% 56.14%, rgb(14, 14, 14) 0%, rgb(14, 14, 14) 100%);
     position: relative;
-
+    z-index: 10;
 }
 
 .section::before {
@@ -15,7 +15,7 @@
    background: url('/servicesBg.png');
    background-repeat: no-repeat;
    background-size: cover;
-   opacity: 0.03;
+   opacity: 0.1;
    z-index: -1;
 }
 
@@ -92,3 +92,41 @@
     z-index: -1;
     transform: rotate(35deg);
 }
+
+
+@media (max-width: 1130px) {
+    .section {
+       padding-right: 20px;
+       padding-left: 20px;
+    }
+ }
+
+
+ @media (max-width: 1105px) {
+    .listImage::before {
+        top: 48px;
+    }
+ }
+
+
+ @media (max-width: 479px) {
+
+    .item {
+        padding: 15px;
+    }
+    .itemImage {
+        width: 80px;
+        height: 80px;
+    }
+    .listImage::after {
+        width: 90px;
+        height: 85px;
+    }
+    .listImage {
+        width: 75%;
+    }
+    .listImage::before {
+        width: 75%;
+        top: 33px;
+    }
+ }

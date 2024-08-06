@@ -14,10 +14,10 @@ const ServicesItem = ({item} : {item: servicesItems}) => {
        <div className={s.itemImage}>
        </div>
        <div>
-        <h2 className='text-lg font-bold text-white mb-4'>
+        <h2 className='text-lg font-bold text-white mb-4 md:text-base'>
             {item.title}
         </h2>
-        <h3 className=' font-medium text-base text-white'>
+        <h3 className=' font-medium text-base text-white md:text-sm'>
             {item.subtitle}
         </h3>
        </div>
