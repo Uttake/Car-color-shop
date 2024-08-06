@@ -1,17 +1,21 @@
-import { Button } from '@chakra-ui/react'
+import clsx from 'clsx'
 import React from 'react'
 
 type MainButtonType = {
-  title: string
+  title: string,
+  fontSize: string,
+  color: string,
+  maxW: string,
+  hgt: string
 }
 
-const MainButton = ({title} : MainButtonType) => {
+const MainButton = ({title, fontSize, color, maxW, hgt} : MainButtonType) => {
   return ( 
-    <Button colorScheme='transparent' variant='outline' color='white'  border='2px' borderColor='red' borderRadius='2px'>
-      <span className='text-xs'>
+    <button className={clsx(maxW, 'border-4 border-[#d42e12] w-full', hgt)}>
+      <span className={clsx(fontSize, color)}>
         {title}
       </span>
-    </Button>
+    </button>
   )
 }
 

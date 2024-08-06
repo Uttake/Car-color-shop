@@ -3,7 +3,7 @@ import InfoList from './InfoList'
 
 const InfoSection = () => {
   return (
-    <section>
+    <section className="max-w-6xl m-auto">
         <InfoList/>
     </section>
   )

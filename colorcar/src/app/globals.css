@@ -10,3 +10,8 @@
 .swiper-pagination-bullet-active {
     background-color: #C53720 !important;
 }
+
+.wrapper {
+    max-width: 1152px;
+    margin: auto;
+}

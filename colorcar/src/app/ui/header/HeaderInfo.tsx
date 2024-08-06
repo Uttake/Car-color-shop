@@ -9,7 +9,7 @@ import { supabase } from "@/app/utils/supabaseClient";
 const HeaderInfo = () => {
   return (
     <div className="flex justify-center items-center">
-      <MainButton title="ЗАКАЗАТЬ ЗВОНОК" />
+      <MainButton title="ЗАКАЗАТЬ ЗВОНОК" fontSize="text-xs" color="text-white" maxW="max-w-[168px]" hgt="h-[40px]"/>
       <button className="mr-3 ml-6">
         <SearchIcon />
       </button>
