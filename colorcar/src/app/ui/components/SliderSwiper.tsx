@@ -46,8 +46,8 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
       <div className="h-full w-full">
         <Swiper
           pagination={{ type: "bullets", clickable: true }}
-          autoplay={true}
-          loop={true}
+          // autoplay={true}
+          // loop={true}
           modules={[Autoplay, Navigation, Pagination]}
           className="h-[620px]"
         >
@@ -56,7 +56,7 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
               <div
                 className="h-full w-full absolute left-0 top-0 "
                 style={{
-                  background: `url(${image}) center center / cover scroll no-repeat`,
+                  background: `url(${image}) bottom center / cover scroll no-repeat`,
                 }}
               ></div>
               <div className="h-full w-full absolute left-0 top-0 bg-black opacity-20"></div>
