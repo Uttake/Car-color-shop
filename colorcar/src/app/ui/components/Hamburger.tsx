@@ -27,9 +27,7 @@ export function Hamburger(props: HamburgerProps) {
         />
         <div
           className={`bg-white block w-8 h-[0.35rem] rounded transition-all origin-[1px] ${
-            isOpen
-              ? "translate-x-full bg-transparent opacity-0"
-              : "translate-x-0"
+            isOpen ? "bg-transparent opacity-0" : "translate-x-0"
           }`}
         />
         <div

@@ -21,7 +21,9 @@ const config: Config = {
       colors:{
         alphablack:'rgba(14, 14, 14, 0.6);'
       },
-      
+      transitionProperty: {
+          
+      }
       
     },
   },

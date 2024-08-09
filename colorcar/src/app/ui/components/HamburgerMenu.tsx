@@ -9,12 +9,14 @@ type HamburgerMenuProps = {
 };
 
 const HamburgerMenu = ({ isInitiallyOpen }: HamburgerMenuProps) => {
-  console.log(isInitiallyOpen);
   return (
     <div
       className={clsx(
-        " fixed top-[120px] w-96 bg-black z-50 flex flex-col p-5 gap-10 translate-x-80 opacity-0 sm:w-full transition-all ",
-        { " translate-x-[-320px] absolute opacity-100": isInitiallyOpen }
+        "absolute top-[120px] w-96 bg-black z-50 flex flex-col right-0 p-5 gap-10 sm:w-full transition ease-in-out",
+        {
+          "opacity-100 scale-100": isInitiallyOpen,
+          "scale-0 opacity-0": !isInitiallyOpen,
+        }
       )}
     >
       <nav>

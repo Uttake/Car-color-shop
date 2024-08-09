@@ -8,15 +8,21 @@ import { supabase } from "@/app/utils/supabaseClient";
 
 const HeaderInfo = () => {
   return (
-    <div className="flex justify-center items-center ">
-      <MainButton title="ЗАКАЗАТЬ ЗВОНОК" fontSize="text-xs" color="text-white" maxW="max-w-[168px]" hgt="h-[40px]"/>
-      <button className="mr-3 ml-6">
+    <div className="flex justify-center items-center gap-5">
+      <MainButton
+        title="ЗАКАЗАТЬ ЗВОНОК"
+        fontSize="text-xs"
+        color="text-white"
+        maxW="max-w-[168px]"
+        hgt="h-[40px]"
+      />
+      {/* <button className="mr-3 ml-6 lg:hidden">
         <SearchIcon />
-      </button>
-      <button>
+      </button> */}
+      <button className="flex">
         <ShopIcon />
+        <Counter count={0} className="" />
       </button>
-      <Counter count={0} className="" />
     </div>
   );
 };
