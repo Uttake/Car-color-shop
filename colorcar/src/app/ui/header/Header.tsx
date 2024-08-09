@@ -12,7 +12,9 @@ const Header = () => {
       <Image src={logo} alt="logo" width={120} height={58}/>
        </Link>
       <HeaderList/>
+      <div className='lg:hidden'>
       <HeaderInfo/>
+      </div>
     </header>
     </>
   )
