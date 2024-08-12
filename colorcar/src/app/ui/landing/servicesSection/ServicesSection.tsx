@@ -22,6 +22,7 @@ const ServicesSection = () => {
             color="text-white"
             maxW="max-w-[236px]"
             hgt="h-[56px]"
+            href="/"
           />
         </div>
       </div>

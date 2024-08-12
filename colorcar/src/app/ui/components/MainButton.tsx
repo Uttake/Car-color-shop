@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import Link from "next/link";
 import React from "react";
 
 type MainButtonType = {
@@ -8,6 +9,7 @@ type MainButtonType = {
   maxW?: string;
   hgt?: string;
   classes?: string;
+  href: string;
 };
 
 const MainButton = ({
@@ -17,6 +19,7 @@ const MainButton = ({
   maxW,
   hgt,
   classes,
+  href,
 }: MainButtonType) => {
   return (
     <button
@@ -27,7 +30,9 @@ const MainButton = ({
         classes
       )}
     >
-      <span className={clsx(fontSize, color, "font-bold")}>{title}</span>
+      <Link href={href} className={clsx(fontSize, color, "font-bold")}>
+        {title}
+      </Link>
     </button>
   );
 };

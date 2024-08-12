@@ -6,7 +6,6 @@ import Search from "../ui/components/Search";
 
 const Catalog = async () => {
   let items = await getCatalogItems();
-  console.log(items);
   return (
     <section className="bg-[#EDEDED] p-20">
       <div className="wrapper">

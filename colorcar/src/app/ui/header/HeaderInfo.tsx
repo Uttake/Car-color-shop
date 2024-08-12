@@ -15,6 +15,7 @@ const HeaderInfo = () => {
         color="text-white"
         maxW="max-w-[168px]"
         hgt="h-[40px]"
+        href="/"
       />
       {/* <button className="mr-3 ml-6 lg:hidden">
         <SearchIcon />

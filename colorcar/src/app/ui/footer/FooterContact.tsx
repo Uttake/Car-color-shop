@@ -34,6 +34,7 @@ const FooterContact = () => {
         color="text-white"
         maxW="max-w-[176px]"
         hgt="h-[40px]"
+        href="/"
       />
     </div>
   );

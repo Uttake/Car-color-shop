@@ -19,7 +19,7 @@ const CatalogItem = ({ title, price, image }: CataloItemsType) => {
       <div className=" text-[#1D1D1D] text-3xl mb-5 font-bold">{price} BYN</div>
       <div className="flex justify-between items-center mb-5">
         <Counter />
-        <button className="p-[6px] border-4 border-orange-brdr">
+        <button className="p-[6px] border-4 border-orange-brdr hover:bg-orange-brdr">
           <ShopCard />
         </button>
       </div>
@@ -28,6 +28,7 @@ const CatalogItem = ({ title, price, image }: CataloItemsType) => {
         hgt="h-[40px]"
         title="ПОДРОБНЕЕ"
         color="text-[#c53720]"
+        href="/"
       />
     </div>
   );

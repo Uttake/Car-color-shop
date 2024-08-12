@@ -21,6 +21,7 @@ const PreviewItem = ({ item }: { item: previewItem }) => {
           color="text-white"
           maxW="max-w-[216px]"
           hgt="h-[52px]"
+          href="/"
         />
       </div>
     </div>

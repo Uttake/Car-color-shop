@@ -24,12 +24,12 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
       <div className="h-full w-full">
         <Swiper
           pagination={{ type: "bullets", clickable: true }}
-          // autoplay={true}
-          // loop={true}
+          autoplay={true}
+          loop={true}
           modules={[Autoplay, Navigation, Pagination]}
           className="h-[620px]"
         >
-          {data.map(({ id, image, title}) => (
+          {data.map(({ id, image, title }) => (
             <SwiperSlide key={id}>
               <div
                 className="h-full w-full absolute left-0 top-0 "
@@ -43,7 +43,14 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
                   <p className="text-5xl mb-12 font-bold text-white sm:text-2xl">
                     {title}
                   </p>
-                  <MainButton title='ПЕРЕЙТИ В КАТАЛОГ' fontSize="text-sm" color="text-white" maxW="max-w-[216px]" hgt="h-[52px]"/>
+                  <MainButton
+                    title="ПЕРЕЙТИ В КАТАЛОГ"
+                    fontSize="text-sm"
+                    color="text-white"
+                    maxW="max-w-[216px]"
+                    hgt="h-[52px]"
+                    href="/catalog"
+                  />
                 </div>
               </div>
             </SwiperSlide>
