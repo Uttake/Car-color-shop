@@ -8,7 +8,7 @@ const config: Config = {
   ],
   theme: {
     wrapper: {
-      base: 'max-w-6xl m-auto'
+      base: "max-w-6xl m-auto",
     },
     screens: {
       '2xl': {'max': '1535px'},
@@ -18,13 +18,10 @@ const config: Config = {
       'sm': {'max': '511px'},
     },
     extend: {
-      colors:{
-        alphablack:'rgba(14, 14, 14, 0.6);'
+      colors: {
+        alphablack: "rgba(14, 14, 14, 0.6);",
+        "orange-brdr": "#C53720",
       },
-      transitionProperty: {
-          
-      }
-      
     },
   },
   plugins: [],

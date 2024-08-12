@@ -24,8 +24,8 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
       <div className="h-full w-full">
         <Swiper
           pagination={{ type: "bullets", clickable: true }}
-          autoplay={true}
-          loop={true}
+          // autoplay={true}
+          // loop={true}
           modules={[Autoplay, Navigation, Pagination]}
           className="h-[620px]"
         >
