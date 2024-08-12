@@ -2,9 +2,15 @@
 
 import React, { useState } from "react";
 
-const Counter = () => {
-  const [count, setCount] = useState(1);
+type CounterType = {
+  getValue?: (count: number) => void;
+};
 
+const Counter = ({ getValue }: CounterType) => {
+  const [count, setCount] = useState(1);
+  if (getValue) {
+    getValue(count);
+  }
   return (
     <div className="flex items-center">
       <button

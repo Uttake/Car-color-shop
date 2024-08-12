@@ -10,7 +10,7 @@ const Catalog = async () => {
     <section className="bg-[#EDEDED] p-20">
       <div className="wrapper">
         <Search />
-        <div className="grid grid-cols-block">
+        <div className="grid grid-cols-block gap-6">
           {items &&
             items.map((item: CatalogItemType) => (
               <CatalogItem
@@ -18,6 +18,7 @@ const Catalog = async () => {
                 title={item.title}
                 image={item.images}
                 price={item.price}
+                id={item.id}
               />
             ))}{" "}
           <div className="flex-grow"></div>

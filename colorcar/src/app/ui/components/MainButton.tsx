@@ -10,6 +10,7 @@ type MainButtonType = {
   hgt?: string;
   classes?: string;
   href: string;
+  hover?: string;
 };
 
 const MainButton = ({
@@ -20,17 +21,19 @@ const MainButton = ({
   hgt,
   classes,
   href,
+  hover,
 }: MainButtonType) => {
   return (
     <button
       className={clsx(
         maxW,
-        "border-4 border-orange-brdr w-full cursor-pointer hover:bg-[#d42e12] transition-all",
+        "group border-4 border-orange-brdr w-full cursor-pointer hover:bg-[#d42e12] transition-all duration-300",
         hgt,
-        classes
+        classes,
+        hover
       )}
     >
-      <Link href={href} className={clsx(fontSize, color, "font-bold")}>
+      <Link href={href} className={clsx(fontSize, color, "font-bold", hover)}>
         {title}
       </Link>
     </button>
