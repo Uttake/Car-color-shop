@@ -11,7 +11,7 @@ export type CataloItemsType = {
 
 const CatalogItem = ({ title, price, image }: CataloItemsType) => {
   return (
-    <div className=" border-4 px-5 py-8 bg-white max-w-[264px]">
+    <div className=" border-4 px-5 py-8 bg-white max-w-[264px] cursor-pointer hover:border-orange-brdr transition duration-300">
       <div className=" mb-4">
         <Image src={image} alt={title} width={264} height={500} />
       </div>
