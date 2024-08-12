@@ -13,7 +13,8 @@ export default function FormAdmin() {
       <Input name="name" label="Название" placeholder="Краска" />
       <Input name="description" label="Описание" placeholder="Краска желтая" />
       <Input name="price" label="Цена" placeholder="20 byn" />
-      <input type="file" />
+      <label htmlFor="image">Картинка</label>
+      <input type="file" name="image" />
       <ButtonForm />
     </form>
   );
