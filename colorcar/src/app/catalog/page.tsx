@@ -6,21 +6,24 @@ import Search from "../ui/components/Search";
 
 const Catalog = async () => {
   let items = await getCatalogItems();
-  console.log(items);
+
   return (
     <section className="bg-[#EDEDED] p-20">
       <div className="wrapper">
         <Search />
-        <div className="flex gap-6 justify-center flex-wrap">
+        <div className="grid grid-cols-block">
           {items &&
             items.map((item: CatalogItemType) => (
               <CatalogItem
+                key={item.id}
                 title={item.title}
                 image={item.images}
                 price={item.price}
               />
-            ))}
+            ))}{" "}
+          <div className="flex-grow"></div>
         </div>
+
         <div>Каталог недоступен</div>
       </div>
     </section>
