@@ -23,6 +23,16 @@ const nextConfig = {
 
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "invnbdbustikwbnttmdr.supabase.co",
+        port: "",
+        pathname: "/storage/v1/object/public/Products%20images/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

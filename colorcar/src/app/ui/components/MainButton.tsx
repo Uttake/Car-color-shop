@@ -22,7 +22,7 @@ const MainButton = ({
     <button
       className={clsx(
         maxW,
-        "border-4 border-[#d42e12] w-full cursor-pointer hover:bg-[#d42e12] transition-all",
+        "border-4 border-orange-brdr w-full cursor-pointer hover:bg-[#d42e12] transition-all",
         hgt,
         classes
       )}

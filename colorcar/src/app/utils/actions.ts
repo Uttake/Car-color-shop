@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { CatalogItemType } from "./definitions";
 import { supabase } from "./supabaseClient";
 import { v1 } from "uuid";
 
@@ -20,11 +22,6 @@ export const postData = async (formData: FormData) => {
       upsert: false
     })
     }
-      // const { data: storageImageUrl} = await supabase
-      // .storage
-      // .from('Products images')
-      // .getPublicUrl(`${id}.png`)
-
     const { data, error } = await supabase
     .from('Products')
     .insert([
@@ -39,3 +36,21 @@ export const postData = async (formData: FormData) => {
       console.log(err)
   }
 }
+
+
+export const getCatalogItems = async() : Promise<CatalogItemType[]>  => {
+  try { 
+  let { data: Products, error } = await supabase
+    .from('Products')
+    .select('*')
+    if(Products) {
+      revalidatePath('/catalog');
+      return Products
+    } else {
+      throw error
+    }
+  } catch(err){
+    throw err
+  }
+}
+
