@@ -1,8 +1,9 @@
-import React from "react";
+import { searchSubmit } from "@/app/utils/actions";
+import React, { useRef } from "react";
 
-const Search = () => {
+const Search = ({ onSubmitBtn }: { onSubmitBtn: any }) => {
   return (
-    <form className="w-full mx-auto mb-5">
+    <form action={onSubmitBtn} className="w-full mx-auto mb-5">
       <div className="flex">
         <label
           htmlFor="search-dropdown"
@@ -77,6 +78,7 @@ const Search = () => {
         </div>
         <div className="relative w-full">
           <input
+            name="search"
             type="search"
             id="search-dropdown"
             className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-black focus:border-black dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
