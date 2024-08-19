@@ -3,14 +3,11 @@
 import React, { useState } from "react";
 
 type CounterType = {
-  getValue?: (count: number) => void;
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const Counter = ({ getValue }: CounterType) => {
-  const [count, setCount] = useState(1);
-  if (getValue) {
-    getValue(count);
-  }
+const Counter = ({ count, setCount }: CounterType) => {
   return (
     <div className="flex items-center">
       <button

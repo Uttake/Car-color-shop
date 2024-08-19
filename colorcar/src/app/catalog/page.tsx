@@ -16,7 +16,7 @@ const Catalog = async () => {
               <CatalogItem
                 key={item.id}
                 title={item.title}
-                image={item.images}
+                images={item.images}
                 price={item.price}
                 id={item.id}
               />

@@ -3,27 +3,22 @@
       "id": 1,
       "title": "НАДЕЖНЫЕ, КАЧЕСТВЕННЫЕ АККУМУЛЯТОРЫ",
       "image": "/landing-background.jpg",
-      "buttons": [
+      "button": 
         {
           "id": 1,
-          "text": "",
-          "link": "",
-          "type": ""
+          "link": ""
         }
-      ]
     },
     {
       "id": 2,
       "title": "НАДЕЖНЫЕ, КАЧЕСТВЕННЫЕ АККУМУЛЯТОРЫ",
       "image": "/landing-background-second.jpg",
-      "buttons": [
+      "button": 
         {
-          "id": 1,
-          "text": "",
-          "link": "ПЕРЕЙТИ В КАТАЛОГ",
-          "type": ""
+          "id": 2,
+          "link": "ПЕРЕЙТИ В КАТАЛОГ"
         }
-      ]
+
     }
   ]
   

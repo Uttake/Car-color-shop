@@ -1,10 +1,25 @@
+"use client";
 import clsx from "clsx";
-import React from "react";
+import React, { useEffect, useState } from "react";
 type countType = {
-  count: number;
   className: string;
 };
-const Counter = ({ count, className }: countType) => {
+const Counter = ({ className }: countType) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    function updateCount() {
+      let basketCount;
+      if (localStorage.getItem("basket")) {
+        basketCount = Array.from(JSON.parse(localStorage.getItem("basket")!));
+        setCount(basketCount.length);
+      }
+    }
+    updateCount();
+    window.addEventListener("storage", updateCount);
+    return () => {
+      window.removeEventListener("storage", updateCount);
+    };
+  }, [count]);
   return (
     <div
       className={clsx(

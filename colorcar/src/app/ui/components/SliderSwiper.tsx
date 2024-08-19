@@ -10,8 +10,11 @@ import MainButton from "./MainButton";
 interface Slide {
   id: number;
   title: string;
-  tagline: string;
   image: string;
+  button: {
+    link: string;
+    id: number;
+  };
 }
 
 interface DemoSliderProps {

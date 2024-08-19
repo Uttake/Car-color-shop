@@ -1,14 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MainButton from "../components/MainButton";
 import Counter from "../components/Count";
-import SearchIcon from "@/app/_assets/search.svg";
 import ShopIcon from "@/app/_assets/shop.svg";
-import { supabase } from "@/app/utils/supabaseClient";
+import Basket from "../components/basket/Basket";
 
 const HeaderInfo = () => {
+  const [cardOpen, setCardOpen] = useState(false);
   return (
-    <div className="flex justify-center items-center gap-5">
+    <div className="flex justify-center items-center gap-5 relative">
       <MainButton
         title="ЗАКАЗАТЬ ЗВОНОК"
         fontSize="text-xs"
@@ -17,13 +17,11 @@ const HeaderInfo = () => {
         hgt="h-[40px]"
         href="/"
       />
-      {/* <button className="mr-3 ml-6 lg:hidden">
-        <SearchIcon />
-      </button> */}
-      <button className="flex">
+      <button className="flex" onClick={() => setCardOpen(!cardOpen)}>
         <ShopIcon />
-        <Counter count={0} className="" />
+        <Counter className="" />
       </button>
+      <Basket cardOpen={cardOpen} />
     </div>
   );
 };

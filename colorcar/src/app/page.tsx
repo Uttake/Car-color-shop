@@ -9,15 +9,14 @@ import CompanySection from "./ui/landing/companySection/CompanySection";
 export default function Home() {
   return (
     <>
-      
-      <main >
+      <main>
         <div>
           <DemoSlider data={dataSlider} />
         </div>
         <InfoSection />
-        <PreviewSection/>
-        <ServicesSection/>
-        <CompanySection/>
+        <PreviewSection />
+        <ServicesSection />
+        <CompanySection />
       </main>
     </>
   );
