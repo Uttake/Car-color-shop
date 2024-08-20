@@ -1,9 +1,30 @@
-import { searchSubmit } from "@/app/utils/actions";
-import React, { useRef } from "react";
+"use client";
 
-const Search = ({ onSubmitBtn }: { onSubmitBtn: any }) => {
+import { usePathname, useSearchParams, useRouter } from "next/navigation";
+
+import React, { useRef, useState } from "react";
+
+const Search = () => {
+  const searchParams = useSearchParams();
+  const searchRef: React.RefObject<HTMLInputElement> = useRef(null);
+  const pathname = usePathname();
+  const { replace } = useRouter();
+
+  const handleSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault();
+
+    const params = new URLSearchParams(searchParams);
+
+    if (searchRef.current?.value) {
+      params.set("query", searchRef.current.value);
+    } else {
+      params.delete("query");
+    }
+    replace(`${pathname}?${params.toString()}`);
+  };
+
   return (
-    <form action={onSubmitBtn} className="w-full mx-auto mb-5">
+    <form className="w-full mx-auto mb-5">
       <div className="flex">
         <label
           htmlFor="search-dropdown"
@@ -78,15 +99,17 @@ const Search = ({ onSubmitBtn }: { onSubmitBtn: any }) => {
         </div>
         <div className="relative w-full">
           <input
+            ref={searchRef}
             name="search"
             type="search"
             id="search-dropdown"
+            defaultValue={searchParams.get("query")?.toString()}
             className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-black focus:border-black dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
             placeholder="Search Mockups, Logos, Design Templates..."
             required
           />
           <button
-            type="submit"
+            onClick={(e) => handleSearch(e)}
             className="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-orange-brdr rounded-e-lg border border-orange-brdr hover:bg-orange-900 focus:ring-4 focus:outline-none focus:ring-orange-900  dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300"
           >
             <svg

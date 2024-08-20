@@ -1,37 +1,44 @@
-"use server";
-import React from "react";
+import React, { Suspense } from "react";
 import CatalogItem from "../ui/components/catalog/CatalogItem";
-import { getCatalogItems, searchSubmit } from "../utils/actions";
+import { getCatalogItems } from "../utils/actions";
 import { CatalogItemType } from "../utils/definitions";
 import Search from "../ui/components/Search";
 
-const Catalog = async () => {
-  let items = await getCatalogItems();
-
-  const onSubmit = async (formData: FormData) => {
-    const data = await searchSubmit(formData);
-    return data;
+const Catalog = async ({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
   };
-  let serachItems = onSubmit();
+}) => {
+  const query = searchParams?.query || "";
+
+  const items = await getCatalogItems(query);
+
   return (
     <section className="bg-[#EDEDED] p-20">
       <div className="wrapper">
-        <Search onSubmitBtn={onSubmit} />
+        <Search />
         <div className="grid grid-cols-block gap-6">
-          {items &&
-            items.map((item: CatalogItemType) => (
-              <CatalogItem
-                key={item.id}
-                title={item.title}
-                images={item.images}
-                price={item.price}
-                id={item.id}
-              />
-            ))}{" "}
-          <div className="flex-grow"></div>
+          {items.error ? (
+            <div>Извините произошла ошибка </div>
+          ) : (
+            items.data && (
+              <>
+                {items.data.map((item: CatalogItemType) => (
+                  <CatalogItem
+                    key={item.id}
+                    title={item.title}
+                    images={item.images}
+                    price={item.price}
+                    id={item.id}
+                  />
+                ))}
+                {!items.data.length && <div>Такого товара нет</div>}
+              </>
+            )
+          )}
         </div>
-
-        <div>Каталог недоступен</div>
       </div>
     </section>
   );

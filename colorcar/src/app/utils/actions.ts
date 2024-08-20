@@ -43,28 +43,42 @@ export const postData = async (formData: FormData) => {
   }
 };
 
-export const getCatalogItems = async (): Promise<CatalogItemType[]> => {
+export const getCatalogItems = async (
+  query: string
+): Promise<{ data?: CatalogItemType[]; error?: string }> => {
   try {
-    let { data: Products, error } = await supabase.from("Products").select("*");
+    let Products;
+    let queryError;
+
+    if (query) {
+      const { data, error } = await supabase
+        .from("Products")
+        .select("*")
+        .ilike("title", `%${query}%`)
+        .range(0, 5);
+      Products = data;
+      queryError = error;
+    } else {
+      const { data, error } = await supabase
+        .from("Products")
+        .select("*")
+        .range(0, 5);
+      Products = data;
+      queryError = error;
+    }
+
+    if (queryError) {
+      throw new Error(queryError.message || "Failed to fetch products");
+    }
+
     if (Products) {
       revalidatePath("/catalog");
-      return Products;
+      return { data: Products };
     } else {
-      throw error;
+      throw new Error("No products found");
     }
   } catch (err) {
-    throw err;
+    const errorMessage = (err as Error).message || "Server error";
+    return { error: errorMessage };
   }
-};
-
-export const searchSubmit = async (formData: FormData) => {
-  "use server";
-  const search = formData.get("search");
-
-  let { data: Products, error } = await supabase
-    .from("Products")
-    .select("*")
-    .ilike("title", "%Mi%");
-
-  return Products;
 };
