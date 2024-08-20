@@ -23,8 +23,7 @@ const Catalog = async () => {
             ))}{" "}
           <div className="flex-grow"></div>
         </div>
-
-        <div>Каталог недоступен</div>
+        {items.length === 0 && <div>Каталог недоступен</div>}
       </div>
     </section>
   );
