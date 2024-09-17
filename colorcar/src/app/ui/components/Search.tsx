@@ -15,6 +15,8 @@ const Search = () => {
 
     const params = new URLSearchParams(searchParams);
 
+    params.set("page", "1");
+
     if (searchRef.current?.value) {
       params.set("query", searchRef.current.value);
     } else {

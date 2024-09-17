@@ -44,7 +44,8 @@ export const postData = async (formData: FormData) => {
 };
 
 export const getCatalogItems = async (
-  query: string
+  query: string,
+  page: number
 ): Promise<{ data?: CatalogItemType[]; error?: string }> => {
   try {
     let Products;
@@ -74,6 +75,28 @@ export const getCatalogItems = async (
     if (Products) {
       revalidatePath("/catalog");
       return { data: Products };
+    } else {
+      throw new Error("No products found");
+    }
+  } catch (err) {
+    const errorMessage = (err as Error).message || "Server error";
+    return { error: errorMessage };
+  }
+};
+
+export const getRowCount = async (): Promise<{
+  count?: number;
+  error?: string;
+}> => {
+  try {
+    const { count, error } = await supabase
+      .from("Products")
+      .select("*", { count: "exact", head: true });
+
+    if (error) throw new Error(error.message || "Failed to fetch products");
+
+    if (count) {
+      return { count: count };
     } else {
       throw new Error("No products found");
     }
