@@ -13,7 +13,7 @@ const HeaderLink = ({ item }: { item: headerLinks }) => {
         href={item.href}
         className="hover:border-b-4 hover:border-[#C53720] pb-1"
       >
-        {item.title}
+        {item.title.toUpperCase()}
       </Link>
     </li>
   );

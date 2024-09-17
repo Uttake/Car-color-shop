@@ -7,7 +7,7 @@ import Search from "../ui/components/Search";
 const Catalog = async () => {
   let items = await getCatalogItems();
   return (
-    <section className="bg-[#EDEDED] p-20">
+    <section className="bg-[#EDEDED] p-20 sm:p-2">
       <div className="wrapper">
         <Search />
         <div className="grid grid-cols-block gap-6">

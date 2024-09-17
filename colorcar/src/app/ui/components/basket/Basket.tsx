@@ -45,7 +45,7 @@ const Basket = ({ cardOpen }: { cardOpen: boolean }) => {
   return (
     <div
       className={clsx(
-        "absolute top-[80px] w-[800px] bg-white flex flex-col right-0 p-10 gap-10 py-10 transition ease-in-out sm:right-0 max-h-[700px] overflow-y-scroll border-2 border-[#1D1D1D] rounded-md z-50",
+        "absolute top-[80px] w-[800px] bg-white flex flex-col right-0 p-10 gap-10 py-10 transition ease-in-out sm:right-0 max-h-[700px] overflow-y-scroll border-2 border-[#1D1D1D] rounded-md z-50 lg:w-[600px] md:p-5 md:w-[470px] sm:w-full",
         {
           "opacity-100 scale-100": cardOpen,
           "scale-0 opacity-0": !cardOpen,
@@ -54,7 +54,7 @@ const Basket = ({ cardOpen }: { cardOpen: boolean }) => {
     >
       <div>
         <h2 className=" text-2xl border-b-2 border-b-orange-brdr pb-3 font-bold">
-          Заказы
+          Ваши заказы
         </h2>
       </div>
       {basketOrders.length === 0 && <div>Корзина пуста</div>}

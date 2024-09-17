@@ -6,6 +6,7 @@ import Counter from "./Counter";
 import { CataloItemsType } from "@/app/utils/definitions";
 import clsx from "clsx";
 import { BasketItemTypes } from "./basket/Basket";
+import MainButton from "./MainButton";
 
 export interface ShopCardButtonType extends CataloItemsType {
   count: number;
@@ -60,7 +61,20 @@ const ShopCardButton = ({ id, title, images, price }: CataloItemsType) => {
   };
   return (
     <div className="flex justify-between items-center mb-5" key={id}>
-      <Counter count={count} setCount={setCount} />
+      {disabled ? (
+        <MainButton
+          title="Товар в корзине"
+          maxW="max-w-[164px]"
+          hgt="h-[40px]"
+          color="text-[#C53720]"
+          href=""
+          hover={"pointer-events-none"}
+          onClick={(e) => e.preventDefault()}
+          disabled={disabled}
+        />
+      ) : (
+        <Counter count={count} setCount={setCount} />
+      )}
       <button
         className="group p-[6px] border-4 border-orange-brdr hover:bg-orange-brdr disabled:bg-orange-brdr"
         onClick={() => addToOrder({ id, title, price, images, count })}

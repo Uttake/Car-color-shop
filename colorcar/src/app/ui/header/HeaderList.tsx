@@ -8,25 +8,24 @@ export type headerList = {
 };
 
 export const lists: headerList[] = [
-  { title: "КОМПАНИЯ", href: "/company" },
-  { title: "КАТАЛОГ", href: "/catalog" },
-  { title: "УСЛУГИ", href: "/services" },
-  { title: "ИНФОРМАЦИЯ", href: "/info" },
-  { title: "КОНТАКТЫ", href: "/contacts" },
+  { title: "Компания", href: "/company" },
+  { title: "Каталог", href: "/catalog" },
+  { title: "Услуги", href: "/services" },
+  { title: "Информация", href: "/info" },
+  { title: "Контакты", href: "/contacts" },
 ];
 const HeaderList = () => {
   return (
-   <>
-     <nav>
-      <ul className="flex gap-3 lg:hidden">
-        {lists?.map((item, i) => (
-          <HeaderLink item={item} key={i} />
-        ))}
-        
-      </ul>
-    </nav>
-  <Hamburger isInitiallyOpen={false}/>
-   </>
+    <>
+      <nav>
+        <ul className="flex gap-3 lg:hidden">
+          {lists?.map((item, i) => (
+            <HeaderLink item={item} key={i} />
+          ))}
+        </ul>
+      </nav>
+      <Hamburger isInitiallyOpen={false} />
+    </>
   );
 };
 

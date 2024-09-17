@@ -37,7 +37,7 @@ const BasketItem = ({ item }: { item: BasketItemTypes }) => {
 
   return (
     <div
-      className="border-b-2 border-b-orange-brdr pb-5 flex items-center py-5"
+      className="border-b-2 border-b-orange-brdr pb-5 flex items-center py-5 md:flex-col md:relative md:mt-5"
       key={item.id}
     >
       <Image
@@ -58,7 +58,7 @@ const BasketItem = ({ item }: { item: BasketItemTypes }) => {
         className="basis-[10%] self-start font-bold flex justify-end"
         onClick={() => removeOrder(item.id)}
       >
-        <CloseTag className="stroke-black hover:stroke-orange-brdr stroke-[4px] transition" />
+        <CloseTag className="stroke-black hover:stroke-orange-brdr stroke-[4px] transition md:absolute md:top-0 md:right-0" />
       </button>
     </div>
   );

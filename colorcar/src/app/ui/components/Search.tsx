@@ -1,9 +1,13 @@
 "use client";
-import React from "react";
+import clsx from "clsx";
+import { title } from "process";
+import React, { useState } from "react";
 
 const Search = () => {
+  const [categoryOpen, setCategoryOpen] = useState(false);
+
   return (
-    <form className="w-full mx-auto mb-5">
+    <form className="w-full mx-auto mb-5 relative">
       <div className="flex">
         <label
           htmlFor="search-dropdown"
@@ -14,12 +18,19 @@ const Search = () => {
         <button
           id="dropdown-button"
           data-dropdown-toggle="dropdown"
-          className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-white bg-black border border-gray-300 rounded-s-lg hover:bg-orange-brdr focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 transition duration-300"
+          className={clsx(
+            "flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-white bg-black border border-gray-300 rounded-s-lg hover:bg-orange-brdr focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 transition duration-300",
+            { "bg-orange-brdr": categoryOpen, "bg-black": !categoryOpen }
+          )}
           type="button"
+          onClick={() => setCategoryOpen(!categoryOpen)}
         >
           All categories{" "}
           <svg
-            className="w-2.5 h-2.5 ms-2.5"
+            className={clsx("w-2.5 h-2.5 ms-2.5 transition", {
+              "-rotate-180": categoryOpen,
+              "rotate-0": !categoryOpen,
+            })}
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -36,7 +47,13 @@ const Search = () => {
         </button>
         <div
           id="dropdown"
-          className="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+          className={clsx(
+            "z-10 bg-white divide-y absolute top-12 divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 transition ease-in-out",
+            {
+              "opacity-100 scale-100": categoryOpen,
+              "scale-0 opacity-0": !categoryOpen,
+            }
+          )}
         >
           <ul
             className="py-2 text-sm text-gray-700 dark:text-gray-200"

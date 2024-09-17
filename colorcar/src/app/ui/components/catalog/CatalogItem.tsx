@@ -18,7 +18,7 @@ const CatalogItem = ({ title, price, images, id }: CataloItemsType) => {
         hgt="h-[40px]"
         title="ПОДРОБНЕЕ"
         color="text-[#c53720]"
-        href="/"
+        href="/contact"
         hover="group-hover:text-white"
       />
     </div>

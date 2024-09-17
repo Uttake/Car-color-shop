@@ -11,6 +11,8 @@ type MainButtonType = {
   classes?: string;
   href: string;
   hover?: string;
+  disabled?: boolean;
+  onClick?: (e: React.SyntheticEvent<EventTarget>) => void;
 };
 
 const MainButton = ({
@@ -22,6 +24,8 @@ const MainButton = ({
   classes,
   href,
   hover,
+  onClick,
+  disabled,
 }: MainButtonType) => {
   return (
     <button
@@ -33,7 +37,11 @@ const MainButton = ({
         hover
       )}
     >
-      <Link href={href} className={clsx(fontSize, color, "font-bold", hover)}>
+      <Link
+        href={href}
+        className={clsx(fontSize, color, "font-bold", hover)}
+        onClick={onClick}
+      >
         {title}
       </Link>
     </button>
