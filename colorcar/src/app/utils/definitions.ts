@@ -3,6 +3,8 @@ export type CataloItemsType = {
     title: string;
     price: number;
     images: string;
+    solo?: boolean;
+    description?:string;
 };
 
 export interface CatalogItemType extends CataloItemsType {

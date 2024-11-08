@@ -1,64 +1,37 @@
-"use client";
-import React, { ReactNode } from "react";
-
-import { usePathname } from "next/navigation";
+import { clsx } from "clsx";
 import Link from "next/link";
-import { lists } from "../header/HeaderList";
 
-type TBreadCrumbProps = {
-  homeElement: ReactNode;
-  separator: ReactNode;
-  containerClasses?: string;
-  listClasses?: string;
-  activeClasses?: string;
-  capitalizeLinks?: boolean;
-};
+interface Breadcrumb {
+  label: string;
+  href: string;
+  active?: boolean;
+}
 
-const Breadcrumb = ({
-  homeElement,
-  separator,
-  containerClasses,
-  listClasses,
-  activeClasses,
-  capitalizeLinks,
-}: TBreadCrumbProps) => {
-  const paths = usePathname();
-  let pathNames = paths.split("/").filter((path) => path);
-  let itemName: string;
-
-  console.log(pathNames);
-  lists.map((item) => {
-    if (paths.includes(item.href)) {
-      itemName = item.title;
-    } else {
-      pathNames;
-    }
-  });
-
+export default function Breadcrumbs({
+  breadcrumbs,
+}: {
+  breadcrumbs: Breadcrumb[];
+}) {
   return (
-    <div className={`bg-white ${pathNames.length === 0 ? "hidden" : "block"}`}>
-      <ul className={containerClasses}>
-        <li className={listClasses}>
-          <Link href={"/"}>{homeElement}</Link>
-        </li>
-        {pathNames.length > 0 && separator}
-        {pathNames.map((link, index) => {
-          let href = `/${pathNames.slice(0, index + 1).join("/")}`;
-          let itemClasses =
-            paths === href ? `${listClasses} ${activeClasses}` : listClasses;
-          let itemLink = itemName;
-          return (
-            <React.Fragment key={index}>
-              <li className={itemClasses}>
-                <Link href={href}>{itemLink}</Link>
-              </li>
-              {pathNames.length !== index + 1 && separator}
-            </React.Fragment>
-          );
-        })}
-      </ul>
-    </div>
+    <nav aria-label="Breadcrumb" className="block bg-white py-5">
+      <ol className={clsx("flex text-xl md:text-2xl wrapper")}>
+        {breadcrumbs.map((breadcrumb, index) => (
+          <li
+            key={breadcrumb.href}
+            aria-current={breadcrumb.active}
+            className={clsx(
+              breadcrumb.active ? "text-gray-900" : "text-gray-500"
+            )}
+          >
+            <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+            {index < breadcrumbs.length - 1 ? (
+              <span className="mx-3 inline-block font-bold text-orange-brdr">
+                &gt;
+              </span>
+            ) : null}
+          </li>
+        ))}
+      </ol>
+    </nav>
   );
-};
-
-export default Breadcrumb;
+}

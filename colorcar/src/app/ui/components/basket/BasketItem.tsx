@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Counter from "../Counter";
 import { BasketItemTypes } from "./Basket";
 import CloseTag from "../../../_assets/close.svg";
+import Link from "next/link";
 
 const BasketItem = ({ item }: { item: BasketItemTypes }) => {
   const [count, setCount] = useState(item.count);
@@ -40,14 +41,18 @@ const BasketItem = ({ item }: { item: BasketItemTypes }) => {
       className="border-b-2 border-b-orange-brdr pb-5 flex items-center py-5 md:flex-col md:relative md:mt-5"
       key={item.id}
     >
-      <Image
-        src={item.images}
-        alt={item.title}
-        width={150}
-        height={150}
-        className=" mb-5 basis-[22.5%]"
-      />
-      <h2 className="text-xl mb-3 basis-[22.5%]">{item.title}</h2>
+      <Link href={`/catalog/${item.id}`}>
+        <Image
+          src={item.images}
+          alt={item.title}
+          width={150}
+          height={150}
+          className=" mb-5 basis-[22.5%]"
+        />
+      </Link>
+      <Link href={`/catalog/${item.id}`} className="basis-[22.5%]">
+        <h2 className="text-xl mb-3 ">{item.title}</h2>
+      </Link>
       <div className="basis-[22.5%]">
         <Counter count={count} setCount={setCount} />
       </div>

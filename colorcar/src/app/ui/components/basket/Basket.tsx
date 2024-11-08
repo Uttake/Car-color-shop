@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import Counter from "../Counter";
 import BasketItem from "./BasketItem";
 import clsx from "clsx";
+import MainButton from "../MainButton";
 
 export interface BasketTypes {
   id: number;
@@ -22,7 +23,13 @@ export type BasketItemTypes = {
   inBasket?: boolean;
 };
 
-const Basket = ({ cardOpen }: { cardOpen: boolean }) => {
+const Basket = ({
+  isCartOpen,
+  setCartOpen,
+}: {
+  isCartOpen: boolean;
+  setCartOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const [basketOrders, setBasketOrders] = useState<BasketItemTypes[]>([]);
   const [fullPrice, setFullPrice] = useState(0);
   function checkUserData() {
@@ -47,8 +54,8 @@ const Basket = ({ cardOpen }: { cardOpen: boolean }) => {
       className={clsx(
         "absolute top-[80px] w-[800px] bg-white flex flex-col right-0 p-10 gap-10 py-10 transition ease-in-out sm:right-0 max-h-[700px] overflow-y-scroll border-2 border-[#1D1D1D] rounded-md z-50 lg:w-[600px] md:p-5 md:w-[470px] sm:w-full",
         {
-          "opacity-100 scale-100": cardOpen,
-          "scale-0 opacity-0": !cardOpen,
+          "opacity-100 scale-100": isCartOpen,
+          "scale-0 opacity-0": !isCartOpen,
         }
       )}
     >
@@ -58,12 +65,24 @@ const Basket = ({ cardOpen }: { cardOpen: boolean }) => {
         </h2>
       </div>
       {basketOrders.length === 0 && <div>Корзина пуста</div>}
-      <div>
+      <div className=" max-h-[500px] overflow-auto">
         {basketOrders.map((item: BasketItemTypes) => (
           <BasketItem item={item} key={item.id} />
         ))}
       </div>
-      <div className="text-2xl font-bold">Итого: {fullPrice.toFixed(2)}</div>
+      <div className="flex justify-between flex-wrap">
+        <div className="text-2xl font-bold">Итого: {fullPrice.toFixed(2)}</div>
+        {basketOrders.length > 0 && (
+          <MainButton
+            title="Оформить заказ"
+            href="/order"
+            maxW="max-w-[176px]"
+            color="white"
+            hgt="h-[40px]"
+            onClick={() => setCartOpen(false)}
+          />
+        )}
+      </div>
     </div>
   );
 };

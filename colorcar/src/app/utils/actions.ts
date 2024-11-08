@@ -4,7 +4,6 @@ import { revalidatePath } from "next/cache";
 import { CatalogItemType } from "./definitions";
 import { supabase } from "./supabaseClient";
 import { v1 } from "uuid";
-import { z } from "zod";
 
 export const postData = async (formData: FormData) => {
   const title = formData.get("name");
@@ -56,14 +55,14 @@ export const getCatalogItems = async (
         .from("Products")
         .select("*")
         .ilike("title", `%${query}%`)
-        .range(0, 5);
+        .range(0, 8);
       Products = data;
       queryError = error;
     } else {
       const { data, error } = await supabase
         .from("Products")
         .select("*")
-        .range(0, 5);
+        .range(0, 8);
       Products = data;
       queryError = error;
     }
@@ -105,3 +104,18 @@ export const getRowCount = async (): Promise<{
     return { error: errorMessage };
   }
 };
+
+
+export const getCatalogItem = async(id: string): Promise<CatalogItemType> => {
+  const { data, error } = await supabase
+    .from('Products') 
+    .select('*') 
+    .eq('id', id)
+    .single(); 
+
+    if (error) {
+      console.error('Error fetching data:', error);
+    }
+
+  return data;   
+}
