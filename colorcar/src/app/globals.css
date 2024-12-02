@@ -96,11 +96,22 @@
         --chart-5: 340 75% 55%;
     }
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
 @layer base {
   * {
     @apply border-border;
     }
   body {
     @apply bg-background text-foreground;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .swiper-pagination-bullet {
+        width: 50px !important;
     }
 }

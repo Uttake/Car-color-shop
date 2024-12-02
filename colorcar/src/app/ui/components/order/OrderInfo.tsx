@@ -12,7 +12,11 @@ const OrderInfo = () => {
     const item = JSON.parse(localStorage.getItem("basket")!);
     if (item) {
       let price = 0;
-      item.forEach((el: BasketItemTypes) => (price += el.price * el.count));
+      item.forEach((el: BasketItemTypes) =>
+        el.discount
+          ? (price += el.count * (el.price - el.discount))
+          : (price += el.count * el.price)
+      );
       setBasketOrders(item);
       setFullPrice(price);
     }
@@ -59,10 +63,16 @@ const OrderInfo = () => {
               <div className="text-base font-medium">
                 <h3 className=" text-[#C53720]">{item.title}</h3>
                 <p className=" text-[#A5A5A5]">
-                  {item.count} шт. х {item.price} руб.
+                  {item.count} шт. х{" "}
+                  {item.discount ? item.price - item.discount : item.price} BYN.
                 </p>
               </div>
-              <div>{item.count * item.price} руб.</div>
+              <div>
+                {item.discount
+                  ? item.count * (item.price - item.discount)
+                  : item.count * item.price}{" "}
+                BYN.
+              </div>
             </div>
           ))
         ) : (
@@ -73,7 +83,7 @@ const OrderInfo = () => {
       </div>
       <div className="p-5 flex justify-between bg-[#1d1d1d] text-white text-base font-medium">
         <span>Итого</span>
-        <span className=" text-xl font-bold">{fullPrice} руб.</span>
+        <span className=" text-xl font-bold">{fullPrice} BYN.</span>
       </div>
     </div>
   );

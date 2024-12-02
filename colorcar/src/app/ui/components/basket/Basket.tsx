@@ -1,7 +1,5 @@
 "use client";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import Counter from "../Counter";
 import BasketItem from "./BasketItem";
 import clsx from "clsx";
 import MainButton from "../MainButton";
@@ -21,6 +19,7 @@ export type BasketItemTypes = {
   images: string;
   count: number;
   inBasket?: boolean;
+  discount?: number;
 };
 
 const Basket = ({
@@ -32,11 +31,19 @@ const Basket = ({
 }) => {
   const [basketOrders, setBasketOrders] = useState<BasketItemTypes[]>([]);
   const [fullPrice, setFullPrice] = useState(0);
+
   function checkUserData() {
     const item = JSON.parse(localStorage.getItem("basket")!);
     if (item) {
       let price = 0;
-      item.forEach((el: BasketItemTypes) => (price += el.price * el.count));
+      item.forEach((el: BasketItemTypes) => {
+        if (el.discount) {
+          price += el.count * (el.price - el.discount);
+          return;
+        } else {
+          price += el.count * el.price;
+        }
+      });
       setBasketOrders(item);
       setFullPrice(price);
     }
@@ -71,7 +78,9 @@ const Basket = ({
         ))}
       </div>
       <div className="flex justify-between flex-wrap">
-        <div className="text-2xl font-bold">Итого: {fullPrice.toFixed(2)}</div>
+        <div className="text-2xl font-bold">
+          Итого: {fullPrice.toFixed(2)} BYN
+        </div>
         {basketOrders.length > 0 && (
           <MainButton
             title="Оформить заказ"

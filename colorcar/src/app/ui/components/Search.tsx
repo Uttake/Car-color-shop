@@ -1,11 +1,16 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import clsx from "clsx";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { title } from "process";
+import catalogData from "@/app/_data/catalog-data.json";
+import DropdownMenu from "./CategoryList/CategoryList";
+import { getSearchItems } from "@/app/utils/actions";
 
 const Search = () => {
   const [categoryOpen, setCategoryOpen] = useState(false);
+  const [filteredTitles, setFilteredTitles] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [items, setItems] = useState<string[]>([]);
   const searchParams = useSearchParams();
   const searchRef: React.RefObject<HTMLInputElement> = useRef(null);
   const pathname = usePathname();
@@ -13,21 +18,54 @@ const Search = () => {
 
   const handleSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-
     const params = new URLSearchParams(searchParams);
-
     params.set("page", "1");
-
     if (searchRef.current?.value) {
       params.set("query", searchRef.current.value);
     } else {
       params.delete("query");
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
+  const searchItems = async () => {
+    const item = await getSearchItems(searchRef.current?.value || "");
+    if (item) {
+      let filteredItems = item?.map((el) => el.title);
+      setItems(filteredItems);
+    }
+  };
+
+  const handleSuggestionClick = (title: string) => {
+    if (searchRef.current) {
+      searchRef.current.value = title;
+      setShowSuggestions(false);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value.toLowerCase();
+    if (query) {
+      const filtered = items.filter((title) =>
+        title.toLowerCase().includes(query)
+      );
+      setFilteredTitles(filtered);
+      setShowSuggestions(true);
+    } else {
+      setFilteredTitles([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  useEffect(() => {
+    searchItems();
+  }, []);
+
   return (
-    <form className="w-full mx-auto mb-5 relative">
+    <form
+      className="w-full mx-auto mb-5 relative"
+      onSubmit={(e) => e.preventDefault()}
+    >
       <div className="flex">
         <label
           htmlFor="search-dropdown"
@@ -45,7 +83,7 @@ const Search = () => {
           type="button"
           onClick={() => setCategoryOpen(!categoryOpen)}
         >
-          All categories{" "}
+          Все категории{" "}
           <svg
             className={clsx("w-2.5 h-2.5 ms-2.5 transition", {
               "-rotate-180": categoryOpen,
@@ -75,43 +113,7 @@ const Search = () => {
             }
           )}
         >
-          <ul
-            className="py-2 text-sm text-gray-700 dark:text-gray-200"
-            aria-labelledby="dropdown-button"
-          >
-            <li>
-              <button
-                type="button"
-                className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Mockups
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Templates
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Design
-              </button>
-            </li>
-            <li>
-              <button
-                type="button"
-                className="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-              >
-                Logos
-              </button>
-            </li>
-          </ul>
+          <DropdownMenu categoryOpen={categoryOpen} data={catalogData} />
         </div>
         <div className="relative w-full">
           <input
@@ -120,9 +122,12 @@ const Search = () => {
             type="search"
             id="search-dropdown"
             defaultValue={searchParams.get("query")?.toString()}
+            onChange={(e) => handleInputChange(e)}
+            onFocus={() => setShowSuggestions(true)}
+            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
             className="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 focus:ring-black focus:border-black dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
             placeholder="Search Mockups, Logos, Design Templates..."
-            required
+            autoComplete="off"
           />
           <button
             onClick={(e) => handleSearch(e)}
@@ -145,6 +150,20 @@ const Search = () => {
             </svg>
             <span className="sr-only">Search</span>
           </button>
+
+          {showSuggestions && filteredTitles.length > 0 && (
+            <ul className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 overflow-y-auto z-10">
+              {filteredTitles.map((title, index) => (
+                <li
+                  key={index}
+                  className="p-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleSuggestionClick(title)}
+                >
+                  {title}
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </form>

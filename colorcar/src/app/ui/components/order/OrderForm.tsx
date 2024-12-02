@@ -8,7 +8,8 @@ import { z } from "zod";
 import OrderInput from "./OrderInput";
 import Spinner from "../Spinner";
 import { toast } from "react-toastify";
-import ReCAPTCHAComponent from "../reCaptcha/ReCAPTCHAComponent";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+
 const UserSchema = z.object({
   name: z.string().min(1, { message: "Имя обязательно для заполнения" }),
   tel: z
@@ -34,6 +35,8 @@ export type UserType = z.infer<typeof UserSchema>;
 const OrderForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
+
   const form = useForm<UserType>({
     defaultValues: {
       name: "",
@@ -57,39 +60,59 @@ const OrderForm = () => {
         setIsLoading(false);
         return;
       }
-      if (!captchaValue) {
-        toast.error("Пожалуйста, пройдите проверку reCAPTCHA");
+      if (!executeRecaptcha) {
+        toast.error("Ошибка при загрузке ReCaptcha");
         return;
       }
 
-      const orderData = {
-        ...data,
-        order: cardData,
-        email: data.email || undefined,
-      };
+      const gRecaptchaToken = await executeRecaptcha("inquirySubmit");
 
-      if (!data.email) {
-        delete orderData.email;
-      }
-
-      const response = await fetch("api/email", {
+      const captchaResponse = await fetch("/api/recaptchaSubmit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(orderData),
+        body: JSON.stringify({ gRecaptchaToken }),
       });
 
-      if (response.ok) {
+      const res = await captchaResponse.json();
+
+      if (res.success) {
+        const orderData = {
+          ...data,
+          order: cardData,
+          email: data.email || undefined,
+        };
+
+        if (!data.email) {
+          delete orderData.email;
+        }
+
+        const response = await fetch("api/email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(orderData),
+        });
+
+        if (response.ok) {
+          setIsLoading(false);
+          toast.success("Заказ успешно оформлен");
+          form.reset();
+          console.log("Заказ успешно отправлен");
+        }
+      } else {
         setIsLoading(false);
-        toast.success("Заказ успешно оформлен");
-        form.reset();
-        console.log("Заказ успешно отправлен");
+        toast.error("Проверьте, что вы не робот");
       }
     } catch (error) {
       setIsLoading(false);
       toast.error("Произошла ошибка");
       console.log("Ошибка", error);
+    } finally {
+      setIsLoading(false);
+      localStorage.setItem("basket", JSON.stringify([]));
     }
   };
 

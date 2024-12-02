@@ -29,6 +29,20 @@ const config: Config = {
   		}
   	},
   	extend: {
+		keyframes: {
+			fadeIn: {
+			  '0%': { opacity: '0', transform: 'scale(0.95)' },
+			  '100%': { opacity: '1', transform: 'scale(1)' },
+			},
+			fadeOut: {
+			  '0%': { opacity: '1', transform: 'scale(1)' },
+			  '100%': { opacity: '0', transform: 'scale(0.95)' },
+			},
+		  },
+		  animation: {
+			fadeIn: 'fadeIn 300ms ease-out',
+			fadeOut: 'fadeOut 300ms ease-out',
+		  },
   		colors: {
   			alphablack: 'rgba(14, 14, 14, 0.6);',
   			'orange-brdr': '#C53720',

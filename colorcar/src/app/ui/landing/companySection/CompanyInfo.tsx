@@ -16,7 +16,7 @@ const CompanyInfo = () => {
         />
       </div>
       <div className="max-w-[744px] p-8 flex flex-col justify-between border-4 border-[#C53720] overflow-hidden bg-alphablack sm:p-4">
-        <h2 className="text-white font-medium text-base mb-7 md:text-sm md:overflow-scroll">
+        <h2 className="text-white font-medium text-base mb-7 md:text-sm">
           «Ваш автомобиль потерял свой блеск или имеет повреждения на кузове? Не
           проблема! Вам в «Car Paints»! Мы предлагаем только качественные
           автоэмали и профессиональное оборудование для покраски, которые

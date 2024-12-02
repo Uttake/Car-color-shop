@@ -29,7 +29,7 @@ const OrderInput = ({ name, title, form, type, isLoading }: InputTypes) => {
           <FormLabel>{title}</FormLabel>
           <FormControl>
             <Input
-              className="h-[40px] w-full border-4 border-[#1D1D1D]"
+              className="h-[40px] w-full border-4 border-[#1D1D1D] focus:border-black focus-visible:ring-transparent"
               type={type}
               disabled={isLoading}
               placeholder=""

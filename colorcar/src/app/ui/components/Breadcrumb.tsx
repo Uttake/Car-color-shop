@@ -13,8 +13,8 @@ export default function Breadcrumbs({
   breadcrumbs: Breadcrumb[];
 }) {
   return (
-    <nav aria-label="Breadcrumb" className="block bg-white py-5">
-      <ol className={clsx("flex text-xl md:text-2xl wrapper")}>
+    <nav aria-label="Breadcrumb" className="block bg-white py-5 xl:px-4">
+      <ol className={clsx("flex flex-wrap text-xl md:text-2xl wrapper")}>
         {breadcrumbs.map((breadcrumb, index) => (
           <li
             key={breadcrumb.href}
@@ -23,9 +23,14 @@ export default function Breadcrumbs({
               breadcrumb.active ? "text-gray-900" : "text-gray-500"
             )}
           >
-            <Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+            <Link
+              className="text-xl md:text-lg sm:text-sm"
+              href={breadcrumb.href}
+            >
+              {breadcrumb.label}
+            </Link>
             {index < breadcrumbs.length - 1 ? (
-              <span className="mx-3 inline-block font-bold text-orange-brdr">
+              <span className="mx-3 inline-block font-bold text-orange-brdr md:text-lg sm:text-sm">
                 &gt;
               </span>
             ) : null}

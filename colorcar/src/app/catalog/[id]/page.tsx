@@ -6,11 +6,12 @@ import React from "react";
 const page = async ({ params }: { params: { id: string } }) => {
   const id = params.id;
   const item = await getCatalogItem(id);
+
   const path = [
     { label: "Главная", href: "/" },
     { label: "Каталог", href: "/catalog" },
     {
-      label: item.title,
+      label: item?.title,
       href: `/catalog/${id}`,
       active: true,
     },
@@ -26,6 +27,7 @@ const page = async ({ params }: { params: { id: string } }) => {
             images={item.images}
             price={item.price}
             id={item.id}
+            discount={item.discount}
             solo={true}
             description={item.description}
           />

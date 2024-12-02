@@ -12,8 +12,14 @@ export interface ShopCardButtonType extends CataloItemsType {
   count: number;
 }
 
-const ShopCardButton = ({ id, title, images, price }: CataloItemsType) => {
-  const [count, setCount] = useState(1);
+const ShopCardButton = ({
+  id,
+  title,
+  images,
+  price,
+  discount,
+}: CataloItemsType) => {
+  const [count, setCount] = useState<number>(1);
   const [disabled, setDisabled] = useState(false);
 
   let array: Array<any> = [];
@@ -46,8 +52,17 @@ const ShopCardButton = ({ id, title, images, price }: CataloItemsType) => {
     price,
     images,
     count,
+    discount,
   }: ShopCardButtonType) => {
-    let orderItem = { id, title, price, images, count, inBasket: true };
+    let orderItem = {
+      id,
+      title,
+      price,
+      images,
+      count,
+      inBasket: true,
+      discount,
+    };
     array = JSON.parse(localStorage.getItem("basket")!);
     let duplicateOrder = array.find((el: ShopCardButtonType) => el.id === id);
 
@@ -59,8 +74,9 @@ const ShopCardButton = ({ id, title, images, price }: CataloItemsType) => {
     localStorage.setItem("basket", JSON.stringify([...array, orderItem]));
     window.dispatchEvent(new Event("storage"));
   };
+
   return (
-    <div className="flex justify-between items-center mb-5" key={id}>
+    <div className="flex justify-between items-center mb-5 gap-5 " key={id}>
       {disabled ? (
         <MainButton
           title="Товар в корзине"
@@ -77,7 +93,9 @@ const ShopCardButton = ({ id, title, images, price }: CataloItemsType) => {
       )}
       <button
         className="group p-[6px] border-4 border-orange-brdr hover:bg-orange-brdr disabled:bg-orange-brdr"
-        onClick={() => addToOrder({ id, title, price, images, count })}
+        onClick={() =>
+          addToOrder({ id, title, price, images, count, discount })
+        }
         disabled={disabled}
       >
         <ShopCard

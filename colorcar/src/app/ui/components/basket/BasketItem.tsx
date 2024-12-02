@@ -56,8 +56,12 @@ const BasketItem = ({ item }: { item: BasketItemTypes }) => {
       <div className="basis-[22.5%]">
         <Counter count={count} setCount={setCount} />
       </div>
+
       <div className="text-xl basis-[22.5%] text-center">
-        {(item.price * count).toFixed(2)} BYN
+        {item.discount
+          ? ((item.price - item.discount) * count).toFixed(2)
+          : (item.price * count).toFixed(2)}{" "}
+        BYN
       </div>
       <button
         className="basis-[10%] self-start font-bold flex justify-end"

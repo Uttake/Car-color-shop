@@ -1,0 +1,91 @@
+[
+    {
+        "title": "Лаки",
+        "link": "/catalog/laki"    
+    },
+    {
+        "title": "Эмали",
+        "link": "/catalog/emali",
+        "subcategories": [{
+            "title":"Базовая",
+            "link": "/catalog/emali/bazovaya"
+        },
+        {
+            "title":"Структурная",
+            "link": "/catalog/emali/strukturnaia"
+        },
+        {
+            "title":"Для дисков",
+            "link": "/catalog/emali/diski"
+        },
+        {
+            "title":"Для сколов",
+            "link": "/catalog/emali/skoly"
+        }
+        ]
+    },
+    {
+        "title": "Шпаклевка",
+        "link": "/catalog/shpaklevka",
+        "subcategories": [{
+            "title":"Базовая",
+            "link": "/catalog/shpaklevka/bazovaya"
+        },
+        {
+            "title":"Структурная",
+            "link": "/catalog/shpaklevka/strukturnaia"
+        },
+        {
+            "title":"Для дисков",
+            "link": "/catalog/shpaklevka/diski"
+        },
+        {
+            "title":"Для сколов",
+            "link": "/catalog/shpaklevka/skoly"
+        }
+        ]  
+    },
+    {
+        "title": "Грунты",
+        "subcategories": [{
+            "title":"Базовая",
+            "link": "/catalog/shpaklevka/bazovaya"
+        },
+        {
+            "title":"Структурная",
+            "link": "/catalog/shpaklevka/strukturnaia"
+        },
+        {
+            "title":"Для дисков",
+            "link": "/catalog/shpaklevka/diski"
+        },
+        {
+            "title":"Для сколов",
+            "link": "/catalog/shpaklevka/skoly"
+        }
+        ]  
+    },
+    {
+        "title": "Расходные материалы",
+        "subcategories": [{
+            "title":"Базовая",
+            "link": "/catalog/shpaklevka/bazovaya"
+        },
+        {
+            "title":"Структурная",
+            "link": "/catalog/shpaklevka/strukturnaia"
+        },
+        {
+            "title":"Для дисков",
+            "link": "/catalog/shpaklevka/diski"
+        },
+        {
+            "title":"Для сколов",
+            "link": "/catalog/shpaklevka/skoly"
+        }
+        ]  
+    },
+    {
+        "title": "Аэрозоли"     
+    }
+]

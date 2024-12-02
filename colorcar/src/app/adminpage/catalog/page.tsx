@@ -1,13 +1,12 @@
-import React, { Suspense } from "react";
-import Breadcrumbs from "../ui/components/Breadcrumb";
-import DemoSlider from "../ui/components/SliderSwiper";
-import dataSlider from "@/app/_data/slider-data.json";
-import Catalog from "../ui/components/catalog/Catalog";
-import { getCatalogItems, getRowCount } from "../utils/actions";
-import { Pagination } from "../ui/components/Pagination";
-import { CatalogItemType } from "../utils/definitions";
+import React from "react";
+import Catalog from "../../ui/components/catalog/Catalog";
+import { getRowCount, getCatalogItems } from "../../utils/actions";
 import clsx from "clsx";
-import CatalogItem from "../ui/components/catalog/CatalogItem";
+import CatalogItem from "../../ui/components/catalog/CatalogItem";
+import { CatalogItemType } from "../../utils/definitions";
+import { Pagination } from "../../ui/components/Pagination";
+import ModalWrapper from "../../ui/components/adminPage/Modal";
+
 const ITEMS_PER_PAGE = 7;
 const page = async ({
   searchParams,
@@ -29,26 +28,23 @@ const page = async ({
 
   return (
     <>
-      <DemoSlider data={dataSlider} />
-      <Breadcrumbs
-        breadcrumbs={[
-          { label: "Главная", href: "/" },
-          {
-            label: "Каталог",
-            href: `/catalog`,
-            active: true,
-          },
-        ]}
-      />
       <Catalog>
+        <ModalWrapper
+          item={items.data![0]}
+          update={false}
+          className=""
+          title="Добавить товар"
+          query={query}
+        />
         <div
           className={clsx(
             {
-              "flex justify-center gap-6 flex-wrap py-5":
+              "flex justify-center gap-6 flex-wrap py-5 relative":
                 items.data?.length! <= 2,
             },
             {
-              "grid grid-cols-block gap-6 py-5": items.data?.length! > 2,
+              "grid grid-cols-block gap-6 py-5 relative":
+                items.data?.length! > 2,
             }
           )}
         >
@@ -58,13 +54,23 @@ const page = async ({
             items.data && (
               <>
                 {items.data.map((item: CatalogItemType) => (
-                  <CatalogItem key={item.id} {...item} />
+                  <div key={item.id} className="relative">
+                    <CatalogItem key={item.id} {...item} solo={true} />
+
+                    <ModalWrapper
+                      item={item}
+                      update={true}
+                      title="Изменить"
+                      query={query}
+                    />
+                  </div>
                 ))}
                 {!items.data.length && <div>Такого товара нет</div>}
               </>
             )
           )}
         </div>
+
         {items.data?.length! > 1 && <Pagination totalPages={totalPages} />}
       </Catalog>
     </>

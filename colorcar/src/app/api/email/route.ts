@@ -27,14 +27,14 @@ export async function POST(req: Request) {
                 <tr style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 8px; text-align: left;">${item.title}</td>
                     <td style="padding: 8px; text-align: center;">${item.count}</td>
-                    <td style="padding: 8px; text-align: right;">${item.price} BYN</td>
+                    <td style="padding: 8px; text-align: right;">${item.discount ? item.price - item.discount : item.price} BYN</td>
                 </tr>
             `)
             .join("");
 
 
         const totalAmount = order.reduce(
-            (total: number, item: BasketItemTypes) => total + item.count * item.price,
+            (total: number, item: BasketItemTypes) => total + (item.discount ? item.price - item.discount : item.price) * item.count,
             0
         );
 
@@ -59,7 +59,6 @@ export async function POST(req: Request) {
                     </tbody>
                 </table>
                 <h3 style="text-align: right; margin-top: 20px;">Итоговая цена: ${totalAmount} BYN</h3>
-                <p style="margin-top: 20px;">Спасибо за ваш заказ! Мы свяжемся с вами для подтверждения.</p>
             </div>
         `;
 
