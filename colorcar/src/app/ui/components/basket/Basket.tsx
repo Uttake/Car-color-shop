@@ -84,7 +84,7 @@ const Basket = ({
         {basketOrders.length > 0 && (
           <MainButton
             title="Оформить заказ"
-            href="/order"
+            href="/order/#order"
             maxW="max-w-[176px]"
             color="white"
             hgt="h-[40px]"

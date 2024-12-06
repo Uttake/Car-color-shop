@@ -1,66 +1,70 @@
 .previewSection {
-   position: relative;
-   background-color: white;
-   width: 100%;
-   padding: 88px 0 88px 0;
-   z-index: 100;
+  position: relative;
+  background-color: white;
+  width: 100%;
+  padding: 88px 0 88px 0;
+  z-index: 100;
 }
 
 .previewSection::before {
-   content: '';
-   width: 100%;
-   height: 100%;
-   left: 0;
-   top: 0;
-   position: absolute;
-   background: url('/landing-background-second.jpg');
-   background-repeat: no-repeat;
-   background-size: cover;
-   opacity: 0.15;
-   z-index: -1;
+  content: "";
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  position: absolute;
+  background: url("/landing-background-second.webp");
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.15;
+  z-index: -1;
 }
 
 .previewItem {
-   position: relative;
-   overflow: hidden;
-   cursor: pointer;
-   z-index: 100;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  z-index: 100;
+  max-width: 360px;
+  width: 100%;
+  height: 360px;
+  background-size: cover;
+  background-position: center;
 }
 
 
 .previewItem:hover .hoverItem {
-   opacity: 1;
-   visibility: visible;
-   display: flex;
-   flex-direction: column;
-   top: 0;
-   left: 0;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   height: 100%;
-   gap: 66px;
-   background-color: rgba(0, 0, 0, 0.8);
-   z-index: 1;
-   transition: all 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 66px;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+  transition: all 0.3s ease;
 }
 
-
 .hoverItem {
-   position: absolute;
-   opacity: 0;
-   visibility: hidden;
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
 }
 
 @media (max-width: 1130px) {
-   .previewSection {
-      padding-right: 20px;
-      padding-left: 20px;
-   }
+  .previewSection {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
 }
 
 @media (max-width: 511px) {
-   .previewItem {
-      max-width: 300px;
-   }
+  .previewItem {
+    max-width: 300px;
+  }
 }

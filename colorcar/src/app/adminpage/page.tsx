@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useActionState, useState } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { login, signup } from "../utils/actions";
 
 const Authorization = () => {
   const router = useRouter();
@@ -38,7 +39,7 @@ const Authorization = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
-    console.log(data);
+    login(data);
   };
 
   return (
@@ -52,34 +53,25 @@ const Authorization = () => {
             Заполните данные формы
           </p>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField
-                control={form.control}
                 name="email"
-                render={({ field, fieldState }) => (
+                render={() => (
                   <FormItem className="flex flex-col dark:text-black relative">
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="email"
-                        className={`mt-1 block ${
-                          fieldState.error ? "border-red-500" : ""
-                        }`}
-                        {...field}
+                        className={`mt-1 block`}
+                        {...form.register("email")}
                       />
                     </FormControl>
-                    {fieldState.error && (
-                      <p className="text-red-500 text-xs mt-1 absolute -bottom-5">
-                        {fieldState.error.message}
-                      </p>
-                    )}
                   </FormItem>
                 )}
               />
               <FormField
-                control={form.control}
                 name="password"
-                render={({ field, fieldState }) => (
+                render={() => (
                   <FormItem className="flex flex-col text-black relative">
                     <FormLabel>Пароль</FormLabel>
                     <button
@@ -101,17 +93,10 @@ const Authorization = () => {
                       <Input
                         placeholder="Введите пароль"
                         type={showPassword ? "text" : "password"}
-                        className={`mt-1 block w-full ${
-                          fieldState.error ? "border-red-500" : ""
-                        }`}
-                        {...field}
+                        className={`mt-1 block w-full `}
+                        {...form.register("password")}
                       />
                     </FormControl>
-                    {fieldState.error && (
-                      <p className="text-red-500 text-xs mt-1 absolute -bottom-5">
-                        {fieldState.error.message}
-                      </p>
-                    )}
                   </FormItem>
                 )}
               />
@@ -126,20 +111,6 @@ const Authorization = () => {
               </div>
             </form>
           </Form>
-          <div className="flex items-center mt-4 opacity-60 mb-4">
-            <div className="flex-grow border-t border-gray-400"></div>
-            <div className="mx-4 text-black text-center">или</div>
-            <div className="flex-grow border-t border-gray-400"></div>
-          </div>
-          <div className="text-sm text-black mt-4 text-center">
-            {!isLogin ? "Нет аккаунта?" : "Уже есть аккаунт?"}
-            <button
-              className="text-blue-600 ml-2 hover:underline transition-all"
-              onClick={() => setIsLogin(!isLogin)}
-            >
-              {!isLogin ? "Зарегистрироваться" : "Войти"}
-            </button>
-          </div>
         </div>
       </div>
     </div>

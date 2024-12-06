@@ -2,7 +2,7 @@
     {
       "id": 1,
       "title": "КАЧЕСТВЕННЫЕ АВТОЭМАЛИ И КРАСКИ",
-      "image": "/landing-background.jpg",
+      "image": "/landing-background.webp",
       "button": 
         {
           "id": 1,
@@ -12,7 +12,7 @@
     {
       "id": 2,
       "title": "БОЛЬШОЙ ВЫБОР АВТОЭМАЛЕЙ И КРАСОК",
-      "image": "/landing-background-second.jpg",
+      "image": "/landing-background-second.webp",
       "button": 
         {
           "id": 2,

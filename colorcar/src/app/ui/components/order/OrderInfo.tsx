@@ -69,9 +69,9 @@ const OrderInfo = () => {
               </div>
               <div>
                 {item.discount
-                  ? item.count * (item.price - item.discount)
-                  : item.count * item.price}{" "}
-                BYN.
+                  ? (item.count * (item.price - item.discount)).toFixed(2)
+                  : (item.count * item.price).toFixed(2)}
+                BYN
               </div>
             </div>
           ))

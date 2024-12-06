@@ -7,10 +7,13 @@ export type CataloItemsType = {
     description?:string;
     isAdmin?: boolean;
     discount?: number;
-    fullDescription?: string;
+    fulldescription?: string;
+    category?: string;
+    subcategory?: string;
 };
 
 export interface CatalogItemType extends CataloItemsType {
     description: string;
     article: any;
 }
+

@@ -44,7 +44,8 @@ const config: Config = {
 			fadeOut: 'fadeOut 300ms ease-out',
 		  },
   		colors: {
-  			alphablack: 'rgba(14, 14, 14, 0.6);',
+
+  			alphablack: 'rgba(14, 14, 14, 0.2);',
   			'orange-brdr': '#C53720',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

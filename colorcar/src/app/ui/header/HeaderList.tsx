@@ -2,18 +2,14 @@ import React from "react";
 import HeaderLink from "./HeaderLink";
 import Hamburger from "../components/Hamburger";
 
-export type headerList = {
-  title: string;
-  href: string;
-};
-
-export const lists: headerList[] = [
+export const lists = [
   { title: "Компания", href: "/company" },
-  { title: "Каталог", href: "/catalog" },
+  { title: "Каталог", href: "/catalog/#catalog" },
   { title: "Услуги", href: "/services" },
   { title: "Информация", href: "/info" },
   { title: "Контакты", href: "/contacts" },
 ];
+
 const HeaderList = () => {
   return (
     <>

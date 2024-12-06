@@ -1,6 +1,8 @@
+"use client";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import AdminInput from "./AdminInput";
+import catalogData from "@/app/_data/catalog-data.json";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -10,7 +12,10 @@ import {
 } from "@/app/utils/actions";
 import { useFormStatus } from "react-dom";
 import Spinner from "../Spinner";
-
+import EditorBlock from "../EditorBlock/EditorBlock";
+import { fixStyleString } from "@/app/utils";
+import DOMPurify from "isomorphic-dompurify";
+import Dropdown from "../DropDown";
 const AdminForm = ({
   item,
   update,
@@ -20,10 +25,11 @@ const AdminForm = ({
   update: boolean;
   query: string;
 }) => {
-  console.log(update);
   const {
     register,
     handleSubmit,
+    setValue,
+    control,
     formState: { errors },
     reset,
   } = useForm();
@@ -43,11 +49,13 @@ const AdminForm = ({
   };
 
   const onSubmit = async (data: any) => {
+    console.log(data);
     const formattedData = {
       ...data,
       images: preview || item.images,
       price: parseFloat(data.price || 0),
       discount: parseFloat(data.discount || 0),
+      fulldescription: data.fulldescription || item.fulldescription,
     };
 
     if (update) {
@@ -60,7 +68,7 @@ const AdminForm = ({
       formData.append("price", data.price.toString());
       formData.append("discount", data.discount.toString());
       formData.append("image", data.images[0]);
-      formData.append("fulldescription", data.fulldescription);
+      formData.append("fulldescription", JSON.stringify(data.fulldescription));
       formData.append("category", data.category);
       formData.append("subcategory", data.subcategory);
       reset();
@@ -69,12 +77,14 @@ const AdminForm = ({
     await getCatalogItems(query, 7);
   };
 
-  // File {
-  //   size: 34807,
-  //   type: 'image/png',
-  //   name: 'Yatu-Easicoat-Auto-Paint.1800x1200w.png',
-  //   lastModified: 1733053232811
-  // }
+  const clearDescription = fixStyleString(item.fulldescription || "");
+
+  const sanitizedDescription = DOMPurify.sanitize(
+    fixStyleString(clearDescription || ""),
+    {
+      ALLOWED_ATTR: ["class", "style", "id", "title"],
+    }
+  );
 
   return (
     <form
@@ -83,7 +93,7 @@ const AdminForm = ({
     >
       <div className="flex gap-6">
         <div>
-          <div className="flex flex-col gap-2 mb-5">
+          <div className="flex flex-col gap-4 mb-5">
             <span>Изображение</span>
             {preview ? (
               <img
@@ -101,27 +111,14 @@ const AdminForm = ({
               type="file"
               accept="image/*"
               onChange={handleImageChange}
-              // defaultValue={item.images}
             />
           </div>
-          <label className="flex flex-col gap-2">
-            Категория
-            <Input
-              {...register("category")}
-              type="string"
-              defaultValue={update ? item.category : ""}
-              placeholder="Категория"
-            />
-          </label>
-          <label className="flex flex-col gap-2">
-            Подкатегория
-            <Input
-              {...register("subcategory")}
-              type="text"
-              defaultValue={update ? item.subcategory : ""}
-              placeholder="Подкатегория"
-            />
-          </label>
+          <Dropdown
+            options={catalogData}
+            label="Категория"
+            control={control}
+            name="category"
+          />
         </div>
         <div className="flex-1 flex flex-col gap-3">
           <AdminInput
@@ -143,6 +140,7 @@ const AdminForm = ({
             <Input
               {...register("price")}
               type="number"
+              step="any"
               defaultValue={update ? item.price : ""}
               placeholder="Цена"
             />
@@ -153,16 +151,23 @@ const AdminForm = ({
             <Input
               {...register("discount")}
               type="number"
+              step="any"
               defaultValue={update ? item.discount : ""}
               placeholder="Скидка"
             />
           </label>
-
-          <AdminInput
-            value="fulldescription"
-            register={register}
-            title="Полное описание"
-            defaultValue={update ? item.fulldescription : ""}
+          <Controller
+            name="fulldescription"
+            control={control}
+            defaultValue={update ? sanitizedDescription : ""}
+            rules={{ required: "Полное описание обязательно" }}
+            render={({ field }) => (
+              <EditorBlock
+                value={field.value}
+                onChange={(newValue) => setValue("fulldescription", newValue)}
+                title="Полное описание"
+              />
+            )}
           />
         </div>
       </div>

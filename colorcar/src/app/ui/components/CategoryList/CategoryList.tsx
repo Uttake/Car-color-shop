@@ -38,12 +38,13 @@ const DropdownMenu = ({
     setHoveredCategory(null);
   };
 
-  return categoryOpen ? (
+  return (
     <div className={styles.menu}>
+      <div className="p-3">Все категории</div>
       {data.map((category) => (
-        <>
+        <div key={category.title}>
           <div
-            key={category.title}
+            // key={category.title}
             className={styles.menuItem}
             onMouseEnter={() => handleMouseEnter(category.title)}
             onMouseLeave={handleMouseLeave}
@@ -51,6 +52,7 @@ const DropdownMenu = ({
             <div className="flex items-center justify-between">
               <Link
                 href={category.link || ""}
+                scroll={false}
                 className={clsx(
                   styles.menuLink,
                   " text-base text-white flex-1"
@@ -100,10 +102,10 @@ const DropdownMenu = ({
               ))}
             </div>
           )}
-        </>
+        </div>
       ))}
     </div>
-  ) : null;
+  );
 };
 
 export default DropdownMenu;

@@ -36,7 +36,7 @@ export function Hamburger(props: HamburgerProps) {
           }`}
         />
       </button>
-      <HamburgerMenu isInitiallyOpen={isOpen} />
+      <HamburgerMenu isInitiallyOpen={isOpen} setIsInitiallyOpen={setIsOpen} />
     </div>
   );
 }

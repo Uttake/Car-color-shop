@@ -1,48 +1,54 @@
-import React from 'react'
-import { v1 } from 'uuid'
-import PreviewItem from './PreviewItem'
+import React from "react";
+import { v1 } from "uuid";
+import PreviewItem from "./PreviewItem";
 
 let previewData = [
   {
-   id: v1(),
-   title: 'АККУМУЛЯТОРЫ',
-   image: '/preview1.jpg',
+    id: v1(),
+    title: "Эмали",
+    image: "/emali.webp",
+    href: "/catalog/emali",
   },
-  { 
+  {
     id: v1(),
-    title: 'АККУМУЛЯТОРЫ',
-    image: '/preview2.jpg',
-   },
-   {
+    title: "Лаки",
+    image: "/laki.webp",
+    href: "/catalog/laki",
+  },
+  {
     id: v1(),
-    title: 'АККУМУЛЯТОРЫ',
-    image: '/preview3.jpg',
-   },
-   {
+    title: "Шпаклевка",
+    image: "/shpatlevka.webp",
+    href: "/catalog/shpaklevka",
+  },
+  {
     id: v1(),
-    title: 'АККУМУЛЯТОРЫ',
-    image: '/preview4.jpg',
-   },
-   {
+    title: "Грунты",
+    image: "/grunti.webp",
+    href: "/catalog/grunti",
+  },
+  {
     id: v1(),
-    title: 'АККУМУЛЯТОРЫ',
-    image: '/preview5.jpg',
-   },
-   {
+    title: "Аэрозоли",
+    image: "/aerosol.webp",
+    href: "/catalog/aerosol",
+  },
+  {
     id: v1(),
-    title: 'АККУМУЛЯТОРЫ',
-    image: '/preview6.jpg',
-   },
-]
+    title: "Расходные материалы",
+    image: "/rashodniki.webp",
+    href: "/catalog/rashodniki",
+  },
+];
 
 const PreviewList = () => {
   return (
-    <div className='flex flex-wrap gap-6 justify-center'>
-      {previewData.map(item => (
-        <PreviewItem item={item}/>
+    <div className="flex flex-wrap gap-6 justify-center">
+      {previewData.map((item) => (
+        <PreviewItem item={item} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default PreviewList
+export default PreviewList;

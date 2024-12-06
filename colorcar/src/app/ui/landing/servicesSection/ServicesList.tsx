@@ -1,9 +1,9 @@
 import React from "react";
 import { v1 } from "uuid";
 
+import Color from "@/app/_assets/capofpaints.svg";
 import InfoHelp from "@/app/_assets/info-help.svg";
-import InfoBag from "@/app/_assets/services-bag.svg";
-import InfoConnection from "@/app/_assets/info-connection.svg";
+import Payment from "@/app/_assets/payment.svg";
 import ServicesItem from "./ServicesItem";
 import Image from "next/image";
 import s from "./servicesSection.module.css";
@@ -14,18 +14,21 @@ const ServicesData = [
     title: "Удобная оплата",
     subtitle:
       "Принимаем как наличный, так и безналичный расчет для вашего удобства.",
+    image: <Payment fill="white" />,
   },
   {
     id: v1(),
     title: "Консультация по выбору краски",
     subtitle:
       "Поможем подобрать подходящий цвет и тип краски, учитывая ваши требования и особенности авто.",
+    image: <InfoHelp />,
   },
   {
     id: v1(),
     title: "Только качественная продукция",
     subtitle:
       "Предлагаем краски и материалы только проверенных брендов для долговечной защиты вашего автомобиля.",
+    image: <Color width={70} height={70} fill="white" />,
   },
 ];
 

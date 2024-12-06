@@ -8,7 +8,7 @@ const ServicesSection = () => {
   return (
     <section className={s.section}>
       <div className="wrapper">
-        <Title title="услуги" color="#ffff" />
+        <Title title="Наши преимущества" color="#ffff" />
         <h3 className="text-[#ffff] text-2xl text-center font-medium mb-9">
           {" "}
           Менеджеры компании с радостью ответят на ваши вопросы и помогут с

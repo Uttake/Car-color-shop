@@ -6,9 +6,13 @@ import clsx from "clsx";
 
 type HamburgerMenuProps = {
   isInitiallyOpen?: boolean;
+  setIsInitiallyOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const HamburgerMenu = ({ isInitiallyOpen }: HamburgerMenuProps) => {
+const HamburgerMenu = ({
+  isInitiallyOpen,
+  setIsInitiallyOpen,
+}: HamburgerMenuProps) => {
   return (
     <div
       className={clsx(
@@ -22,7 +26,11 @@ const HamburgerMenu = ({ isInitiallyOpen }: HamburgerMenuProps) => {
       <nav>
         <ul className="flex flex-col gap-3 text-2xl">
           {lists?.map((item, i) => (
-            <HeaderLink item={item} key={i} />
+            <HeaderLink
+              item={item}
+              key={i}
+              handleClick={() => setIsInitiallyOpen(false)}
+            />
           ))}
         </ul>
       </nav>

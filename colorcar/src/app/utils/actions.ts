@@ -2,8 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { CatalogItemType } from "./definitions";
-import { supabase } from "./supabaseClient";
+import { supabase } from "./supabase/supabaseClient";
 import { v1 } from "uuid";
+import {redirect} from 'next/navigation'
+import {createClient} from '../../app/utils/supabase/serverSupabaseClient'
 
 
 export const postData = async (formData: FormData) => {
@@ -49,47 +51,6 @@ export const postData = async (formData: FormData) => {
     }
   } catch (err) {
     console.log(err);
-  }
-};
-
-export const getCatalogItems = async (
-  query: string,
-  page: number
-): Promise<{ data?: CatalogItemType[]; error?: string }> => {
-  try {
-    let Products;
-    let queryError;
-
-    if (query) {
-      const { data, error } = await supabase
-        .from("Products")
-        .select("*")
-        .ilike("title", `%${query}%`)
-        .range(0, 8);
-      Products = data;
-      queryError = error;
-    } else {
-      const { data, error } = await supabase
-        .from("Products")
-        .select("*")
-        .range(0, 8);
-      Products = data;
-      queryError = error;
-    }
-
-    if (queryError) {
-      throw new Error(queryError.message || "Failed to fetch products");
-    }
-
-    if (Products) {
-      revalidatePath("/catalog");
-      return { data: Products };
-    } else {
-      throw new Error("No products found");
-    }
-  } catch (err) {
-    const errorMessage = (err as Error).message || "Server error";
-    return { error: errorMessage };
   }
 };
 
@@ -164,7 +125,7 @@ export const updateCatalogItem = async (id: string, data: CatalogItemType) => {
       .from("Products")
       .update({ ...data, images: imageUrl }) 
       .eq("id", id);
-
+      revalidatePath('/adminpage/catalog')
     if (error) {
       console.error("Ошибка обновления данных:", error);
       return;
@@ -192,11 +153,91 @@ export const getSearchItems = async (query: string) => {
   }
 }
 
-export const signUp = async (email: string, password: string) => {
-  const { data, error } = await supabase.auth.signUp({ email, password });
-  if (error) {
-    throw new Error(error.message);
+export const removeItem = async (id: string) => {
+  const {error} = await supabase.from('Products').delete().eq('id', id)
+  if(error) {
+    console.log('Ошибка при удалении товара')
   }
-  return data;
-};
+  revalidatePath('/adminpage/catalog')
+}
 
+
+export const login = async (data: {email: string, password: string}) => {
+  const supabase = await createClient()
+  const { error } = await supabase.auth.signInWithPassword(data)
+
+  if (error) {
+    redirect('/adminpage')
+  }
+
+  revalidatePath('/adminpage/catalog')
+  redirect('/adminpage/catalog')
+}
+
+
+export const signup = async (data: {email: string, password: string}) =>  {
+  const supabase = await createClient()
+  const { error } = await supabase.auth.signUp(data)
+
+  if (error) {
+    redirect('/error')
+  }
+
+  revalidatePath('/adminpage/catalog')
+  redirect('/adminpage/catalog')
+}
+
+export const logout =  async () => {
+  const supabase = await createClient()
+  const {error} = await supabase.auth.signOut()
+  revalidatePath('/adminpage')
+  redirect('/adminpage')
+}
+
+
+export const getItemsByCategory = async ({
+  query,
+  slug,
+  page,
+  sortParam,
+}: {
+  query: string;
+  slug?: string;
+  page: number;
+  sortParam?: [string, string] | undefined;
+}) => {
+  try {
+    const rangeStart = (page - 1) * 8;
+    const rangeEnd = rangeStart + 7;
+    const productsQuery = supabase
+      .from("Products")
+      .select("*")
+      .range(rangeStart, rangeEnd);
+
+    if (query) {
+      productsQuery.ilike("title", `%${query}%`);
+    }
+    if (slug) {
+      productsQuery.eq("category", slug);
+    }
+
+    if (sortParam && sortParam[0] === "sortByprice") {
+      const isAscending = sortParam[1] !== "true"; 
+      productsQuery.order("price", { ascending: isAscending });
+    }
+
+    const { data, error } = await productsQuery;
+    if (error) {
+      throw new Error(error.message || "Failed to fetch products");
+    }
+
+    if (data && data.length > 0) {
+      return { data };
+    } else {
+      throw new Error("No products found");
+    }
+  } catch (err) {
+    const errorMessage = (err as Error).message || "Server error";
+    return { error: errorMessage };
+  }
+};

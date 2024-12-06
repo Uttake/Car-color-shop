@@ -9,13 +9,14 @@ const page = async ({ params }: { params: { id: string } }) => {
 
   const path = [
     { label: "Главная", href: "/" },
-    { label: "Каталог", href: "/catalog" },
+    { label: "Каталог", href: "/catalog/#catalog" },
     {
       label: item?.title,
       href: `/catalog/${id}`,
       active: true,
     },
   ];
+
   return (
     <>
       <Breadcrumbs breadcrumbs={path} />
@@ -28,6 +29,7 @@ const page = async ({ params }: { params: { id: string } }) => {
             price={item.price}
             id={item.id}
             discount={item.discount}
+            fulldescription={item.fulldescription}
             solo={true}
             description={item.description}
           />

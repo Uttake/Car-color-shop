@@ -17,19 +17,18 @@ const page = () => {
   return (
     <>
       <Breadcrumbs breadcrumbs={path} />
-      <section className="bg-white py-20">
+      <section className="bg-[#EDEDED] py-20">
         <div className="wrapper">
           <Title title="Контакты" color="#0000" />
           <h3 className="text-[#1d1d1d] text-2xl text-center font-medium mb-9 md:text-lg">
             Автоэмали Могилев
           </h3>
-          <div className="flex">
+          <div className="flex flex-wrap w-full">
             <ContactInfo />
             <MapY />
           </div>
         </div>
       </section>
-      ;
     </>
   );
 };

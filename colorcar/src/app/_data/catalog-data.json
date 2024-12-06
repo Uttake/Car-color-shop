@@ -1,72 +1,86 @@
 [
     {
         "title": "Лаки",
+        "category": "laki",
         "link": "/catalog/laki"    
     },
     {
         "title": "Эмали",
+        "category": "emali",
         "link": "/catalog/emali",
         "subcategories": [{
             "title":"Базовая",
-            "link": "/catalog/emali/bazovaya"
+            "category": "emali-basovie",
+            "link": "/catalog/emali-basovie"
         },
         {
             "title":"Структурная",
-            "link": "/catalog/emali/strukturnaia"
+            "category": "emali-strukturnie",
+            "link": "/catalog/emali-strukturnie"
         },
         {
             "title":"Для дисков",
-            "link": "/catalog/emali/diski"
+            "category": "emali-dlya-diskov",
+            "link": "/catalog/emali-dlya-diskov"
         },
         {
             "title":"Для сколов",
-            "link": "/catalog/emali/skoly"
+            "category": "emali-dlya-skolov",
+            "link": "/catalog/emali-dlya-skolov"
         }
         ]
     },
     {
         "title": "Шпаклевка",
+        "category": "shpaklevka",
         "link": "/catalog/shpaklevka",
         "subcategories": [{
             "title":"Базовая",
-            "link": "/catalog/shpaklevka/bazovaya"
+            "category": "shpaklevka-bazovaya",
+            "link": "/catalog/shpaklevka/shpaklevka-bazovaya"
         },
         {
             "title":"Структурная",
-            "link": "/catalog/shpaklevka/strukturnaia"
+            "category": "shpaklevka-strukturnaia",
+            "link": "/catalog/shpaklevka/shpaklevka-strukturnaia"
         },
         {
             "title":"Для дисков",
-            "link": "/catalog/shpaklevka/diski"
+            "category": "shpaklevka-dlya-diskov",
+            "link": "/catalog/shpaklevka/shpaklevka-dlya-diskov"
         },
         {
             "title":"Для сколов",
-            "link": "/catalog/shpaklevka/skoly"
+            "category": "shpaklevka-dlya-skolov",
+            "link": "/catalog/shpaklevka/shpaklevka-dlya-skolov"
         }
         ]  
     },
     {
         "title": "Грунты",
+        "category": "grunti",
+        "link": "/catalog/grunti",
         "subcategories": [{
             "title":"Базовая",
-            "link": "/catalog/shpaklevka/bazovaya"
+            "link": "/catalog/shpaklevka/grunti-bazovie"
         },
         {
             "title":"Структурная",
-            "link": "/catalog/shpaklevka/strukturnaia"
+            "link": "/catalog/shpaklevka/grunti-strukturnie"
         },
         {
             "title":"Для дисков",
-            "link": "/catalog/shpaklevka/diski"
+            "link": "/catalog/shpaklevka/grunti-dlya-diskov"
         },
         {
             "title":"Для сколов",
-            "link": "/catalog/shpaklevka/skoly"
+            "link": "/catalog/shpaklevka/grunti-dlya-skolov"
         }
         ]  
     },
     {
         "title": "Расходные материалы",
+        "link": "/catalog/rashodnye-materiali",
         "subcategories": [{
             "title":"Базовая",
             "link": "/catalog/shpaklevka/bazovaya"
@@ -86,6 +100,7 @@
         ]  
     },
     {
-        "title": "Аэрозоли"     
+        "title": "Аэрозоли",
+        "link": "/catalog/aerosoli"    
     }
 ]

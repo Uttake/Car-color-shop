@@ -30,7 +30,7 @@ const DemoSlider: React.FC<DemoSliderProps> = ({ data }) => {
           autoplay={true}
           loop={true}
           modules={[Autoplay, Navigation, Pagination]}
-          className="h-[620px]"
+          className="h-[350px]"
         >
           {data.map(({ id, image, title }) => (
             <SwiperSlide key={id}>

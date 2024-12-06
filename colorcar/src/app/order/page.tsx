@@ -18,7 +18,7 @@ const page = async () => {
           },
         ]}
       />
-      <section className=" bg-[#ededed]">
+      <section className=" bg-[#ededed]" id="order">
         <div className="wrapper py-20">
           <h1 className="text-4xl font-bold uppercase mb-9">
             Оформление заказа
