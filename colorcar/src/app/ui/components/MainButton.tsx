@@ -41,6 +41,7 @@ const MainButton = ({
     >
       <Link
         href={href}
+        scroll={false}
         className={clsx(
           fontSize,
           color,

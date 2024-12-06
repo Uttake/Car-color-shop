@@ -1,6 +1,6 @@
 import React from "react";
 import Catalog from "../../ui/components/catalog/Catalog";
-import { getRowCount, getCatalogItems, logout } from "../../utils/actions";
+import { getRowCount, getItemsByCategory, logout } from "../../utils/actions";
 import clsx from "clsx";
 import CatalogItem from "../../ui/components/catalog/CatalogItem";
 import { CatalogItemType } from "../../utils/definitions";
@@ -11,7 +11,26 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Logout from "@/app/ui/components/adminPage/Logout";
 import RemoveItem from "@/app/ui/components/adminPage/RemoveItem";
-import AsideCategories from "@/app/ui/components/AsideCategories";
+import ModalInfo from "@/app/ui/components/modalInfo/ModalInfo";
+import InfoForm from "@/app/ui/components/modalInfo/InfoForm";
+import InfoContainer from "@/app/ui/components/modalInfo/InfoContainer";
+
+let reserveItems: CatalogItemType = {
+  id: "f32ea770-b402-11ef-a129-2b66bd5bce59",
+  title: "EASICOAT Эмаль (краска) акриловая ",
+  description: "2K AUDI - VW LO7Q 1л, БЕЗ ОТВЕРДИТЕЛЯ ",
+  images:
+    "https://invnbdbustikwbnttmdr.supabase.co/storage/v1/object/public/Products%20images/f32ea770-b402-11ef-a129-2b66bd5bce59.png",
+  price: 51.38,
+  article: null,
+  discount: 0,
+  category: "laki",
+  subcategory: "''",
+  fulldescription:
+    '"<p><span style=\\"color: rgb(31, 31, 31)\\"><strong>Акриловая эмаль служит для окраски кузовов и пластмассовых деталей автомобиля. Эмаль обладает приятным блеском, эластичностью, прочностью и повышенной укрывистостью. Быстро сохнет.</strong></span></p>"',
+  avaiblity: true,
+  new: false,
+};
 
 const ITEMS_PER_PAGE = 7;
 const page = async ({
@@ -25,8 +44,16 @@ const page = async ({
   const query = searchParams?.query || "";
 
   const currentPage = Number(searchParams?.page) || 1;
+  const sortParam =
+    (searchParams &&
+      Object.entries(searchParams).find(([key]) => key.startsWith("sort"))) ||
+    "";
 
-  const items = await getCatalogItems(query, ITEMS_PER_PAGE);
+  const items = await getItemsByCategory({
+    query,
+    page: currentPage,
+    sortParam: Array.isArray(sortParam) ? sortParam : undefined,
+  });
 
   const totalPages = Math.ceil(
     Number((await getRowCount()).count) / ITEMS_PER_PAGE
@@ -42,16 +69,24 @@ const page = async ({
   return (
     <>
       <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto">
-        <AsideCategories />
+        {/* <AsideCategories /> */}
         <Catalog>
           <div className="flex justify-between">
-            <ModalWrapper
-              item={items.data![0]}
-              update={false}
-              className=""
-              title="Добавить товар"
-              query={query}
-            />
+            <div className="flex gap-4 items-center">
+              <ModalWrapper
+                item={reserveItems}
+                update={false}
+                className=""
+                title="Добавить товар"
+                query={query}
+              />
+              <ModalInfo title="Добавить информацию" width="900px">
+                <InfoForm />
+              </ModalInfo>
+              <ModalInfo title="Изменить информацию" width="900px">
+                <InfoContainer />
+              </ModalInfo>
+            </div>
             <Logout />
           </div>
           <div

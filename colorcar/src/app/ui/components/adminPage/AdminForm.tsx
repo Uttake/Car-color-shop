@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import {
   postData,
   updateCatalogItem,
-  getCatalogItems,
+  getItemsByCategory,
 } from "@/app/utils/actions";
 import { useFormStatus } from "react-dom";
 import Spinner from "../Spinner";
@@ -16,6 +16,18 @@ import EditorBlock from "../EditorBlock/EditorBlock";
 import { fixStyleString } from "@/app/utils";
 import DOMPurify from "isomorphic-dompurify";
 import Dropdown from "../DropDown";
+
+let avaiblity = [
+  {
+    title: "В наличии",
+    category: "true",
+  },
+  {
+    title: "Под заказ",
+    category: "false",
+  },
+];
+
 const AdminForm = ({
   item,
   update,
@@ -70,11 +82,12 @@ const AdminForm = ({
       formData.append("image", data.images[0]);
       formData.append("fulldescription", JSON.stringify(data.fulldescription));
       formData.append("category", data.category);
-      formData.append("subcategory", data.subcategory);
+      formData.append("avaiblity", data.avaiblity);
+      formData.append("newest", data.newest);
       reset();
       await postData(formData);
     }
-    await getCatalogItems(query, 7);
+    await getItemsByCategory({ query, page: 7 });
   };
 
   const clearDescription = fixStyleString(item.fulldescription || "");
@@ -119,6 +132,30 @@ const AdminForm = ({
             control={control}
             name="category"
           />
+
+          <Dropdown
+            label="Наличие"
+            control={control}
+            name="avaiblity"
+            options={avaiblity}
+          />
+
+          <Controller
+            name="newest"
+            control={control}
+            defaultValue={update ? item.newest : false}
+            render={({ field }) => (
+              <label className="flex items-center gap-2 text-sm font-medium mt-5">
+                <input
+                  type="checkbox"
+                  checked={field.value}
+                  onChange={(e) => field.onChange(e.target.checked)}
+                  className="form-checkbox h-5 w-5 text-blue-600"
+                />
+                Новинка
+              </label>
+            )}
+          />
         </div>
         <div className="flex-1 flex flex-col gap-3">
           <AdminInput
@@ -136,13 +173,13 @@ const AdminForm = ({
           />
 
           <label className="flex flex-col gap-2 text-sm font-medium">
-            Цена
+            Цена USD
             <Input
               {...register("price")}
               type="number"
               step="any"
               defaultValue={update ? item.price : ""}
-              placeholder="Цена"
+              placeholder="Цена USD"
             />
           </label>
 
@@ -160,7 +197,6 @@ const AdminForm = ({
             name="fulldescription"
             control={control}
             defaultValue={update ? sanitizedDescription : ""}
-            rules={{ required: "Полное описание обязательно" }}
             render={({ field }) => (
               <EditorBlock
                 value={field.value}

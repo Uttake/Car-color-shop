@@ -10,7 +10,7 @@ import CatalogItem from "@/app/ui/components/catalog/CatalogItem";
 import { Pagination } from "@/app/ui/components/Pagination";
 import { CatalogItemType } from "@/app/utils/definitions";
 import { description } from "@/app/utils";
-import SortedWrapper from "@/app/ui/components/sorted/SortedWrapper";
+import { unstable_noStore as noStore } from "next/cache";
 const ITEMS_PER_PAGE = 7;
 const page = async ({
   params,
@@ -19,6 +19,7 @@ const page = async ({
   params: { slug: string };
   searchParams: { query: string; page?: string; sort?: string };
 }) => {
+  noStore();
   const query = searchParams?.query || "";
   const slug = decodeURIComponent(params.slug);
   const sortParam =

@@ -5,7 +5,7 @@ export default function MapY() {
   return (
     <div className=" basis-1/2 md:basis-full md:h-[300px]">
       <iframe
-        src={`https://yandex.by/map-widget/v1/?display-text=Автоэмали%2C%20автомобильные%20краски&ll=30.363762%2C53.925503&mode=search&oid=91161796048&ol=biz&sctx=ZAAAAAgBEAAaKAoSCXgJTn0gXT5AEY16iEZ39kpAEhIJTS7GwDqOTz8Rcm9%2Bw0SDND8iBgABAgMEBSgKOABAoacNSAFqAnVhnQHNzMw9oAEAqAEAvQHoQ3wUggIbKChjYXRlZ29yeV9pZDooMTg0MTA1MzEyKSkpigIJMTg0MTA1MzEykgIAmgIMZGVza3RvcC1tYXBz&sll=30.363762%2C53.925503&sspn=0.000963%2C0.000313&text=%7B"text"%3A"Автоэмали%2C%20автомобильные%20краски"%2C"what"%3A%5B%7B"attr_name"%3A"category_id"%2C"attr_values"%3A%5B"184105312"%5D%7D%5D%7D&z=21`}
+        src={`https://yandex.by/map-widget/v1/?ll=30.364994%2C53.943989&mode=poi&poi%5Bpoint%5D=30.364690%2C53.944102&poi%5Buri%5D=ymapsbm1%3A%2F%2Forg%3Foid%3D190205805976&z=19.44`}
         width="100%"
         height="100%"
         frameBorder="1"

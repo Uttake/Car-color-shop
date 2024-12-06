@@ -23,7 +23,12 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
-      <body className={clsx(inter.className, "bg-[#EDEDED] overflow-x-hidden")}>
+      <body
+        className={clsx(
+          inter.className,
+          "bg-[#EDEDED] overflow-x-hidden antialiased"
+        )}
+      >
         <ToastProvider>
           <BasketProvider>
             <GoogleCaptchaWrapper>

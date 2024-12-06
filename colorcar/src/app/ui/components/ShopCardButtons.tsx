@@ -18,6 +18,7 @@ const ShopCardButton = ({
   images,
   price,
   discount,
+  avaiblity,
 }: CataloItemsType) => {
   const [count, setCount] = useState<number>(1);
   const [disabled, setDisabled] = useState(false);
@@ -77,12 +78,15 @@ const ShopCardButton = ({
 
   return (
     <div className="flex justify-between items-center mb-5 gap-5 " key={id}>
-      {disabled ? (
+      {disabled || !avaiblity ? (
         <MainButton
-          title="Товар в корзине"
+          title={disabled ? "Товар в корзине" : "Нет в наличии"}
           maxW="max-w-[164px]"
           hgt="h-[40px]"
-          color="text-[#C53720]"
+          color={disabled ? "text-[#C53720]" : "text-alphablack"}
+          classes={clsx({
+            "bg-alphablack border-alphablack ": !avaiblity,
+          })}
           href=""
           hover={"pointer-events-none"}
           onClick={(e) => e.preventDefault()}
@@ -92,15 +96,32 @@ const ShopCardButton = ({
         <Counter count={count} setCount={setCount} />
       )}
       <button
-        className="group p-[6px] border-4 border-orange-brdr hover:bg-orange-brdr disabled:bg-orange-brdr"
+        className={clsx(
+          {
+            "group p-[6px] border-4 border-orange-brdr hover:bg-orange-brdr disabled:bg-orange-brdr":
+              avaiblity,
+          },
+          {
+            "bg-alphablack border-alphablack p-[6px] border-4 pointer-events-none":
+              !avaiblity,
+          }
+        )}
         onClick={() =>
           addToOrder({ id, title, price, images, count, discount })
         }
-        disabled={disabled}
+        disabled={disabled || !avaiblity}
       >
         <ShopCard
           strokeWidth="2"
-          className=" stroke-orange-brdr group-hover:stroke-white group-disabled:stroke-white"
+          className={clsx(
+            {
+              "stroke-orange-brdr group-hover:stroke-white group-disabled:stroke-white":
+                avaiblity,
+            },
+            {
+              "stroke-alphablack": !avaiblity,
+            }
+          )}
         />
       </button>
     </div>

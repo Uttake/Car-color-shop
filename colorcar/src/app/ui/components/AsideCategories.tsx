@@ -1,5 +1,4 @@
 "use client";
-import clsx from "clsx";
 import React, { useState } from "react";
 import catalogData from "@/app/_data/catalog-data.json";
 import DropdownMenu from "./CategoryList/CategoryList";

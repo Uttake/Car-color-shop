@@ -6,6 +6,7 @@ import { supabase } from "./supabase/supabaseClient";
 import { v1 } from "uuid";
 import {redirect} from 'next/navigation'
 import {createClient} from '../../app/utils/supabase/serverSupabaseClient'
+import { getUsd } from "./index";
 
 
 export const postData = async (formData: FormData) => {
@@ -17,9 +18,12 @@ export const postData = async (formData: FormData) => {
   const discount = Number(formData.get("discount"));
   const fulldescription = formData.get("fulldescription");
   const category = formData.get("category");
-  const subcategory = formData.get("subcategory");
-
+  const avaiblity = formData.get("avaiblity");
+  const newest = formData.get("newest");
   let id = v1();
+
+  let course = await getUsd()
+
   try {
     if (image) {
       const { data: storageData, error: storageError } = await supabase.storage
@@ -37,15 +41,18 @@ export const postData = async (formData: FormData) => {
           title,
           description,
           images: `https://invnbdbustikwbnttmdr.supabase.co/storage/v1/object/public/Products%20images/${id}.png`,
-          price,
+          price: (price * course).toFixed(2),
           discount,
           fulldescription,
           category,
-          subcategory
+          avaiblity,
+          new: newest,
         },
       ])
       .select();
-
+      if(data) {
+        revalidatePath('/adminpage/catalog')
+      }
     if (error) {
       throw error;
     }
@@ -131,6 +138,8 @@ export const updateCatalogItem = async (id: string, data: CatalogItemType) => {
       return;
     }
 
+    revalidatePath("/adminpage/catalog");
+
     console.log("Данные успешно обновлены");
   } catch (e) {
     console.error("Неожиданная ошибка:", e);
@@ -213,8 +222,9 @@ export const getItemsByCategory = async ({
       .from("Products")
       .select("*")
       .range(rangeStart, rangeEnd);
-
+      
     if (query) {
+      console.log(query);
       productsQuery.ilike("title", `%${query}%`);
     }
     if (slug) {
@@ -224,6 +234,11 @@ export const getItemsByCategory = async ({
     if (sortParam && sortParam[0] === "sortByprice") {
       const isAscending = sortParam[1] !== "true"; 
       productsQuery.order("price", { ascending: isAscending });
+    }
+    
+    if(sortParam && sortParam[0] === "sortBystock") {
+      const isAscending = sortParam[1] !== "true"; 
+      productsQuery.order("avaiblity", { ascending: isAscending });
     }
 
     const { data, error } = await productsQuery;
@@ -241,3 +256,58 @@ export const getItemsByCategory = async ({
     return { error: errorMessage };
   }
 };
+
+
+export const postInfo = async (formData: FormData) => {
+  const title = formData.get("title");
+  const link = formData.get("link");
+  const image = formData.get("image");
+  let id = v1();
+
+  try {
+    if (image) {
+      const { data: storageData, error: storageError } = await supabase.storage
+        .from("Info Images")
+        .upload(`${id}.png`, image, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+    }
+
+  
+    const { data, error } = await supabase
+    .from("Info")
+    .insert([
+      {
+        id,
+        title,
+        link,
+        image: `https://invnbdbustikwbnttmdr.supabase.co/storage/v1/object/public/Info%20Images/${id}.png`,
+      },
+    ])
+    .select();
+
+
+    if(data) {
+      console.log(data)
+      revalidatePath('/')
+    }
+
+    if (error) {
+      throw error;
+    }
+  }catch(e) {
+    console.log(e)
+  }
+
+}
+
+export const getInfo = async() => {
+  const { data, error } = await supabase
+    .from("Info")
+    .select("*")
+    if(error) {
+      console.log(error)
+    }
+    return data
+}

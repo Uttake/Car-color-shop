@@ -9,7 +9,7 @@ const Header = async () => {
     <>
       <header className=" bg-black">
         <div className="max-w-6xl m-auto flex items-center justify-between xl:px-5 bg-opacity-75">
-          <Link href={"/"}>
+          <Link href={"/"} scroll={false}>
             <Image src={logo} alt="logo" width={120} height={58} />
           </Link>
           <HeaderList />

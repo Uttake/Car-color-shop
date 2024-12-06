@@ -2,8 +2,9 @@ import Breadcrumbs from "@/app/ui/components/Breadcrumb";
 import CatalogItem from "@/app/ui/components/catalog/CatalogItem";
 import { getCatalogItem } from "@/app/utils/actions";
 import React from "react";
-
+import { unstable_noStore as noStore } from "next/cache";
 const page = async ({ params }: { params: { id: string } }) => {
+  noStore();
   const id = params.id;
   const item = await getCatalogItem(id);
 

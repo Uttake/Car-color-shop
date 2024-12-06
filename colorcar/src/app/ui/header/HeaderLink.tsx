@@ -23,6 +23,7 @@ const HeaderLink = ({
     >
       <Link
         href={item.href}
+        scroll={false}
         className="hover:border-b-4 hover:border-[#C53720] pb-1"
       >
         {item.title.toUpperCase()}

@@ -10,6 +10,9 @@ export type CataloItemsType = {
     fulldescription?: string;
     category?: string;
     subcategory?: string;
+    avaiblity? : boolean
+    disabled? : boolean
+    new?: boolean
 };
 
 export interface CatalogItemType extends CataloItemsType {

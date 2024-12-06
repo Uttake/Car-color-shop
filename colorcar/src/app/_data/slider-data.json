@@ -3,22 +3,13 @@
       "id": 1,
       "title": "КАЧЕСТВЕННЫЕ АВТОЭМАЛИ И КРАСКИ",
       "image": "/landing-background.webp",
-      "button": 
-        {
-          "id": 1,
-          "link": ""
-        }
+      "link" : "/catalog"
     },
     {
       "id": 2,
       "title": "БОЛЬШОЙ ВЫБОР АВТОЭМАЛЕЙ И КРАСОК",
       "image": "/landing-background-second.webp",
-      "button": 
-        {
-          "id": 2,
-          "link": "ПЕРЕЙТИ В КАТАЛОГ"
-        }
-
+      "link" : "/catalog"
     }
   ]
   

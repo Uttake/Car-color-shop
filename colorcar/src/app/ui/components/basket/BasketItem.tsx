@@ -41,7 +41,7 @@ const BasketItem = ({ item }: { item: BasketItemTypes }) => {
       className="border-b-2 border-b-orange-brdr pb-5 flex items-center py-5 md:flex-col md:relative md:mt-5"
       key={item.id}
     >
-      <Link href={`/catalog/${item.id}`}>
+      <Link href={`/catalog/${item.id}`} scroll={false}>
         <Image
           src={item.images}
           alt={item.title}

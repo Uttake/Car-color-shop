@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 type countType = {
   className: string;
 };
+
 const Counter = ({ className }: countType) => {
   const [count, setCount] = useState(0);
   useEffect(() => {

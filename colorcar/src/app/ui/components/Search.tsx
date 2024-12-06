@@ -124,7 +124,7 @@ const Search = ({ main }: { main?: boolean }) => {
               fill="transparent"
             >
               <path
-                stroke="black"
+                stroke={main ? "black" : "white"}
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth="2"

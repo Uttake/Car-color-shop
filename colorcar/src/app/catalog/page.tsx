@@ -9,6 +9,7 @@ import { CatalogItemType } from "../utils/definitions";
 import clsx from "clsx";
 import CatalogItem from "../ui/components/catalog/CatalogItem";
 import AsideCategories from "../ui/components/AsideCategories";
+import { unstable_noStore as noStore } from "next/cache";
 const ITEMS_PER_PAGE = 7;
 const page = async ({
   searchParams,
@@ -19,6 +20,7 @@ const page = async ({
     sort?: string;
   };
 }) => {
+  noStore();
   const query = searchParams?.query || "";
 
   const currentPage = Number(searchParams?.page) || 1;
@@ -33,6 +35,9 @@ const page = async ({
     page: currentPage,
     sortParam: Array.isArray(sortParam) ? sortParam : undefined,
   });
+
+  console.log(items);
+
   const totalPages = Math.ceil(
     Number((await getRowCount()).count) / ITEMS_PER_PAGE
   );
@@ -83,5 +88,6 @@ const page = async ({
     </>
   );
 };
+export const dynamic = "force-dynamic";
 
 export default page;

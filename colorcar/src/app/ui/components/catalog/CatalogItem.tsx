@@ -21,6 +21,7 @@ const CatalogItem = async ({
   isAdmin,
   discount,
   category,
+  avaiblity,
 }: CataloItemsType) => {
   const sanitizedDescription = DOMPurify.sanitize(
     fixStyleString(fulldescription || ""),
@@ -32,25 +33,34 @@ const CatalogItem = async ({
     <>
       <div
         className={clsx(
-          `border-4 px-5 flex flex-col justify-between py-8 bg-white cursor-pointer h-full  hover:border-orange-brdr transition duration-300 sm:w-full has-[:disabled]:border-green-500 ${styles.catalog}`,
+          `relative border-4 px-5 flex flex-col justify-between py-8 bg-white cursor-pointer h-full hover:border-orange-brdr transition duration-300 sm:w-full has-[:disabled]:border-green-500 ${styles.catalog}`,
           {
-            " xl:justify-center flex flex-wrap wrapper justify-between m-auto flex-row":
+            " xl:justify-center flex flex-wrap wrapper justify-between m-auto flex-row ":
               solo,
+          },
+          {
+            "border-orange-brdr has-[:disabled]:border-orange-brdr": !avaiblity,
           }
         )}
         style={{ flexDirection: solo ? "row" : "column" }}
       >
-        {isAdmin && <Button>Редактирование</Button>}
+        {!avaiblity && (
+          <div className="absolute top-0 right-0 bg-[#C53720] text-white px-5 py-2">
+            Под заказ
+          </div>
+        )}
         <ImageContainer src={images} title={title} />
         <div className={styles["catalog-item"]}>
           <h2
-            className={clsx("text-[#C53720] text-xl font-medium mb-11", {
+            className={clsx("text-[#C53720] text-xl font-medium mb-5", {
               solo: "mb-0",
             })}
           >
             {title}
           </h2>
-          {solo && <div className="my-6">{description}</div>}
+          <div className={clsx({ "my-6": solo }, { "mb-8": !solo })}>
+            {description}
+          </div>
           <Price price={price} discount={discount ? discount : 0} />
           <ShopCardButton
             title={title}
@@ -58,6 +68,7 @@ const CatalogItem = async ({
             images={images}
             id={id}
             discount={discount}
+            avaiblity={avaiblity}
           />
 
           {!solo && (
@@ -65,9 +76,15 @@ const CatalogItem = async ({
               maxW="max-w-[224px]"
               hgt="h-[40px]"
               title="ПОДРОБНЕЕ"
-              color="text-[#c53720]"
-              href={`/catalog/${category}/${id}`}
-              hover="group-hover:text-white"
+              classes={clsx({ "border-alphablack": !avaiblity })}
+              color={avaiblity ? "text-[#C53720]" : "text-alphablack"}
+              href={avaiblity ? `/catalog/${category}/${id}` : "#"}
+              hover={clsx(
+                { "group-hover:text-white": avaiblity },
+                {
+                  "group-hover:appearance-none pointer-events-none": !avaiblity,
+                }
+              )}
             />
           )}
         </div>

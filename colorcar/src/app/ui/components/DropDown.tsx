@@ -2,10 +2,10 @@
 import React, { useState } from "react";
 import { useController, UseControllerProps } from "react-hook-form";
 
-interface Category {
+export interface Category {
   title: string;
   category?: string;
-  link: string;
+  link?: string;
   subcategories?: Category[];
 }
 
@@ -38,7 +38,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <div className="w-full max-w-sm">
+    <div className="w-full max-w-sm mb-4">
       <label className="block mb-2 text-sm font-medium text-gray-700">
         {label}
       </label>
