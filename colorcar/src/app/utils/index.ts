@@ -1,3 +1,5 @@
+
+import DOMPurify from "dompurify";
 export const fixStyleString = (htmlString: string): string => {
     return htmlString
       .replace(/\\&quot;/g, '"')
@@ -5,6 +7,11 @@ export const fixStyleString = (htmlString: string): string => {
       .replace(/^"|"$/g, "")
       .trim();
   };
+
+
+  export function sanitizeHtml(html: string) {
+    return DOMPurify.sanitize(html);
+  }
 
 export const description : Record<string, string> = {
   'emali': 'Эмали',

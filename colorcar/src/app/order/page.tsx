@@ -3,11 +3,12 @@ import Breadcrumbs from "../ui/components/Breadcrumb";
 import OrderInfo from "../ui/components/order/OrderInfo";
 import OrderForm from "../ui/components/order/OrderForm";
 import dataSlider from "@/app/_data/slider-data.json";
-import DemoSlider from "../ui/components/SliderSwiper";
+import DemoSlider from "../ui/components/sliders/SliderSwiper";
+import SwiperWrapper from "../ui/components/sliders/SwiperWrapper";
 const page = async () => {
   return (
     <>
-      <DemoSlider data={dataSlider} />
+      <SwiperWrapper />
       <Breadcrumbs
         breadcrumbs={[
           { label: "Главная", href: "/" },

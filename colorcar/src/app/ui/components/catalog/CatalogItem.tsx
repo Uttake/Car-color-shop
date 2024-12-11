@@ -49,18 +49,18 @@ const CatalogItem = async ({
             Под заказ
           </div>
         )}
-        <ImageContainer src={images} title={title} />
-        <div className={styles["catalog-item"]}>
+        <ImageContainer src={images} title={title} solo={solo} />
+        <div className={clsx(styles["catalog-item"], "flex-1")}>
           <h2
-            className={clsx("text-[#C53720] text-xl font-medium mb-5", {
-              solo: "mb-0",
-            })}
+            className={clsx(
+              "text-[#C53720] text-base font-medium mb-5 overflow-hidden text-ellipsis max-h-12",
+              {
+                solo: "mb-0",
+              }
+            )}
           >
             {title}
           </h2>
-          <div className={clsx({ "my-6": solo }, { "mb-8": !solo })}>
-            {description}
-          </div>
           <Price price={price} discount={discount ? discount : 0} />
           <ShopCardButton
             title={title}

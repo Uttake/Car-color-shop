@@ -3,13 +3,17 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import Header from "./ui/header/Header";
-import Footer from "./ui/footer/Footer";
+
 const inter = Inter({ subsets: ["latin"] });
 import ToastProvider from "./ui/components/ToastProvider";
 import { BasketProvider } from "./ui/components/BasketContext";
 import GoogleCaptchaWrapper from "./ui/components/GoogleCaptchaWrapper";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
+import dynamic from "next/dynamic";
+import YaMetrica from "./ui/components/YaMetrica";
+
+const Footer = dynamic(() => import("./ui/footer/Footer"), { ssr: false });
 
 export const metadata: Metadata = {
   title: "Car color shop",
@@ -33,30 +37,15 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <BasketProvider>
             <GoogleCaptchaWrapper>
               <Header />
+
               {children}
-              <Footer />
             </GoogleCaptchaWrapper>
           </BasketProvider>
         </ToastProvider>
+        <Footer />
+        <YaMetrica />
       </body>
       <GoogleAnalytics gaId="G-JJ4RDB15WV" />
-      <Script
-        id="yandex-metrika"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
-            (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
-            ym(99101809, "init", {
-              clickmap: true,
-              trackLinks: true,
-              accurateTrackBounce: true,
-              webvisor: true
-            });
-          `,
-        }}
-      />
     </html>
   );
 }

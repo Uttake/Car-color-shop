@@ -1,6 +1,5 @@
 declare global {
   interface Window {
-    ym?: (id: number, event: string, options?: Record<string, any>) => void;
+    ym?: (...args: any[]) => void;
   }
 }
-export {};

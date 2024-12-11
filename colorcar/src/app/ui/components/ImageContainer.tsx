@@ -3,7 +3,15 @@ import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Close from "../../_assets/close.svg";
-const ImageContainer = ({ src, title }: { src: string; title: string }) => {
+const ImageContainer = ({
+  src,
+  title,
+  solo,
+}: {
+  src: string;
+  title: string;
+  solo: boolean;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = () => setIsOpen(true);
@@ -14,7 +22,7 @@ const ImageContainer = ({ src, title }: { src: string; title: string }) => {
   }
 
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && solo) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -32,7 +40,7 @@ const ImageContainer = ({ src, title }: { src: string; title: string }) => {
         className="max-w-full max-h-full object-contain cursor-pointer"
       />
       <Modal
-        isOpen={isOpen}
+        isOpen={isOpen && solo}
         onRequestClose={closeModal}
         contentLabel="Image Modal"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"

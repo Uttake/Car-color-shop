@@ -4,9 +4,12 @@ import s from "./previewSection.module.css";
 import PreviewList from "./PreviewList";
 import Search from "../../components/Search";
 import clsx from "clsx";
+
 const PreviewSection = () => {
   return (
     <section className={clsx(s.previewSection, "relative")}>
+      <div className={clsx(s.background)}></div>
+
       <Search main={true} />
       <div className="max-w-6xl m-auto relative">
         <Title

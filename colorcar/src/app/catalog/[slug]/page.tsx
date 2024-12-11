@@ -1,5 +1,5 @@
 import Breadcrumbs from "@/app/ui/components/Breadcrumb";
-import DemoSlider from "@/app/ui/components/SliderSwiper";
+import DemoSlider from "@/app/ui/components/sliders/SliderSwiper";
 import React from "react";
 import dataSlider from "@/app/_data/slider-data.json";
 import { getItemsByCategory, getRowCount } from "@/app/utils/actions";
@@ -40,7 +40,7 @@ const page = async ({
   );
   return (
     <>
-      <DemoSlider data={dataSlider} />
+      {/* <DemoSlider data={dataSlider} /> */}
       <Breadcrumbs
         breadcrumbs={[
           { label: "Главная", href: "/" },

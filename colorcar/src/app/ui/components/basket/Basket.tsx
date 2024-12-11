@@ -59,7 +59,7 @@ const Basket = ({
   return (
     <div
       className={clsx(
-        "absolute top-[80px] w-[800px] bg-white flex flex-col right-0 p-10 gap-10 py-10 transition ease-in-out sm:right-0 max-h-[700px] overflow-y-scroll border-2 border-[#1D1D1D] rounded-md z-50 lg:w-[600px] md:p-5 md:w-[470px] sm:w-full",
+        "absolute top-[80px] w-[800px] bg-white flex flex-col right-0 p-10 gap-10 py-10 transition ease-in-out sm:right-0 max-h-[700px] overflow-y-scroll border-2 border-[#1D1D1D] rounded-md z-[1000] lg:w-[600px] md:p-5 md:w-[470px] sm:w-full ",
         {
           "opacity-100 scale-100": isCartOpen,
           "scale-0 opacity-0": !isCartOpen,

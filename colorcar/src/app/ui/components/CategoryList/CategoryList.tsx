@@ -62,7 +62,10 @@ const DropdownMenu = ({
               </Link>
 
               {category.subcategories && (
-                <button onClick={() => handleChange(category.title)}>
+                <button
+                  onClick={() => handleChange(category.title)}
+                  aria-label="submenu"
+                >
                   <svg
                     className={clsx("w-3.5 h-3.5 ms-2.5 transition", {
                       "-rotate-180": category.title === submenuOpen,

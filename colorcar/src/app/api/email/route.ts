@@ -58,7 +58,7 @@ export async function POST(req: Request) {
                         ${cartItems}
                     </tbody>
                 </table>
-                <h3 style="text-align: right; margin-top: 20px;">Итоговая цена: ${totalAmount} BYN</h3>
+                <h3 style="text-align: right; margin-top: 20px;">Итоговая цена: ${totalAmount.toFixed(2)} BYN</h3>
             </div>
         `;
 

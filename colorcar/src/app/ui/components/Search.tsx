@@ -70,9 +70,7 @@ const Search = ({ main }: { main?: boolean }) => {
         <label
           htmlFor="search-dropdown"
           className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
-        >
-          Your Email
-        </label>
+        ></label>
 
         <div className="relative w-full">
           <input
@@ -98,6 +96,7 @@ const Search = ({ main }: { main?: boolean }) => {
             autoComplete="off"
           />
           <button
+            aria-label="Search"
             onClick={(e) => {
               if (main) {
                 push(`catalog/?page=1&query=${searchRef.current?.value}`);

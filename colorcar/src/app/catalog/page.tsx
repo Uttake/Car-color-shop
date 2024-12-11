@@ -1,15 +1,19 @@
-import React, { Suspense } from "react";
+import React from "react";
 import Breadcrumbs from "../ui/components/Breadcrumb";
-import DemoSlider from "../ui/components/SliderSwiper";
-import dataSlider from "@/app/_data/slider-data.json";
 import Catalog from "../ui/components/catalog/Catalog";
-import { getItemsByCategory, getRowCount } from "../utils/actions";
+import {
+  getItemsByCategory,
+  getPriceRange,
+  getRowCount,
+} from "../utils/actions";
 import { Pagination } from "../ui/components/Pagination";
 import { CatalogItemType } from "../utils/definitions";
 import clsx from "clsx";
 import CatalogItem from "../ui/components/catalog/CatalogItem";
 import AsideCategories from "../ui/components/AsideCategories";
 import { unstable_noStore as noStore } from "next/cache";
+import FilterComponent from "../ui/components/filter/FilterWrapper";
+import { getUsd } from "../utils";
 const ITEMS_PER_PAGE = 7;
 const page = async ({
   searchParams,
@@ -18,25 +22,43 @@ const page = async ({
     query?: string;
     page?: string;
     sort?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    status?: string;
   };
 }) => {
   noStore();
-  const query = searchParams?.query || "";
 
+  const course = await getUsd();
+  const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
+  const status = searchParams?.status || "";
+
+  const minPrice = +(
+    parseFloat(searchParams?.minPrice || "0") / course
+  ).toFixed(2);
+  const maxPrice = +(
+    parseFloat(searchParams?.maxPrice || "0") / course
+  ).toFixed(2);
 
   const sortParam =
     (searchParams &&
       Object.entries(searchParams).find(([key]) => key.startsWith("sort"))) ||
     "";
 
+  const priceRange = await getPriceRange();
+
   const items = await getItemsByCategory({
     query,
     page: currentPage,
     sortParam: Array.isArray(sortParam) ? sortParam : undefined,
+    minPrice,
+    maxPrice,
+    status: status.split(","),
   });
 
-  console.log(items);
+  const lowestPries = +(priceRange.minPrice * course).toFixed(2);
+  const highestPries = +(priceRange.maxPrice * course).toFixed(2);
 
   const totalPages = Math.ceil(
     Number((await getRowCount()).count) / ITEMS_PER_PAGE
@@ -44,7 +66,6 @@ const page = async ({
 
   return (
     <>
-      <DemoSlider data={dataSlider} />
       <Breadcrumbs
         breadcrumbs={[
           { label: "Главная", href: "/" },
@@ -56,7 +77,13 @@ const page = async ({
         ]}
       />
       <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto">
-        <AsideCategories />
+        <div className="flex flex-col gap-5">
+          <AsideCategories />
+          <FilterComponent
+            lowestPries={lowestPries}
+            highestPries={highestPries}
+          />
+        </div>
         <Catalog>
           <div
             className={clsx(

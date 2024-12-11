@@ -5,6 +5,11 @@ import EditorBlock from "../EditorBlock/EditorBlock";
 import Dropdown from "../DropDown";
 import catalogData from "@/app/_data/catalog-data.json";
 import clsx from "clsx";
+import Edit from "../../../_assets/change.svg";
+import Confirm from "../../../_assets/confirm.svg";
+import Delete from "../../../_assets/close.svg";
+import { deleteInfo, updateInfo } from "@/app/utils/actions";
+
 interface InfoItemProps {
   data: {
     title: string;
@@ -23,27 +28,46 @@ const InfoItem = ({ data }: InfoItemProps) => {
     formState: { errors },
     reset,
   } = useForm();
-  const [edit, SetEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [preview, setPreview] = useState<string>(data.image);
+  const [file, setFile] = useState<File | null>(null);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
+    const selectedFile = event.target.files?.[0];
+    if (selectedFile) {
+      setFile(selectedFile);
       const reader = new FileReader();
       reader.onload = () => {
         setPreview(reader.result as string);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
     }
   };
+  const onSubmit = async (data: any) => {
+    const updatedData = {
+      title: data.title,
+      link: data.link,
+      image: data.image,
+    };
+
+    const file = data.file;
+
+    const success = await updateInfo(data.id, updatedData, file);
+
+    if (success) {
+      setEdit(false);
+    }
+  };
+
   return (
-    <div
+    <form
+      onSubmit={handleSubmit(onSubmit)}
       className={clsx(
         {
           "flex items-center justify-between border-[1px] border-orange-brdr px-3 py-3":
             !edit,
         },
-        { "flex items-start justify-between gap-2": edit }
+        { "flex  justify-between gap-2": edit }
       )}
     >
       {edit ? (
@@ -107,6 +131,7 @@ const InfoItem = ({ data }: InfoItemProps) => {
           label="Ссылка"
           control={control}
           name="link"
+          defaultValue={data.link}
         />
       ) : (
         <div>
@@ -117,11 +142,32 @@ const InfoItem = ({ data }: InfoItemProps) => {
         </div>
       )}
 
-      <div>
-        <button onClick={() => SetEdit(!edit)}>Изменить</button>
-        <button>Удалить</button>
+      <div className="flex items-center gap-6">
+        <button
+          type="button"
+          onClick={async () => {
+            if (edit) {
+              await handleSubmit(onSubmit)();
+            } else {
+              setEdit(true);
+            }
+          }}
+        >
+          {edit ? <Confirm stroke="black" /> : <Edit stroke="black" />}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            if (edit) {
+              setEdit(false);
+            }
+            deleteInfo(data.id, data.image);
+          }}
+        >
+          <Delete stroke="black" strokeWidth={2} />
+        </button>
       </div>
-    </div>
+    </form>
   );
 };
 

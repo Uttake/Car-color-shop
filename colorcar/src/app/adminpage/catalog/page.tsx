@@ -14,6 +14,7 @@ import RemoveItem from "@/app/ui/components/adminPage/RemoveItem";
 import ModalInfo from "@/app/ui/components/modalInfo/ModalInfo";
 import InfoForm from "@/app/ui/components/modalInfo/InfoForm";
 import InfoContainer from "@/app/ui/components/modalInfo/InfoContainer";
+import SendTable from "@/app/ui/components/modalInfo/SendTable";
 
 let reserveItems: CatalogItemType = {
   id: "f32ea770-b402-11ef-a129-2b66bd5bce59",
@@ -86,6 +87,7 @@ const page = async ({
               <ModalInfo title="Изменить информацию" width="900px">
                 <InfoContainer />
               </ModalInfo>
+              <SendTable items={items} />
             </div>
             <Logout />
           </div>

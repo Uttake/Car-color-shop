@@ -98,7 +98,7 @@ const AdminForm = ({
       ALLOWED_ATTR: ["class", "style", "id", "title"],
     }
   );
-
+  console.log(item);
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -143,7 +143,7 @@ const AdminForm = ({
           <Controller
             name="newest"
             control={control}
-            defaultValue={update ? item.newest : false}
+            defaultValue={update ? item.new : false}
             render={({ field }) => (
               <label className="flex items-center gap-2 text-sm font-medium mt-5">
                 <input
@@ -151,6 +151,7 @@ const AdminForm = ({
                   checked={field.value}
                   onChange={(e) => field.onChange(e.target.checked)}
                   className="form-checkbox h-5 w-5 text-blue-600"
+                  defaultChecked={update ? item.newest : false}
                 />
                 Новинка
               </label>

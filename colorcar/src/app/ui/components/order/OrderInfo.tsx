@@ -3,32 +3,44 @@ import React, { use, useEffect, useState } from "react";
 import { BasketItemTypes } from "../basket/Basket";
 import MainButton from "../MainButton";
 import { useBasket } from "../BasketContext";
+import { getUsd } from "@/app/utils";
 
 const OrderInfo = () => {
   const [basketOrders, setBasketOrders] = useState<BasketItemTypes[]>([]);
   const [fullPrice, setFullPrice] = useState(0);
   const { cardOpen, setCardOpen } = useBasket();
+  const [course, setCourse] = useState(0);
+
   function checkUserData() {
     const item = JSON.parse(localStorage.getItem("basket")!);
+    console.log(course);
     if (item) {
       let price = 0;
       item.forEach((el: BasketItemTypes) =>
         el.discount
-          ? (price += el.count * (el.price - el.discount))
-          : (price += el.count * el.price)
+          ? (price += el.count * (el.price * course - el.discount))
+          : (price += el.count * (el.price * course))
       );
       setBasketOrders(item);
       setFullPrice(price);
     }
   }
 
+  const handleCourseChange = async () => {
+    const course = await getUsd();
+    setCourse(course);
+  };
+
   useEffect(() => {
+    handleCourseChange();
     checkUserData();
+
     window.addEventListener("storage", checkUserData);
+
     return () => {
       window.removeEventListener("storage", checkUserData);
     };
-  }, []);
+  }, [course]);
 
   const handleChangeCart = (): void => {
     window.scrollTo({
@@ -64,13 +76,19 @@ const OrderInfo = () => {
                 <h3 className=" text-[#C53720]">{item.title}</h3>
                 <p className=" text-[#A5A5A5]">
                   {item.count} шт. х{" "}
-                  {item.discount ? item.price - item.discount : item.price} BYN.
+                  {item.discount
+                    ? (item.price * course - item.discount).toFixed(2)
+                    : (item.price * course).toFixed(2)}{" "}
+                  BYN.
                 </p>
               </div>
               <div>
                 {item.discount
-                  ? (item.count * (item.price - item.discount)).toFixed(2)
-                  : (item.count * item.price).toFixed(2)}
+                  ? (
+                      item.count *
+                      (item.price * course - item.discount)
+                    ).toFixed(2)
+                  : (item.count * (item.price * course)).toFixed(2)}
                 BYN
               </div>
             </div>
@@ -83,7 +101,7 @@ const OrderInfo = () => {
       </div>
       <div className="p-5 flex justify-between bg-[#1d1d1d] text-white text-base font-medium">
         <span>Итого</span>
-        <span className=" text-xl font-bold">{fullPrice} BYN.</span>
+        <span className=" text-xl font-bold">{fullPrice.toFixed(2)} BYN.</span>
       </div>
     </div>
   );

@@ -9,6 +9,21 @@ import {createClient} from '../../app/utils/supabase/serverSupabaseClient'
 import { getUsd } from "./index";
 
 
+export const getNewest = async () => {
+  try {
+    const {data, error} = await supabase.from('Products').select('*').eq('newest', true)
+
+    if(error) {
+      throw new Error(error.message)
+    }
+
+    return data
+  } catch (error) {
+    console.log(error)
+  }
+
+  
+}
 export const postData = async (formData: FormData) => {
   
   const title = formData.get("name");
@@ -21,8 +36,6 @@ export const postData = async (formData: FormData) => {
   const avaiblity = formData.get("avaiblity");
   const newest = formData.get("newest");
   let id = v1();
-
-  let course = await getUsd()
 
   try {
     if (image) {
@@ -41,12 +54,12 @@ export const postData = async (formData: FormData) => {
           title,
           description,
           images: `https://invnbdbustikwbnttmdr.supabase.co/storage/v1/object/public/Products%20images/${id}.png`,
-          price: (price * course).toFixed(2),
+          price: price.toFixed(2),
           discount,
           fulldescription,
           category,
           avaiblity,
-          new: newest,
+          newest,
         },
       ])
       .select();
@@ -107,7 +120,7 @@ export const updateCatalogItem = async (id: string, data: CatalogItemType) => {
         .from("Products images")
         .upload(`${id}.png`, data.images, {
           cacheControl: "3600",
-          upsert: false,
+          upsert: true
         });
 
       if (storageError) {
@@ -164,8 +177,12 @@ export const getSearchItems = async (query: string) => {
 
 export const removeItem = async (id: string) => {
   const {error} = await supabase.from('Products').delete().eq('id', id)
+  const {error: storageError} = await supabase.storage.from('Products images').remove([`${id}.png`])
   if(error) {
     console.log('Ошибка при удалении товара')
+  }
+  if(storageError) {
+    console.log('Ошибка при удалении изображения')
   }
   revalidatePath('/adminpage/catalog')
 }
@@ -209,11 +226,17 @@ export const getItemsByCategory = async ({
   slug,
   page,
   sortParam,
+  minPrice,
+  maxPrice,
+  status,
 }: {
   query: string;
   slug?: string;
   page: number;
   sortParam?: [string, string] | undefined;
+  minPrice?: number;
+  maxPrice?: number;
+  status?: string[];
 }) => {
   try {
     const rangeStart = (page - 1) * 8;
@@ -222,23 +245,47 @@ export const getItemsByCategory = async ({
       .from("Products")
       .select("*")
       .range(rangeStart, rangeEnd);
-      
+
+
     if (query) {
-      console.log(query);
       productsQuery.ilike("title", `%${query}%`);
     }
+
+
     if (slug) {
       productsQuery.eq("category", slug);
     }
 
+
     if (sortParam && sortParam[0] === "sortByprice") {
-      const isAscending = sortParam[1] !== "true"; 
+      const isAscending = sortParam[1] !== "true";
       productsQuery.order("price", { ascending: isAscending });
     }
-    
-    if(sortParam && sortParam[0] === "sortBystock") {
-      const isAscending = sortParam[1] !== "true"; 
+
+
+    if (sortParam && sortParam[0] === "sortBystock") {
+      const isAscending = sortParam[1] !== "true";
       productsQuery.order("avaiblity", { ascending: isAscending });
+    }
+
+
+    if (minPrice) {
+      productsQuery.gte("price", minPrice);
+      productsQuery.lte("price", maxPrice);
+    }
+
+
+    if (status && status.length > 0) {
+      const filters = [];
+      if (status.includes("available")) {
+        filters.push("avaiblity.eq.true");
+      }
+      if (status.includes("order")) {
+        filters.push("avaiblity.eq.false");
+      }
+      if (filters.length > 0) {
+        productsQuery.or(filters.join(","));
+      }
     }
 
     const { data, error } = await productsQuery;
@@ -258,6 +305,8 @@ export const getItemsByCategory = async ({
 };
 
 
+
+
 export const postInfo = async (formData: FormData) => {
   const title = formData.get("title");
   const link = formData.get("link");
@@ -268,7 +317,7 @@ export const postInfo = async (formData: FormData) => {
     if (image) {
       const { data: storageData, error: storageError } = await supabase.storage
         .from("Info Images")
-        .upload(`${id}.png`, image, {
+        .upload(`${id}.webp`, image, {
           cacheControl: "3600",
           upsert: false,
         });
@@ -282,7 +331,7 @@ export const postInfo = async (formData: FormData) => {
         id,
         title,
         link,
-        image: `https://invnbdbustikwbnttmdr.supabase.co/storage/v1/object/public/Info%20Images/${id}.png`,
+        image: `https://invnbdbustikwbnttmdr.supabase.co/storage/v1/object/public/Info%20Images/${id}.webp`,
       },
     ])
     .select();
@@ -311,3 +360,99 @@ export const getInfo = async() => {
     }
     return data
 }
+
+export const deleteInfo = async (id: string, imagePath: string) => {
+  const { data, error } = await supabase
+    .from("Info")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.error("Error deleting record:", error);
+    return;
+  }
+  const { error: storageError } = await supabase.storage
+    .from("Info Images") 
+    .remove([`${id}.webp`]);
+
+  if (storageError) {
+    console.error("Error deleting image:", storageError);
+    return;
+  }
+
+  revalidatePath("/");
+  revalidatePath("/adminpage/catalog");
+};
+
+
+export const updateInfo = async (
+  id: string,
+  updatedData: { title: string; link: string; image: string },
+  file: File | null
+) => {
+  try {
+    const bucketName = "Info Images"; 
+
+    if (file) {
+      const { error: deleteError } = await supabase.storage
+        .from(bucketName)
+        .remove([updatedData.image]); 
+      if (deleteError) {
+        console.error("Error deleting old image:", deleteError);
+        return false;
+      }
+
+      const { error: uploadError } = await supabase.storage
+        .from(bucketName)
+        .upload(updatedData.image, file);
+      if (uploadError) {
+        console.error("Error uploading new file:", uploadError);
+        return false;
+      }
+    }
+
+
+    const { error: updateError } = await supabase
+      .from("Info")
+      .update(updatedData)
+      .eq("id", id);
+    if (updateError) {
+      console.error("Error updating record:", updateError);
+      return false;
+    }
+
+    revalidatePath("/");
+    revalidatePath("/adminpage/catalog");
+
+    return true;
+  } catch (error) {
+    console.error("Error updating info:", error);
+    return false;
+  }
+};
+
+export const getPriceRange = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("Products")
+      .select("price");
+
+    if (error) {
+      throw new Error(`Ошибка получения диапазона цен: ${error.message}`);
+    }
+
+    if (!data || data.length === 0) {
+      return { minPrice: 0, maxPrice: 0 };
+    }
+
+    const prices = data.map(item => item.price);
+    return {
+      minPrice: Math.min(...prices),
+      maxPrice: Math.max(...prices),
+    };
+  } catch (e) {
+    console.log(e);
+    return { minPrice: 0, maxPrice: 0 };
+  }
+};
+

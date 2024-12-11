@@ -32,7 +32,6 @@
   background-position: center;
 }
 
-
 .previewItem:hover .hoverItem {
   opacity: 1;
   visibility: visible;

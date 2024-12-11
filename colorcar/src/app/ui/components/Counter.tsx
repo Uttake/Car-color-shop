@@ -29,6 +29,7 @@ const Counter = ({ count, setCount }: CounterType) => {
           value={count}
           min={1}
           max={100}
+          aria-label="count"
           onChange={handleChange}
           className=" flex justify-center items-center text-xl font-medium text-orange-brdr border-t-4 border-b-4 border-orange-brdr text-center w-20 h-10 focus-within:ring-transparent focus:border-orange-brdr"
         />

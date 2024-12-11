@@ -96,6 +96,7 @@ const ShopCardButton = ({
         <Counter count={count} setCount={setCount} />
       )}
       <button
+        aria-label="add to order"
         className={clsx(
           {
             "group p-[6px] border-4 border-orange-brdr hover:bg-orange-brdr disabled:bg-orange-brdr":

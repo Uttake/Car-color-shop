@@ -1,7 +1,8 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import React from "react";
 import MainButton from "../../components/MainButton";
 import s from "./previewSection.module.css";
+
 type previewItem = {
   title: string;
   image: string;
@@ -10,10 +11,18 @@ type previewItem = {
 
 const PreviewItem = ({ item }: { item: previewItem }) => {
   return (
-    <div
-      className={s.previewItem}
-      style={{ backgroundImage: `url(${item.image})` }}
-    >
+    <div className={s.previewItem}>
+      <Image
+        src={item.image}
+        alt={item.title}
+        layout="fill"
+        objectFit="cover"
+        quality={85}
+        className={s.image}
+        loading="lazy"
+        priority={false}
+        sizes="(max-width: 768px) 100vw, 50vw"
+      />
       <div className={s.hoverItem}>
         <h3 className="text-2xl font-medium text-center text-white">
           {item.title.toUpperCase()}

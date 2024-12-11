@@ -1,32 +1,18 @@
-import dynamic from "next/dynamic";
+import CompanySection from "./ui/landing/companySection/CompanySection";
+import InfoSection from "./ui/landing/InfoSection/InfoSection";
+import PreviewSection from "./ui/landing/previewSection/PreviewSection";
+import ServicesSection from "./ui/landing/servicesSection/ServicesSection";
+import SwiperWrapper from "./ui/components/sliders/SwiperWrapper";
+import NovetlyWrapper from "./ui/landing/newestSection/NovetlyWrapper";
 
-import DemoSlider from "./ui/components/SliderSwiper";
-import dataSlider from "@/app/_data/slider-data.json";
-const InfoSection = dynamic(
-  () => import("./ui/landing/InfoSection/InfoSection"),
-  { ssr: false }
-);
-const PreviewSection = dynamic(
-  () => import("./ui/landing/previewSection/PreviewSection"),
-  { ssr: false }
-);
-const ServicesSection = dynamic(
-  () => import("./ui/landing/servicesSection/ServicesSection"),
-  { ssr: false }
-);
-const CompanySection = dynamic(
-  () => import("./ui/landing/companySection/CompanySection"),
-  { ssr: false }
-);
-
-export default function Home() {
+export default async function Home() {
   return (
     <>
-      <DemoSlider data={dataSlider} />
-
+      <SwiperWrapper />
       <main className="relative">
         <PreviewSection />
         <ServicesSection />
+        <NovetlyWrapper />
         <InfoSection />
         <CompanySection />
       </main>

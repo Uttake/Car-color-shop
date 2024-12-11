@@ -17,6 +17,7 @@ export function Hamburger(props: HamburgerProps) {
     <div className="hidden lg:block">
       <button
         onClick={handleClick}
+        aria-label="Burger menu"
         type="button"
         className={`w-8 h-8 flex justify-around flex-col flex-wrap z-10 cursor-pointer`}
       >

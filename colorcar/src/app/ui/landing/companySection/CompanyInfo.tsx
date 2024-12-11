@@ -8,11 +8,12 @@ const CompanyInfo = () => {
     <div className="flex gap-6 mt-[74px] flex-wrap xl:justify-center sm:relative">
       <div className={s.imageBlock}>
         <Image
-          src={"/companyPerson.png"}
+          src={"/companyPerson.webp"}
           alt="company man"
           width={360}
           height={347}
           className={s.image}
+          loading="lazy"
         />
       </div>
       <div className="max-w-[744px] p-8 flex flex-col justify-between border-4 border-[#C53720] overflow-hidden bg-alphablack sm:p-4">

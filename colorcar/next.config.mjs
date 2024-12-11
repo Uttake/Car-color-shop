@@ -25,13 +25,21 @@ const nextConfig = {
     return config;
   },
   images: {
+    domains: ["localhost"],
+    deviceSizes: [640, 1080, 1920],
+    formats: ["image/webp"],
     remotePatterns: [
       {
         protocol: "https",
         hostname: "invnbdbustikwbnttmdr.supabase.co",
         port: "",
-        pathname: "/storage/v1/object/public/Products%20images/**",
+        pathname: "/storage/v1/object/public/**",
       },
+    ],
+  },
+  experimental: {
+    fontLoaders: [
+      { loader: "@next/font/google", options: { display: "swap" } },
     ],
   },
 };

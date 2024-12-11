@@ -1,6 +1,7 @@
 import React from "react";
 import Search from "../Search";
 import SortedWrapper from "../sorted/SortedWrapper";
+import FilterComponent from "../filter/FilterWrapper";
 
 export const Catalog = async ({ children }: { children: React.ReactNode }) => {
   return (

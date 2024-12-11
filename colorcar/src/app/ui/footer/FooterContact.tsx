@@ -9,13 +9,13 @@ const footerContactData = [
     type: "tel",
   },
   {
-    tumb: "mail.svg",
+    tumb: "/mail.svg",
     title: "example@gmail.com",
     type: "mailto",
   },
 ];
 
-const FooterContact = () => {
+const FooterContact = async () => {
   return (
     <div>
       {footerContactData.map((item) => (

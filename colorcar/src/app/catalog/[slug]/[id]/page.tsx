@@ -30,6 +30,7 @@ const page = async ({ params }: { params: { id: string } }) => {
             price={item.price}
             id={item.id}
             discount={item.discount}
+            avaiblity={item.avaiblity}
             fulldescription={item.fulldescription}
             solo={true}
             description={item.description}
