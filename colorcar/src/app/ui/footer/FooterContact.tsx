@@ -19,7 +19,7 @@ const FooterContact = async () => {
   return (
     <div>
       {footerContactData.map((item) => (
-        <div className="flex gap-2 mb-3 last:mb-5">
+        <div key={item.title} className="flex gap-2 mb-3 last:mb-5">
           <Image src={item.tumb} alt={item.title} width={20} height={20} />
           <h3 className=" text-base text-white">
             <a href={`${item.type}:${item.title.replace(/[-\(\)\s]/g, "")}`}>

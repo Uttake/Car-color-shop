@@ -3,8 +3,8 @@ import HeaderLink from "./HeaderLink";
 import Hamburger from "../components/Hamburger";
 
 export const lists = [
-  { title: "Компания", href: "/company" },
-  { title: "Каталог", href: "/catalog/#catalog" },
+  { title: "О нас", href: "/company" },
+  { title: "Каталог", href: "/catalog" },
   { title: "Услуги", href: "/services" },
   { title: "Информация", href: "/info" },
   { title: "Контакты", href: "/contacts" },

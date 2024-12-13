@@ -86,7 +86,11 @@ const Dropdown: React.FC<DropdownProps> = ({
                         type="button"
                         className="block w-full px-4 py-2 text-sm text-left hover:bg-gray-100 focus:outline-none"
                         onClick={() => {
-                          field.onChange(sub.category || sub.title);
+                          field.onChange(
+                            (item.category &&
+                              item.category + "," + sub.category) ||
+                              sub.title
+                          );
                           setIsDropdownOpen(false);
                         }}
                       >

@@ -1,6 +1,7 @@
 import { BasketItemTypes } from "@/app/ui/components/basket/Basket";
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
+import { getUsd } from "@/app/utils";
 
 const user = process.env.EMAIL_USER;
 const pass = process.env.EMAIL_PASS;
@@ -9,7 +10,7 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { name, tel, email, order } = body;
-
+        const course = await getUsd()
  
         const transporter = nodemailer.createTransport({
             host: "smtp.mail.ru",
@@ -27,7 +28,7 @@ export async function POST(req: Request) {
                 <tr style="border-bottom: 1px solid #ddd;">
                     <td style="padding: 8px; text-align: left;">${item.title}</td>
                     <td style="padding: 8px; text-align: center;">${item.count}</td>
-                    <td style="padding: 8px; text-align: right;">${item.discount ? item.price - item.discount : item.price} BYN</td>
+                    <td style="padding: 8px; text-align: right;">${item.discount ? item.price * course - item.discount : item.price * course} BYN</td>
                 </tr>
             `)
             .join("");
@@ -58,7 +59,7 @@ export async function POST(req: Request) {
                         ${cartItems}
                     </tbody>
                 </table>
-                <h3 style="text-align: right; margin-top: 20px;">Итоговая цена: ${totalAmount.toFixed(2)} BYN</h3>
+                <h3 style="text-align: right; margin-top: 20px;">Итоговая цена: ${(totalAmount * course).toFixed(2)} BYN</h3>
             </div>
         `;
 

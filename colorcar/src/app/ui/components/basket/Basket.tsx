@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import BasketItem from "./BasketItem";
 import clsx from "clsx";
 import MainButton from "../MainButton";
+import { getUsd } from "@/app/utils";
 
 export interface BasketTypes {
   id: number;
@@ -31,7 +32,12 @@ const Basket = ({
 }) => {
   const [basketOrders, setBasketOrders] = useState<BasketItemTypes[]>([]);
   const [fullPrice, setFullPrice] = useState(0);
+  const [course, setCourse] = useState(0);
 
+  const handleCourseChange = async () => {
+    const course = await getUsd();
+    setCourse(course);
+  };
   function checkUserData() {
     const item = JSON.parse(localStorage.getItem("basket")!);
     if (item) {
@@ -48,6 +54,11 @@ const Basket = ({
       setFullPrice(price);
     }
   }
+
+  useEffect(() => {
+    handleCourseChange();
+  }, []);
+
   useEffect(() => {
     checkUserData();
     window.addEventListener("storage", checkUserData);
@@ -74,12 +85,12 @@ const Basket = ({
       {basketOrders.length === 0 && <div>Корзина пуста</div>}
       <div className=" max-h-[500px] overflow-auto">
         {basketOrders.map((item: BasketItemTypes) => (
-          <BasketItem item={item} key={item.id} />
+          <BasketItem item={item} key={item.id} course={course} />
         ))}
       </div>
       <div className="flex justify-between flex-wrap">
         <div className="text-2xl font-bold">
-          Итого: {fullPrice.toFixed(2)} BYN
+          Итого: {(fullPrice * course).toFixed(2)} BYN
         </div>
         {basketOrders.length > 0 && (
           <MainButton

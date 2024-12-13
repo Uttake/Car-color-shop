@@ -1,18 +1,18 @@
-export type CataloItemsType = {
+export interface CataloItemsType  {
     id: string;
     title: string;
     price: number;
-    images: string | File;
+    images: string; 
     solo?: boolean;
-    description?:string;
+    description?: string;
     isAdmin?: boolean;
     discount?: number;
     fulldescription?: string;
     category?: string;
     subcategory?: string;
-    avaiblity? : boolean
-    disabled? : boolean
-    new?: boolean
+    avaiblity?: boolean;
+    disabled?: boolean;
+    new?: boolean;
 };
 
 export interface CatalogItemType extends CataloItemsType {

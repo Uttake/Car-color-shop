@@ -47,10 +47,6 @@ const OrderForm = () => {
     mode: "onChange",
   });
 
-  const handleCaptchaChange = (value: string) => {
-    setCaptchaValue(value);
-  };
-
   const onSubmit = async (data: UserType) => {
     setIsLoading(true);
     try {

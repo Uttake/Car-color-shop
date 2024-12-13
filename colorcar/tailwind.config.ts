@@ -44,8 +44,8 @@ const config: Config = {
 			fadeOut: 'fadeOut 300ms ease-out',
 		  },
   		colors: {
-
   			alphablack: 'rgba(14, 14, 14, 0.2);',
+			overlay: 'rgba(14, 14, 14, 0.6);',
   			'orange-brdr': '#C53720',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -95,7 +95,10 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
+		backgroundImage: {
+			'about' : 'url("/landing-background-second.webp")'
+		}
   	}
   },
   plugins: [

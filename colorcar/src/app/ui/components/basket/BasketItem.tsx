@@ -6,7 +6,13 @@ import { BasketItemTypes } from "./Basket";
 import CloseTag from "../../../_assets/close.svg";
 import Link from "next/link";
 
-const BasketItem = ({ item }: { item: BasketItemTypes }) => {
+const BasketItem = ({
+  item,
+  course,
+}: {
+  item: BasketItemTypes;
+  course: number;
+}) => {
   const [count, setCount] = useState(item.count);
   let array: Array<BasketItemTypes> = Array.from(
     JSON.parse(localStorage.getItem("basket")!)
@@ -59,11 +65,12 @@ const BasketItem = ({ item }: { item: BasketItemTypes }) => {
 
       <div className="text-xl basis-[22.5%] text-center">
         {item.discount
-          ? ((item.price - item.discount) * count).toFixed(2)
-          : (item.price * count).toFixed(2)}{" "}
+          ? ((item.price * course - item.discount) * count).toFixed(2)
+          : (item.price * course * count).toFixed(2)}{" "}
         BYN
       </div>
       <button
+        aria-label="удалить из корзины"
         className="basis-[10%] self-start font-bold flex justify-end"
         onClick={() => removeOrder(item.id)}
       >

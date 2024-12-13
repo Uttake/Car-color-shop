@@ -33,7 +33,7 @@ const CatalogItem = async ({
     <>
       <div
         className={clsx(
-          `relative border-4 px-5 flex flex-col justify-between py-8 bg-white cursor-pointer h-full hover:border-orange-brdr transition duration-300 sm:w-full has-[:disabled]:border-green-500 ${styles.catalog}`,
+          `relative border-4 px-5 flex flex-col justify-between py-8 bg-white cursor-pointer h-full hover:border-orange-brdr transition max-w-[320px] md:max-w-full md:w-full  duration-300 sm:w-full has-[:disabled]:border-green-500 ${styles.catalog}`,
           {
             " xl:justify-center flex flex-wrap wrapper justify-between m-auto flex-row ":
               solo,
@@ -49,7 +49,7 @@ const CatalogItem = async ({
             Под заказ
           </div>
         )}
-        <ImageContainer src={images} title={title} solo={solo} />
+        <ImageContainer src={images} title={title} solo={solo ?? false} />
         <div className={clsx(styles["catalog-item"], "flex-1")}>
           <h2
             className={clsx(

@@ -21,6 +21,7 @@ const FilterStatus = ({ status, setStatus }: FilterStatusProps) => {
         {" "}
         <span>Статус</span>{" "}
         <ArrowIcon
+          aria-label="Фильтровать по статусу"
           stroke="white"
           style={{
             transform: isStatusOpen ? "rotate(-90deg)" : "rotate(90deg)",
@@ -33,9 +34,11 @@ const FilterStatus = ({ status, setStatus }: FilterStatusProps) => {
           [styles.open]: isStatusOpen,
         })}
       >
-        <label className={styles.checkboxLabel}>
+        <label className={styles.checkboxLabel} htmlFor="available">
           <input
             type="checkbox"
+            id="available"
+            aria-labelledby="Фильтровать по статусу в наличии"
             checked={status.available}
             onChange={(e) =>
               setStatus({ ...status, available: e.target.checked })
@@ -44,9 +47,11 @@ const FilterStatus = ({ status, setStatus }: FilterStatusProps) => {
           />
           В наличии
         </label>
-        <label className={styles.checkboxLabel}>
+        <label className={styles.checkboxLabel} htmlFor="order">
           <input
             type="checkbox"
+            id="order"
+            aria-labelledby="Фильтровать по статусу под заказ"
             checked={status.order}
             onChange={(e) => setStatus({ ...status, order: e.target.checked })}
             className={styles.checkbox}

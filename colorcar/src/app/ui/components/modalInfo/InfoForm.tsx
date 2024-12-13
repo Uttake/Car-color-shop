@@ -7,6 +7,7 @@ import EditorBlock from "../EditorBlock/EditorBlock";
 import Dropdown from "../DropDown";
 import catalogData from "@/app/_data/catalog-data.json";
 import { postInfo } from "@/app/utils/actions";
+import Image from "next/image";
 
 const InfoForm = () => {
   const {
@@ -51,9 +52,11 @@ const InfoForm = () => {
           <div className="flex flex-col gap-4 mb-5">
             <span>Изображение</span>
             {preview ? (
-              <img
+              <Image
                 src={preview}
                 alt="Предпросмотр"
+                width={160}
+                height={160}
                 className="w-40 h-40 object-cover rounded border mb-2"
               />
             ) : (

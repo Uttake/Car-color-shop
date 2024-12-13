@@ -1,6 +1,5 @@
 import React from "react";
 import s from "./servicesSection.module.css";
-import Image from "next/image";
 import clsx from "clsx";
 
 type servicesItems = {

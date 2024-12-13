@@ -25,7 +25,10 @@ const FilterPrice = ({
     setIsPriceOpen((prev) => !prev);
   };
   return (
-    <div className={clsx(styles.filterSection)}>
+    <div
+      className={clsx(styles.filterSection)}
+      aria-label="Фильтровать по цене"
+    >
       <h5 className={styles.filterSubtitle} onClick={togglePriceSection}>
         <span>Цена</span>{" "}
         <ArrowIcon
@@ -42,6 +45,7 @@ const FilterPrice = ({
         <div className="flex mb-5">
           <input
             type="number"
+            aria-label="Фильтровать по цене от"
             value={priceRange[0]}
             onChange={(e) => {
               const newValue = parseFloat(e.target.value);
@@ -54,6 +58,7 @@ const FilterPrice = ({
           />
           <input
             type="number"
+            aria-label="Фильтровать по цене до"
             value={priceRange[1]}
             onChange={(e) => {
               const newValue = parseFloat(e.target.value);

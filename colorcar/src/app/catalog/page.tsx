@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Breadcrumbs from "../ui/components/Breadcrumb";
 import Catalog from "../ui/components/catalog/Catalog";
 import {
@@ -14,7 +14,8 @@ import AsideCategories from "../ui/components/AsideCategories";
 import { unstable_noStore as noStore } from "next/cache";
 import FilterComponent from "../ui/components/filter/FilterWrapper";
 import { getUsd } from "../utils";
-const ITEMS_PER_PAGE = 7;
+import ItemPerView from "../ui/components/ItemPerView";
+const ITEMS_PER_PAGE = 9;
 const page = async ({
   searchParams,
 }: {
@@ -25,6 +26,7 @@ const page = async ({
     minPrice?: string;
     maxPrice?: string;
     status?: string;
+    rowPerPage?: string;
   };
 }) => {
   noStore();
@@ -46,6 +48,7 @@ const page = async ({
       Object.entries(searchParams).find(([key]) => key.startsWith("sort"))) ||
     "";
 
+  const rowPerPage = Number(searchParams?.rowPerPage) || ITEMS_PER_PAGE;
   const priceRange = await getPriceRange();
 
   const items = await getItemsByCategory({
@@ -55,13 +58,14 @@ const page = async ({
     minPrice,
     maxPrice,
     status: status.split(","),
+    row: Number(rowPerPage),
   });
 
   const lowestPries = +(priceRange.minPrice * course).toFixed(2);
   const highestPries = +(priceRange.maxPrice * course).toFixed(2);
 
   const totalPages = Math.ceil(
-    Number((await getRowCount()).count) / ITEMS_PER_PAGE
+    Number((await getRowCount({})).count) / rowPerPage || ITEMS_PER_PAGE
   );
 
   return (
@@ -77,12 +81,14 @@ const page = async ({
         ]}
       />
       <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 md:w-full">
           <AsideCategories />
-          <FilterComponent
-            lowestPries={lowestPries}
-            highestPries={highestPries}
-          />
+          <Suspense fallback={null}>
+            <FilterComponent
+              lowestPries={lowestPries}
+              highestPries={highestPries}
+            />
+          </Suspense>
         </div>
         <Catalog>
           <div
@@ -109,7 +115,15 @@ const page = async ({
               )
             )}
           </div>
-          {items.data?.length! > 1 && <Pagination totalPages={totalPages} />}
+
+          <div className="flex items-center justify-between w-full bg-white px-4">
+            <Suspense fallback={null}>
+              <Pagination totalPages={totalPages} />
+            </Suspense>
+            <Suspense fallback={null}>
+              <ItemPerView />
+            </Suspense>
+          </div>
         </Catalog>
       </div>
     </>

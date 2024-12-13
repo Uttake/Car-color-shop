@@ -9,6 +9,7 @@ import Edit from "../../../_assets/change.svg";
 import Confirm from "../../../_assets/confirm.svg";
 import Delete from "../../../_assets/close.svg";
 import { deleteInfo, updateInfo } from "@/app/utils/actions";
+import Image from "next/image";
 
 interface InfoItemProps {
   data: {
@@ -74,10 +75,12 @@ const InfoItem = ({ data }: InfoItemProps) => {
         <div className="flex flex-col gap-4 mb-5">
           <span>Изображение</span>
           {preview ? (
-            <img
+            <Image
               src={preview}
               alt="Предпросмотр"
               className="w-40 h-40 object-cover rounded border mb-2"
+              width={200}
+              height={200}
             />
           ) : (
             <div className="w-40 h-40 bg-gray-200 text-gray-500 flex items-center justify-center rounded border mb-2">

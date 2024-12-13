@@ -2,10 +2,12 @@ import React from "react";
 import Breadcrumbs from "../ui/components/Breadcrumb";
 import OrderInfo from "../ui/components/order/OrderInfo";
 import OrderForm from "../ui/components/order/OrderForm";
-import dataSlider from "@/app/_data/slider-data.json";
-import DemoSlider from "../ui/components/sliders/SliderSwiper";
 import SwiperWrapper from "../ui/components/sliders/SwiperWrapper";
+import { getUsd } from "../utils";
+import { unstable_noStore as NoStore } from "next/cache";
 const page = async () => {
+  NoStore();
+  const course = await getUsd();
   return (
     <>
       <SwiperWrapper />
@@ -26,7 +28,7 @@ const page = async () => {
           </h1>
           <div className="flex justify-between flex-wrap gap-8">
             <OrderForm />
-            <OrderInfo />
+            <OrderInfo course={course} />
           </div>
         </div>
       </section>

@@ -1,46 +1,81 @@
 import Breadcrumbs from "@/app/ui/components/Breadcrumb";
 import DemoSlider from "@/app/ui/components/sliders/SliderSwiper";
-import React from "react";
+import React, { Suspense } from "react";
 import dataSlider from "@/app/_data/slider-data.json";
-import { getItemsByCategory, getRowCount } from "@/app/utils/actions";
+import {
+  getItemsByCategory,
+  getPriceRange,
+  getRowCount,
+} from "@/app/utils/actions";
 import AsideCategories from "@/app/ui/components/AsideCategories";
 import Catalog from "@/app/ui/components/catalog/Catalog";
 import clsx from "clsx";
 import CatalogItem from "@/app/ui/components/catalog/CatalogItem";
 import { Pagination } from "@/app/ui/components/Pagination";
 import { CatalogItemType } from "@/app/utils/definitions";
-import { description } from "@/app/utils";
+import { description, getUsd } from "@/app/utils";
 import { unstable_noStore as noStore } from "next/cache";
-const ITEMS_PER_PAGE = 7;
+import FilterComponent from "@/app/ui/components/filter/FilterWrapper";
+import ItemPerView from "@/app/ui/components/ItemPerView";
+const ITEMS_PER_PAGE = 9;
 const page = async ({
   params,
   searchParams,
 }: {
   params: { slug: string };
-  searchParams: { query: string; page?: string; sort?: string };
+  searchParams: {
+    query: string;
+    page?: string;
+    sort?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    status?: string;
+    rowPerPage?: string;
+  };
 }) => {
   noStore();
+
+  const course = await getUsd();
   const query = searchParams?.query || "";
-  const slug = decodeURIComponent(params.slug);
+  const slug = params.slug;
+  const currentPage = Number(searchParams?.page) || 1;
+  const status = searchParams?.status || "";
+
+  const minPrice = +(
+    parseFloat(searchParams?.minPrice || "0") / course
+  ).toFixed(2);
+  const maxPrice = +(
+    parseFloat(searchParams?.maxPrice || "0") / course
+  ).toFixed(2);
+
   const sortParam =
     Object.entries(searchParams).find(([key, value]) =>
       key.startsWith("sort")
     ) || "";
 
-  const currentPage = Number(searchParams?.page) || 1;
+  const rowPerPage = Number(searchParams?.rowPerPage) || ITEMS_PER_PAGE;
+
   const items = await getItemsByCategory({
     query,
     slug,
     page: currentPage,
     sortParam: Array.isArray(sortParam) ? sortParam : undefined,
+    minPrice,
+    maxPrice,
+    row: Number(rowPerPage),
+    status: status.split(","),
   });
 
   const totalPages = Math.ceil(
-    Number((await getRowCount()).count) / ITEMS_PER_PAGE
+    Number((await getRowCount({ slug })).count) / ITEMS_PER_PAGE
   );
+
+  const priceRange = await getPriceRange();
+
+  const lowestPries = +(priceRange.minPrice * course).toFixed(2);
+  const highestPries = +(priceRange.maxPrice * course).toFixed(2);
   return (
     <>
-      {/* <DemoSlider data={dataSlider} /> */}
       <Breadcrumbs
         breadcrumbs={[
           { label: "Главная", href: "/" },
@@ -56,8 +91,16 @@ const page = async ({
           },
         ]}
       />
-      <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto">
-        <AsideCategories />
+      <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto pb-5">
+        <div className="flex flex-col gap-5 md:w-full">
+          <AsideCategories />
+          <Suspense fallback={null}>
+            <FilterComponent
+              lowestPries={lowestPries}
+              highestPries={highestPries}
+            />
+          </Suspense>
+        </div>
         <Catalog>
           <div
             className={clsx(
@@ -71,7 +114,9 @@ const page = async ({
             )}
           >
             {items?.error ? (
-              <div>Извините произошла ошибка </div>
+              <div className="mt-4 text-center">
+                Нет товаров для выбранного фильтра
+              </div>
             ) : (
               items?.data && (
                 <>
@@ -83,7 +128,15 @@ const page = async ({
               )
             )}
           </div>
-          {items?.data?.length! > 1 && <Pagination totalPages={totalPages} />}
+
+          <div className="flex items-center justify-between w-full bg-white px-4">
+            <Suspense fallback={null}>
+              <Pagination totalPages={totalPages} />
+            </Suspense>
+            <Suspense fallback={null}>
+              <ItemPerView />
+            </Suspense>
+          </div>
         </Catalog>
       </div>
     </>

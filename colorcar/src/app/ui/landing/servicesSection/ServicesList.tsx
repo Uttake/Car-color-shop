@@ -14,7 +14,7 @@ const ServicesData = [
     title: "Удобная оплата",
     subtitle:
       "Принимаем как наличный, так и безналичный расчет для вашего удобства.",
-    image: <Payment fill="white" />,
+    image: <Payment fill="white" width={70} height={70} />,
   },
   {
     id: v1(),
@@ -37,7 +37,7 @@ const ServicesList = () => {
     <div className="flex justify-between flex-wrap xl:justify-center">
       <div>
         {ServicesData.map((item) => (
-          <ServicesItem item={item} />
+          <ServicesItem key={item.id} item={item} />
         ))}
       </div>
       <div className={s.listImage}>

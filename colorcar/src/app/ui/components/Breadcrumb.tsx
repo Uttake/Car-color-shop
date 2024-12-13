@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
 import Link from "next/link";
-
+import ArrowIcon from "../../_assets/arrow.svg";
 interface Breadcrumb {
   label: string;
   href: string;
@@ -31,7 +31,7 @@ export default function Breadcrumbs({
             </Link>
             {index < breadcrumbs.length - 1 ? (
               <span className="mx-3 inline-block font-bold text-orange-brdr md:text-lg sm:text-sm">
-                &gt;
+                <ArrowIcon />
               </span>
             ) : null}
           </li>

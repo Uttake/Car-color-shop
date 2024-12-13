@@ -17,7 +17,7 @@ let previewData = [
   },
   {
     id: v1(),
-    title: "Шпаклевка",
+    title: "Шпатлевка",
     image: "/shpatlevka.webp",
     href: "/catalog/shpaklevka",
   },
@@ -45,7 +45,7 @@ const PreviewList = () => {
   return (
     <div className="flex flex-wrap gap-6 justify-center">
       {previewData.map((item) => (
-        <PreviewItem item={item} />
+        <PreviewItem key={item.id} item={item} />
       ))}
     </div>
   );

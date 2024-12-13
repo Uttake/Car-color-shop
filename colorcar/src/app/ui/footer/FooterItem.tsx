@@ -10,7 +10,10 @@ const FooterItem = async ({ item }: { item: footerType }) => {
     <div>
       <h2 className=" text-base text-white mb-5">{item.maintitle}</h2>
       {item.subtitle.map((el) => (
-        <div className=" text-xs text-white opacity-50 mb-4 last:mb-0">
+        <div
+          key={el.title}
+          className=" text-xs text-white opacity-50 mb-4 last:mb-0"
+        >
           {el.title}
         </div>
       ))}

@@ -1,7 +1,10 @@
 "use client";
 
+import clsx from "clsx";
 import { usePathname, useSearchParams } from "next/navigation";
 import React from "react";
+import ArrowIcon from "../../_assets/arrow.svg";
+import Link from "next/link";
 
 export const generatePagination = (currentPage: number, totalPages: number) => {
   if (totalPages <= 7) {
@@ -40,59 +43,61 @@ export const Pagination = ({ totalPages }: { totalPages: number }) => {
 
   return (
     <div>
-      <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+      <div className="flex items-center justify-between border-t border-gray-200 bg-white py-3 sm:px-6">
         <div className="sm:flex sm:flex-1 sm:items-center sm:justify-between">
-          <div>
-            <nav
-              className="isolate inline-flex -space-x-px rounded-md shadow-sm"
-              aria-label="Pagination"
+          <nav
+            className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+            aria-label="Pagination"
+          >
+            <Link
+              href={createPageURL(Math.max(currentPage - 1, 1))}
+              scroll={false}
+              className={clsx(
+                "relative inline-flex items-center px-3.5 py-2 text-sm border-t-4 border-l-4 border-b-4 border-orange-brdr",
+                currentPage === 1 &&
+                  "text-gray-400 cursor-not-allowed opacity-50"
+              )}
+              aria-disabled={currentPage === 1}
             >
-              <button className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
-                <span className="sr-only">Previous</span>
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+              <span className="sr-only">Previous</span>
+              <ArrowIcon style={{ transform: "rotate(180deg)" }} />
+            </Link>
+            {allPages.map((el) =>
+              typeof el === "number" ? (
+                <Link
+                  key={el}
+                  scroll={false}
+                  href={createPageURL(el)}
+                  className={clsx(
+                    "relative inline-flex items-center px-3.5 py-2 text-sm font-semibold text-black border-4 border-orange-brdr",
+                    currentPage === el && "bg-orange-brdr text-white"
+                  )}
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-              {allPages.map((el) => {
-                return (
-                  <button
-                    key={el}
-                    className="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700 ring-1 ring-inset ring-gray-300 focus:outline-offset-0 hover:bg-gray-50"
-                  >
-                    {el}
-                  </button>
-                );
-              })}
-
-              <a
-                href={createPageURL(currentPage + 1)}
-                className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
-              >
-                <span className="sr-only">Next</span>
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  aria-hidden="true"
+                  {el}
+                </Link>
+              ) : (
+                <span
+                  key={el}
+                  className="relative inline-flex items-center px-3.5 py-2 text-sm text-gray-500"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </a>
-            </nav>
-          </div>
+                  {el}
+                </span>
+              )
+            )}
+            <Link
+              href={createPageURL(Math.min(currentPage + 1, totalPages))}
+              scroll={false}
+              className={clsx(
+                "relative inline-flex items-center px-3.5 py-2 border-t-4 border-r-4 border-b-4 border-orange-brdr",
+                currentPage === totalPages &&
+                  "text-gray-400 cursor-not-allowed opacity-50"
+              )}
+              aria-disabled={currentPage === totalPages}
+            >
+              <span className="sr-only">Next</span>
+              <ArrowIcon />
+            </Link>
+          </nav>
         </div>
       </div>
     </div>

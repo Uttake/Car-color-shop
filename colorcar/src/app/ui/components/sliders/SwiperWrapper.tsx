@@ -8,7 +8,7 @@ const SwiperWrapper = async () => {
   return (
     <>
       <div>
-        <DemoSlider sliderData={sliderData} />
+        <DemoSlider sliderData={sliderData || []} />
       </div>
     </>
   );

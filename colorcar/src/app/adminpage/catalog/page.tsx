@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Catalog from "../../ui/components/catalog/Catalog";
 import { getRowCount, getItemsByCategory, logout } from "../../utils/actions";
 import clsx from "clsx";
@@ -15,6 +15,7 @@ import ModalInfo from "@/app/ui/components/modalInfo/ModalInfo";
 import InfoForm from "@/app/ui/components/modalInfo/InfoForm";
 import InfoContainer from "@/app/ui/components/modalInfo/InfoContainer";
 import SendTable from "@/app/ui/components/modalInfo/SendTable";
+import ItemPerView from "@/app/ui/components/ItemPerView";
 
 let reserveItems: CatalogItemType = {
   id: "f32ea770-b402-11ef-a129-2b66bd5bce59",
@@ -33,17 +34,18 @@ let reserveItems: CatalogItemType = {
   new: false,
 };
 
-const ITEMS_PER_PAGE = 7;
+const ITEMS_PER_PAGE = 20;
 const page = async ({
   searchParams,
 }: {
   searchParams?: {
     query?: string;
     page?: string;
+    rowPerPage?: string;
   };
 }) => {
   const query = searchParams?.query || "";
-
+  const rowPerPage = Number(searchParams?.rowPerPage) || ITEMS_PER_PAGE;
   const currentPage = Number(searchParams?.page) || 1;
   const sortParam =
     (searchParams &&
@@ -54,10 +56,11 @@ const page = async ({
     query,
     page: currentPage,
     sortParam: Array.isArray(sortParam) ? sortParam : undefined,
+    row: Number(rowPerPage),
   });
 
   const totalPages = Math.ceil(
-    Number((await getRowCount()).count) / ITEMS_PER_PAGE
+    Number((await getRowCount({})).count) / rowPerPage || ITEMS_PER_PAGE
   );
 
   const supabase = await createClient();
@@ -70,7 +73,6 @@ const page = async ({
   return (
     <>
       <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto">
-        {/* <AsideCategories /> */}
         <Catalog>
           <div className="flex justify-between">
             <div className="flex gap-4 items-center">
@@ -126,7 +128,14 @@ const page = async ({
             )}
           </div>
 
-          {items.data?.length! > 1 && <Pagination totalPages={totalPages} />}
+          <div className="flex items-center justify-between w-full bg-white px-4">
+            <Suspense fallback={null}>
+              <Pagination totalPages={totalPages} />
+            </Suspense>
+            <Suspense fallback={null}>
+              <ItemPerView />
+            </Suspense>
+          </div>
         </Catalog>
       </div>
     </>

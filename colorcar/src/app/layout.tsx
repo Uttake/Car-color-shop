@@ -3,7 +3,6 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import clsx from "clsx";
 import Header from "./ui/header/Header";
-
 const inter = Inter({ subsets: ["latin"] });
 import ToastProvider from "./ui/components/ToastProvider";
 import { BasketProvider } from "./ui/components/BasketContext";
@@ -12,6 +11,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import Script from "next/script";
 import dynamic from "next/dynamic";
 import YaMetrica from "./ui/components/YaMetrica";
+import "react-toastify/dist/ReactToastify.css";
 
 const Footer = dynamic(() => import("./ui/footer/Footer"), { ssr: false });
 
@@ -37,7 +37,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <BasketProvider>
             <GoogleCaptchaWrapper>
               <Header />
-
               {children}
             </GoogleCaptchaWrapper>
           </BasketProvider>

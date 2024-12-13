@@ -1,12 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Category.module.css";
 import clsx from "clsx";
 import Link from "next/link";
+import ArrowIcon from "../../../_assets/arrow.svg";
+import { usePathname } from "next/navigation";
 
 type MenuData = {
   title: string;
   link?: string;
+  category?: string;
   subcategories?: MenuData[];
 };
 
@@ -15,47 +18,45 @@ type DropdownMenuProps = {
   data: MenuData[];
 };
 
-const DropdownMenu = ({
-  categoryOpen,
-  data,
-}: DropdownMenuProps): JSX.Element | null => {
-  const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+const DropdownMenu = ({ data }: DropdownMenuProps): JSX.Element | null => {
+  const [activeCategory, setActiveCategory] = useState<string>("");
   const [submenuOpen, setSubmenuOpen] = useState<string>("");
+  const pathname = usePathname();
+
+  console.log(submenuOpen);
+
+  useEffect(() => {
+    if (pathname && pathname !== "") {
+      const category = pathname.split("/")[2] || "";
+      setSubmenuOpen(category);
+      setActiveCategory(category);
+    }
+  }, [pathname]);
 
   const handleChange = (str: string) => {
-    if (submenuOpen === str) {
-      setSubmenuOpen("");
-    } else {
-      setSubmenuOpen(str);
-    }
-  };
-
-  const handleMouseEnter = (title: string) => {
-    setHoveredCategory(title);
-  };
-
-  const handleMouseLeave = () => {
-    setHoveredCategory(null);
+    setSubmenuOpen((prev) => (prev.includes(str) ? "" : str));
   };
 
   return (
     <div className={styles.menu}>
-      <div className="p-3">Все категории</div>
       {data.map((category) => (
         <div key={category.title}>
           <div
-            // key={category.title}
             className={styles.menuItem}
-            onMouseEnter={() => handleMouseEnter(category.title)}
-            onMouseLeave={handleMouseLeave}
+            style={{
+              backgroundColor:
+                category.category === activeCategory.split("-")[0]
+                  ? "#C53720"
+                  : "",
+            }}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between p-2">
               <Link
                 href={category.link || ""}
                 scroll={false}
                 className={clsx(
                   styles.menuLink,
-                  " text-base text-white flex-1"
+                  " text-lg font-bold text-white flex-1"
                 )}
               >
                 {category.title}
@@ -63,48 +64,54 @@ const DropdownMenu = ({
 
               {category.subcategories && (
                 <button
-                  onClick={() => handleChange(category.title)}
+                  onClick={(e) => {
+                    handleChange(category.category || "");
+                  }}
                   aria-label="submenu"
                 >
-                  <svg
+                  <ArrowIcon
+                    width={25}
+                    height={25}
+                    stroke="white"
                     className={clsx("w-3.5 h-3.5 ms-2.5 transition", {
-                      "-rotate-180": category.title === submenuOpen,
-                      "rotate-0": !submenuOpen,
+                      "rotate-90": submenuOpen.includes(
+                        category.category || ""
+                      ),
+
+                      "rotate-0": submenuOpen !== category.category,
                     })}
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 10 6"
-                  >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="m1 1 4 4 4-4"
-                    />
-                  </svg>
+                  />
                 </button>
               )}
             </div>
           </div>
-          {category.subcategories && submenuOpen === category.title && (
-            <div
-              className={`${styles.submenu} ${
-                submenuOpen === category.title ? styles.submenuOpen : ""
-              }`}
-            >
-              {category.subcategories.map((subcategory) => (
-                <a
-                  href={subcategory.link}
-                  key={subcategory.title}
-                  className={clsx(styles.submenuItem, "text-sm font-medium")}
-                >
-                  {subcategory.title}
-                </a>
-              ))}
-            </div>
-          )}
+          {category.subcategories &&
+            submenuOpen.split("-")[0] === category.category && (
+              <div
+                className={`${styles.submenu} ${
+                  submenuOpen.split("-")[0] === category.category
+                    ? styles.submenuOpen
+                    : ""
+                }`}
+              >
+                {category.subcategories.map((subcategory) => (
+                  <Link
+                    href={subcategory.link || ""}
+                    key={subcategory.title}
+                    scroll={false}
+                    style={{
+                      textDecoration:
+                        activeCategory === subcategory.category
+                          ? "underline"
+                          : "",
+                    }}
+                    className={clsx(styles.submenuItem, "text-sm font-medium")}
+                  >
+                    {subcategory.title}
+                  </Link>
+                ))}
+              </div>
+            )}
         </div>
       ))}
     </div>

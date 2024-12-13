@@ -13,6 +13,7 @@ const SortedItem = ({ title, value }: { title: string; value: string }) => {
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     setIsActive(params.has(value));
+    setSortedValue(params.get(value) === "true");
   }, [searchParams, value]);
 
   const handleChange = () => {
@@ -43,7 +44,9 @@ const SortedItem = ({ title, value }: { title: string; value: string }) => {
       {title}
       <SortedIco
         className="transition-transform"
-        style={{ transform: sortedValue ? "rotate(180deg)" : "" }}
+        style={{
+          transform: sortedValue ? "rotate(180deg)" : "rotate(0deg)",
+        }}
         stroke={isActive ? "#C53720" : "#1D1D1D"}
       />
     </div>

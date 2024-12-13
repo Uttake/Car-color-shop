@@ -120,3 +120,11 @@
 .button:hover {
   opacity: 0.9;
 }
+
+
+@media screen and (max-width: 768px) {
+  .filterContainer {
+    max-width: 100%;
+    width: 100%;
+  }
+}

@@ -1,12 +1,11 @@
 "use server";
-
 import { revalidatePath } from "next/cache";
 import { CatalogItemType } from "./definitions";
 import { supabase } from "./supabase/supabaseClient";
 import { v1 } from "uuid";
 import {redirect} from 'next/navigation'
 import {createClient} from '../../app/utils/supabase/serverSupabaseClient'
-import { getUsd } from "./index";
+
 
 
 export const getNewest = async () => {
@@ -33,6 +32,7 @@ export const postData = async (formData: FormData) => {
   const discount = Number(formData.get("discount"));
   const fulldescription = formData.get("fulldescription");
   const category = formData.get("category");
+  const subcategory = formData.get("subcategory");
   const avaiblity = formData.get("avaiblity");
   const newest = formData.get("newest");
   let id = v1();
@@ -58,13 +58,16 @@ export const postData = async (formData: FormData) => {
           discount,
           fulldescription,
           category,
+          subcategory,
           avaiblity,
           newest,
         },
       ])
       .select();
       if(data) {
+
         revalidatePath('/adminpage/catalog')
+        return 'success'
       }
     if (error) {
       throw error;
@@ -74,19 +77,33 @@ export const postData = async (formData: FormData) => {
   }
 };
 
-export const getRowCount = async (): Promise<{
+export const getRowCount = async ({
+  slug,
+}: {
+  slug?: string;
+}): Promise<{
   count?: number;
   error?: string;
 }> => {
   try {
-    const { count, error } = await supabase
+    const productsQuery = supabase
       .from("Products")
       .select("*", { count: "exact", head: true });
 
+    if (slug) {
+      if (slug.includes('-')) {
+        productsQuery.eq("subcategory", slug);
+      } else {
+        productsQuery.eq("category", slug);
+      }
+    }
+
+    const { count, error } = await productsQuery;
+
     if (error) throw new Error(error.message || "Failed to fetch products");
 
-    if (count) {
-      return { count: count };
+    if (count !== null && count !== undefined) {
+      return { count };
     } else {
       throw new Error("No products found");
     }
@@ -95,6 +112,7 @@ export const getRowCount = async (): Promise<{
     return { error: errorMessage };
   }
 };
+
 
 
 export const getCatalogItem = async(id: string): Promise<CatalogItemType> => {
@@ -113,7 +131,7 @@ export const getCatalogItem = async(id: string): Promise<CatalogItemType> => {
 
 export const updateCatalogItem = async (id: string, data: CatalogItemType) => {
   try {
-    let imageUrl = data.images; 
+    let imageUrl: string | File  = data.images; 
 
     if (data.images instanceof File) {
       const { data: storageData, error: storageError } = await supabase.storage
@@ -151,9 +169,12 @@ export const updateCatalogItem = async (id: string, data: CatalogItemType) => {
       return;
     }
 
+   
+
     revalidatePath("/adminpage/catalog");
 
     console.log("Данные успешно обновлены");
+    return 'success'
   } catch (e) {
     console.error("Неожиданная ошибка:", e);
   }
@@ -229,6 +250,7 @@ export const getItemsByCategory = async ({
   minPrice,
   maxPrice,
   status,
+  row
 }: {
   query: string;
   slug?: string;
@@ -237,10 +259,17 @@ export const getItemsByCategory = async ({
   minPrice?: number;
   maxPrice?: number;
   status?: string[];
+  row: number;
 }) => {
   try {
-    const rangeStart = (page - 1) * 8;
-    const rangeEnd = rangeStart + 7;
+    const { count } = await getRowCount(slug ? { slug } : {});
+    const totalItems = count ?? 0;
+
+    const totalPages = Math.ceil(totalItems / row);
+    page = Math.min(page, totalPages);
+
+    const rangeStart = (page - 1) * row;
+    const rangeEnd = Math.min(rangeStart + row - 1, totalItems - 1);
     const productsQuery = supabase
       .from("Products")
       .select("*")
@@ -251,12 +280,15 @@ export const getItemsByCategory = async ({
       productsQuery.ilike("title", `%${query}%`);
     }
 
+    if(slug) {
+      if(slug.includes('-')) {
+        productsQuery.eq("subcategory", slug)
+      } else {
+        productsQuery.eq("category", slug)
+      }
 
-    if (slug) {
-      productsQuery.eq("category", slug);
     }
-
-
+    
     if (sortParam && sortParam[0] === "sortByprice") {
       const isAscending = sortParam[1] !== "true";
       productsQuery.order("price", { ascending: isAscending });
@@ -266,6 +298,11 @@ export const getItemsByCategory = async ({
     if (sortParam && sortParam[0] === "sortBystock") {
       const isAscending = sortParam[1] !== "true";
       productsQuery.order("avaiblity", { ascending: isAscending });
+    }
+
+    if (sortParam && sortParam[0] === "sortBynew") {
+      const isAscending = sortParam[1] !== "true";
+      productsQuery.order("created_at", { ascending: isAscending });
     }
 
 

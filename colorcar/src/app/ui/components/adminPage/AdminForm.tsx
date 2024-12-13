@@ -16,6 +16,8 @@ import EditorBlock from "../EditorBlock/EditorBlock";
 import { fixStyleString } from "@/app/utils";
 import DOMPurify from "isomorphic-dompurify";
 import Dropdown from "../DropDown";
+import Image from "next/image";
+import { toast } from "react-toastify";
 
 let avaiblity = [
   {
@@ -61,7 +63,6 @@ const AdminForm = ({
   };
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     const formattedData = {
       ...data,
       images: preview || item.images,
@@ -71,21 +72,34 @@ const AdminForm = ({
     };
 
     if (update) {
-      await updateCatalogItem(item.id, formattedData);
+      const data = await updateCatalogItem(item.id, formattedData);
+      if (data === "success") {
+        toast.success("Товар обновлен");
+        return;
+      }
+      toast.error(data);
       reset();
     } else {
       const formData = new FormData();
+      const [category, subCategroy] = data.category.split(",");
+
       formData.append("name", data.title);
       formData.append("description", data.description);
       formData.append("price", data.price.toString());
       formData.append("discount", data.discount.toString());
       formData.append("image", data.images[0]);
       formData.append("fulldescription", JSON.stringify(data.fulldescription));
-      formData.append("category", data.category);
+      formData.append("category", category);
+      formData.append("subcategory", subCategroy);
       formData.append("avaiblity", data.avaiblity);
       formData.append("newest", data.newest);
       reset();
-      await postData(formData);
+      const res = await postData(formData);
+      if (res === "success") {
+        toast.success("Товар добавлен");
+        return;
+      }
+      toast.error(res);
     }
     await getItemsByCategory({ query, page: 7 });
   };
@@ -98,7 +112,7 @@ const AdminForm = ({
       ALLOWED_ATTR: ["class", "style", "id", "title"],
     }
   );
-  console.log(item);
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -109,9 +123,11 @@ const AdminForm = ({
           <div className="flex flex-col gap-4 mb-5">
             <span>Изображение</span>
             {preview ? (
-              <img
+              <Image
                 src={preview}
                 alt="Предпросмотр"
+                width={200}
+                height={200}
                 className="w-40 h-40 object-cover rounded border mb-2"
               />
             ) : (
@@ -131,6 +147,7 @@ const AdminForm = ({
             label="Категория"
             control={control}
             name="category"
+            defaultValue={update ? item.category : ""}
           />
 
           <Dropdown
@@ -138,6 +155,7 @@ const AdminForm = ({
             control={control}
             name="avaiblity"
             options={avaiblity}
+            defaultValue={update ? item.avaiblity.toString() : ""}
           />
 
           <Controller

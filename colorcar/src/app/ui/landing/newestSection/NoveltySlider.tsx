@@ -44,22 +44,24 @@ const NoveltySlider: React.FC<NoveltySliderProps> = ({ data }) => {
     course > 0 && (
       <section className="py-10">
         <Title title="Новинки" color="#000" />
-        <div className="wrapper relative">
-          <button aria-label="prev" className="custom-prev">
+        <div className="wrapper relative flex items-center gap-3 lg:flex-wrap lg:justify-center overflow-hidden md:px-4 lg:px-2">
+          <button
+            aria-label="prev"
+            className="custom-prev min-w-[40px] lg:order-1"
+          >
             <ArrowIcon style={{ transform: "rotate(180deg)" }} />
           </button>
-          <button aria-label="next" className="custom-next">
-            <ArrowIcon />
-          </button>
+
           <Swiper
+            className="newestSlider w-full"
             modules={[Navigation, Pagination]}
+            centerInsufficientSlides={true}
             navigation={{
               prevEl: ".custom-prev",
               nextEl: ".custom-next",
             }}
-            slidesPerView={4}
+            slidesPerView="auto"
             spaceBetween={30}
-            className="newestSlider"
           >
             {data.map((item: CatalogItemType, index) => (
               <SwiperSlide key={item.id} className="max-w-[274px]">
@@ -117,6 +119,12 @@ const NoveltySlider: React.FC<NoveltySliderProps> = ({ data }) => {
               </SwiperSlide>
             ))}
           </Swiper>
+          <button
+            aria-label="next"
+            className="custom-next min-w-[40px] lg:order-3"
+          >
+            <ArrowIcon />
+          </button>
         </div>
       </section>
     )

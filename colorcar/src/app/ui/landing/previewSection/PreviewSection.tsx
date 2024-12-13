@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import Title from "../../components/Title";
 import s from "./previewSection.module.css";
 import PreviewList from "./PreviewList";
@@ -10,7 +10,9 @@ const PreviewSection = () => {
     <section className={clsx(s.previewSection, "relative")}>
       <div className={clsx(s.background)}></div>
 
-      <Search main={true} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Search main={true} />
+      </Suspense>
       <div className="max-w-6xl m-auto relative">
         <Title
           title="Автоэмали и лакокрасочные материалы: качественные решения для вашего автомобиля."

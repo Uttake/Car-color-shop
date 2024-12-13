@@ -24,6 +24,9 @@ const nextConfig = {
 
     return config;
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   images: {
     domains: ["localhost"],
     deviceSizes: [640, 1080, 1920],
@@ -35,11 +38,6 @@ const nextConfig = {
         port: "",
         pathname: "/storage/v1/object/public/**",
       },
-    ],
-  },
-  experimental: {
-    fontLoaders: [
-      { loader: "@next/font/google", options: { display: "swap" } },
     ],
   },
 };

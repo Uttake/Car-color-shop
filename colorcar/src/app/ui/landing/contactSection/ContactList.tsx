@@ -18,7 +18,7 @@ const ContactList = () => {
           key={item.title}
           className="flex items-center text-white gap-4 mb-4 last:mb-0 text-base font-medium"
         >
-          <item.img />
+          <item.img width={20} height={20} />
           {item.type ? (
             <a href={`${item.type}:${item.title.replace(/[-\(\)\s]/g, "")}`}>
               <span>{item.title}</span>

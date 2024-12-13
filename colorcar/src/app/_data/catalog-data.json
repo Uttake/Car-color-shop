@@ -31,28 +31,28 @@
         ]
     },
     {
-        "title": "Шпаклевка",
-        "category": "shpaklevka",
-        "link": "/catalog/shpaklevka",
+        "title": "Шпатлевка",
+        "category": "shpatlevka",
+        "link": "/catalog/shpatlevka",
         "subcategories": [{
             "title":"Базовая",
-            "category": "shpaklevka-bazovaya",
-            "link": "/catalog/shpaklevka/shpaklevka-bazovaya"
+            "category": "shpatlevka-bazovaya",
+            "link": "/catalog/shpatlevka-bazovaya"
         },
         {
             "title":"Структурная",
-            "category": "shpaklevka-strukturnaia",
-            "link": "/catalog/shpaklevka/shpaklevka-strukturnaia"
+            "category": "shpatlevka-strukturnaia",
+            "link": "/catalog/shpatlevka-strukturnaia"
         },
         {
             "title":"Для дисков",
-            "category": "shpaklevka-dlya-diskov",
-            "link": "/catalog/shpaklevka/shpaklevka-dlya-diskov"
+            "category": "shpatlevka-dlya-diskov",
+            "link": "/catalog/shpatlevka-dlya-diskov"
         },
         {
             "title":"Для сколов",
-            "category": "shpaklevka-dlya-skolov",
-            "link": "/catalog/shpaklevka/shpaklevka-dlya-skolov"
+            "category": "shpatlevka-dlya-skolov",
+            "link": "/catalog/shpatlevka-dlya-skolov"
         }
         ]  
     },
@@ -62,45 +62,47 @@
         "link": "/catalog/grunti",
         "subcategories": [{
             "title":"Базовая",
-            "link": "/catalog/shpaklevka/grunti-bazovie"
+            "link": "/catalog/grunti-bazovie"
         },
         {
             "title":"Структурная",
-            "link": "/catalog/shpaklevka/grunti-strukturnie"
+            "link": "/catalog/grunti-strukturnie"
         },
         {
             "title":"Для дисков",
-            "link": "/catalog/shpaklevka/grunti-dlya-diskov"
+            "link": "/catalog/grunti-dlya-diskov"
         },
         {
             "title":"Для сколов",
-            "link": "/catalog/shpaklevka/grunti-dlya-skolov"
+            "link": "/catalog/grunti-dlya-skolov"
         }
         ]  
     },
     {
         "title": "Расходные материалы",
         "link": "/catalog/rashodnye-materiali",
+        "category": "rashodnye-materiali",
         "subcategories": [{
             "title":"Базовая",
-            "link": "/catalog/shpaklevka/bazovaya"
+            "link": "/catalog/rashodnye-materiali-bazovaya"
         },
         {
             "title":"Структурная",
-            "link": "/catalog/shpaklevka/strukturnaia"
+            "link": "/catalog/rashodnye-materiali-strukturnaia"
         },
         {
             "title":"Для дисков",
-            "link": "/catalog/shpaklevka/diski"
+            "link": "/catalog/rashodnye-materiali-diski"
         },
         {
             "title":"Для сколов",
-            "link": "/catalog/shpaklevka/skoly"
+            "link": "/catalog/rashodnye-materiali-skoly"
         }
         ]  
     },
     {
         "title": "Аэрозоли",
+        "category": "aerosoli",
         "link": "/catalog/aerosoli"    
     }
 ]

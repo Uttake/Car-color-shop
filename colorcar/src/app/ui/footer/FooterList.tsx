@@ -41,7 +41,7 @@ const FooterList = async () => {
   return (
     <div className="flex justify-between basis-[60%] flex-wrap md:basis-full md:gap-6">
       {footerData.map((item) => (
-        <FooterItem item={item} />
+        <FooterItem key={item.maintitle} item={item} />
       ))}
     </div>
   );
