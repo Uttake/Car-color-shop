@@ -1,6 +1,8 @@
+[build.environment]
+NPM_FLAGS = "--global pnpm"
 [build]
-  command = "npm run build"
-  publish = "colorcar/.next"
+  command = "pnpm run build"
+  publish = ".next"
 
 [[redirects]]
   from = "/*"
