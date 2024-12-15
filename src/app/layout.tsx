@@ -9,11 +9,10 @@ import { BasketProvider } from "./ui/components/BasketContext";
 import GoogleCaptchaWrapper from "./ui/components/GoogleCaptchaWrapper";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import dynamic from "next/dynamic";
-// import YaMetrica from "./ui/components/YaMetrica";
 import "react-toastify/dist/ReactToastify.css";
 import FooterContact from "./ui/footer/FooterContact";
 import Footer from "./ui/footer/Footer";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const YaMetrica = dynamic(() => import("./ui/components/YaMetrica"), {
   ssr: false,
 });
@@ -51,6 +50,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         </ToastProvider>
         <Footer />
         <YaMetrica />
+        <SpeedInsights />
       </body>
       <GoogleAnalytics gaId="G-JJ4RDB15WV" />
     </html>
