@@ -79,8 +79,10 @@ export const postData = async (formData: FormData) => {
 
 export const getRowCount = async ({
   slug,
+  query,
 }: {
   slug?: string;
+  query?: string;
 }): Promise<{
   count?: number;
   error?: string;
@@ -98,6 +100,9 @@ export const getRowCount = async ({
       }
     }
 
+    if(query) {
+      productsQuery.ilike('title', `%${query}%`)
+    }
     const { count, error } = await productsQuery;
 
     if (error) throw new Error(error.message || "Failed to fetch products");
@@ -180,13 +185,23 @@ export const updateCatalogItem = async (id: string, data: CatalogItemType) => {
   }
 };
 
-export const getSearchItems = async (query: string) => {
+export const getSearchItems = async (query: string, slug?: string) => {
   try {
-    const { data, error } = await supabase
-    .from("Products")
-    .select("title")
-    .ilike("title", `%${query}%`)
-    .range(0, 8);
+    const productQuery = supabase
+      .from("Products")
+      .select('title')
+      .ilike("title", `%${query}%`)
+      .range(0, 8);
+
+    if (slug) {
+      if (slug.includes('-')) {
+        productQuery.eq("subcategory", slug);
+      } else {
+        productQuery.eq("category", slug);
+      }
+    }
+    const { data, error } = await productQuery
+
     if(error) {
       console.log(error);
     }

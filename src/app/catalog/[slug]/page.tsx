@@ -69,10 +69,9 @@ const page = async ({
     status: status.split(","),
   });
 
-  const totalPages = Math.ceil(
-    Number((await getRowCount({ slug })).count) / ITEMS_PER_PAGE
-  );
-
+  const totalPages =
+    Math.ceil(Number((await getRowCount({ query })).count || 0) / rowPerPage) ||
+    1;
   const priceRange = await getPriceRange();
 
   const lowestPries = +(priceRange.minPrice * course).toFixed(2);

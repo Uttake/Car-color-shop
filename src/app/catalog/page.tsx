@@ -34,7 +34,6 @@ const page = async ({
   };
 }) => {
   noStore();
-  console.log(searchParams);
   const course = await getUsd();
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
@@ -67,10 +66,11 @@ const page = async ({
 
   const lowestPries = +(priceRange.minPrice * course).toFixed(2);
   const highestPries = +(priceRange.maxPrice * course).toFixed(2);
+  const co = await getRowCount({});
 
-  const totalPages = Math.ceil(
-    Number((await getRowCount({})).count) / rowPerPage || ITEMS_PER_PAGE
-  );
+  const totalPages =
+    Math.ceil(Number((await getRowCount({ query })).count || 0) / rowPerPage) ||
+    1;
 
   const title = `Каталог товаров ${query ? `по запросу: ${query}` : ""}`;
   const description = `Просмотр каталога товаров на нашем сайте${

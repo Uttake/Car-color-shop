@@ -13,6 +13,7 @@ const Search = ({ main }: { main?: boolean }) => {
   const pathname = usePathname();
   const { replace } = useRouter();
   const { push } = useRouter();
+
   const handleSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
     const params = new URLSearchParams(searchParams);
@@ -26,7 +27,11 @@ const Search = ({ main }: { main?: boolean }) => {
   };
 
   const searchItems = async () => {
-    const item = await getSearchItems(searchRef.current?.value || "");
+    const slug = pathname.split("/")[2];
+    const item = await getSearchItems(
+      searchRef.current?.value || "",
+      slug || ""
+    );
     if (item) {
       let filteredItems = item?.map((el) => el.title);
       setItems(filteredItems);
