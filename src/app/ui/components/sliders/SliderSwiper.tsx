@@ -19,15 +19,11 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
   const [isLoopEnabled, setIsLoopEnabled] = useState(false);
 
   useEffect(() => {
-    const handleLoad = () => {
+    const timer = setTimeout(() => {
       setIsLoopEnabled(true);
-    };
+    }, 100);
 
-    window.onload = handleLoad;
-
-    return () => {
-      window.onload = null; // Clean up the event listener when the component unmounts
-    };
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -51,6 +47,7 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
                 fill
                 priority={index === 0}
                 placeholder="blur"
+                blurDataURL={image.replace(".jpg", "-lowres.jpg")}
                 className="object-cover"
               />
 

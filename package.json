@@ -15,6 +15,7 @@
     "@hookform/resolvers": "^3.9.1",
     "@netlify/next": "^1.4.9",
     "@netlify/plugin-nextjs": "^5.9.0",
+    "@next/bundle-analyzer": "^15.1.0",
     "@next/third-parties": "^15.0.3",
     "@pbe/react-yandex-maps": "^1.2.5",
     "@radix-ui/react-label": "^2.1.0",
