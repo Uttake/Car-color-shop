@@ -9,21 +9,19 @@ const ItemPerView = () => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const [active, setActive] = useState(variants[0]);
+
   const createPageURL = (variant: number | string) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString());
     params.set("rowPerPage", variant.toString());
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
-  console.log(active);
-
   useEffect(() => {
-    const params = new URLSearchParams(searchParams);
-    const rowPerPage = params.get("rowPerPage");
+    const rowPerPage = searchParams.get("rowPerPage");
     if (rowPerPage) {
       setActive(Number(rowPerPage));
     }
-  }, []);
+  }, [searchParams]);
 
   return (
     <div className="flex gap-4 items-end">

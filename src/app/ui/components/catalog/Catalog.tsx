@@ -10,6 +10,7 @@ export const Catalog = async ({ children }: { children: React.ReactNode }) => {
           <Search />
         </Suspense>
         <SortedWrapper />
+
         {children}
       </div>
     </section>

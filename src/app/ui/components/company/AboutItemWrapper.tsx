@@ -6,7 +6,7 @@ import AboutItem from "./AboutItem";
 
 const AboutItemWrapper = () => {
   return (
-    <div className="flex flex-col gap-9 items-center justify-center">
+    <div className="flex flex-col gap-9 items-center justify-center xl:flex-row xl:w-full xl:justify-evenly">
       <AboutItem
         icon={
           <DocumentIco
@@ -15,7 +15,7 @@ const AboutItemWrapper = () => {
           />
         }
         title="Реквизиты"
-        onClick={() => {}}
+        type=""
       />
       <AboutItem
         icon={
@@ -25,7 +25,7 @@ const AboutItemWrapper = () => {
           />
         }
         title="Задать вопрос"
-        onClick={() => {}}
+        type="callback"
       />
     </div>
   );

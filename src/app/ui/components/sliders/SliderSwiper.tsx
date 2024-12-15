@@ -7,8 +7,6 @@ import "swiper/css/pagination";
 import Image from "next/image";
 import MainButton from "../MainButton";
 import DOMPurify from "isomorphic-dompurify";
-import styles from "./SliderSwiper.module.css";
-import clsx from "clsx";
 
 interface Slide {
   id: number;
@@ -21,11 +19,15 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
   const [isLoopEnabled, setIsLoopEnabled] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    const handleLoad = () => {
       setIsLoopEnabled(true);
-    }, 100);
+    };
 
-    return () => clearTimeout(timer);
+    window.onload = handleLoad;
+
+    return () => {
+      window.onload = null; // Clean up the event listener when the component unmounts
+    };
   }, []);
 
   return (
@@ -49,7 +51,6 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
                 fill
                 priority={index === 0}
                 placeholder="blur"
-                blurDataURL={image.replace(".jpg", "-lowres.jpg")}
                 className="object-cover"
               />
 

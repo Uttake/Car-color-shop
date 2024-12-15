@@ -13,7 +13,7 @@ export const fixStyleString = (htmlString: string): string => {
     return DOMPurify.sanitize(html);
   }
 
-export const description : Record<string, string> = {
+export const translateCategories : Record<string, string> = {
   'emali': 'Эмали',
   'laki': 'Лаки',
   'emali-basovie': 'Базовая эмали',

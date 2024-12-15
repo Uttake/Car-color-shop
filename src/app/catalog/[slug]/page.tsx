@@ -13,10 +13,12 @@ import clsx from "clsx";
 import CatalogItem from "@/app/ui/components/catalog/CatalogItem";
 import { Pagination } from "@/app/ui/components/Pagination";
 import { CatalogItemType } from "@/app/utils/definitions";
-import { description, getUsd } from "@/app/utils";
+import { translateCategories, getUsd } from "@/app/utils";
 import { unstable_noStore as noStore } from "next/cache";
 import FilterComponent from "@/app/ui/components/filter/FilterWrapper";
-import ItemPerView from "@/app/ui/components/ItemPerView";
+import Head from "next/head";
+import Script from "next/script";
+import { headers } from "next/headers";
 const ITEMS_PER_PAGE = 9;
 const page = async ({
   params,
@@ -74,8 +76,30 @@ const page = async ({
 
   const lowestPries = +(priceRange.minPrice * course).toFixed(2);
   const highestPries = +(priceRange.maxPrice * course).toFixed(2);
+
+  const title = `Каталог товаров ${query ? `по запросу: ${query}` : ""}`;
+  const description = `Просмотр каталога товаров на нашем сайте${
+    query ? ` для запроса: ${query}` : ""
+  }. Найдите лучшие товары по выгодным ценам.`;
+  const currentUrl = new URL(
+    headers().get("host") || "",
+    "https://yourwebsite.com"
+  ).href;
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={"/logo.webp"} />{" "}
+        <meta property="og:url" content={currentUrl} />{" "}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={"/logo.webp"} />
+      </Head>
       <Breadcrumbs
         breadcrumbs={[
           { label: "Главная", href: "/" },
@@ -85,14 +109,14 @@ const page = async ({
             active: true,
           },
           {
-            label: description[slug],
+            label: translateCategories[slug],
             href: `/catalog/${slug}`,
             active: true,
           },
         ]}
       />
       <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto pb-5">
-        <div className="flex flex-col gap-5 md:w-full">
+        <div className="flex flex-col gap-5 tablet:w-full">
           <AsideCategories />
           <Suspense fallback={null}>
             <FilterComponent
@@ -102,6 +126,14 @@ const page = async ({
           </Suspense>
         </div>
         <Catalog>
+          <div className="flex items-center justify-between w-full bg-white px-4 mt-3 flex-wrap">
+            <Suspense fallback={null}>
+              <Pagination totalPages={totalPages} />
+            </Suspense>
+            {/* <Suspense fallback={null}>
+              <ItemPerView />
+            </Suspense> */}
+          </div>
           <div
             className={clsx(
               {
@@ -133,12 +165,38 @@ const page = async ({
             <Suspense fallback={null}>
               <Pagination totalPages={totalPages} />
             </Suspense>
-            <Suspense fallback={null}>
+            {/* <Suspense fallback={null}>
               <ItemPerView />
-            </Suspense>
+            </Suspense> */}
           </div>
         </Catalog>
       </div>
+      <Script
+        id="jsonld"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: Array.isArray(items.data)
+              ? items.data.map((item, index) => ({
+                  "@type": "ListItem",
+                  position: index + 1,
+                  name: item.title,
+                  item: {
+                    "@type": "Product",
+                    name: item.title,
+                    image: item.image,
+                    description: item.description,
+                    priceCurrency: "BYN",
+                    price: item.price * course,
+                    url: `https://yourwebsite.com/product/${item.id}`,
+                  },
+                }))
+              : [],
+          }),
+        }}
+      />
     </>
   );
 };

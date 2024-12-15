@@ -3,14 +3,20 @@ import CatalogItem from "@/app/ui/components/catalog/CatalogItem";
 import { getCatalogItem } from "@/app/utils/actions";
 import React from "react";
 import { unstable_noStore as noStore } from "next/cache";
+import { description } from "@/app/utils";
 const page = async ({ params }: { params: { id: string } }) => {
   noStore();
   const id = params.id;
   const item = await getCatalogItem(id);
-
+  console.log(item);
   const path = [
     { label: "Главная", href: "/" },
     { label: "Каталог", href: "/catalog/#catalog" },
+    {
+      label: description[item?.category as string],
+      href: `/catalog/${item?.category}`,
+    },
+
     {
       label: item?.title,
       href: `/catalog/${id}`,

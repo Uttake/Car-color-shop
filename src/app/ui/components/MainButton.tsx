@@ -30,30 +30,30 @@ const MainButton = ({
   type,
 }: MainButtonType) => {
   return (
-    <button
-      className={clsx(
-        maxW,
-        "group border-4 border-orange-brdr w-full cursor-pointer hover:bg-[#d42e12] transition-all duration-300",
-        hgt,
-        classes,
-        hover
-      )}
-    >
-      <Link
-        href={href}
-        scroll={false}
+    <Link href={href} scroll={false}>
+      <button
         className={clsx(
-          fontSize,
-          color,
-          "font-bold block",
+          maxW,
+          "group border-4 border-orange-brdr w-full cursor-pointer hover:bg-[#d42e12] transition-all duration-300",
+          hgt,
+          classes,
           hover,
-          "flex justify-center items-center w-full h-full"
+          disabled && "cursor-not-allowed opacity-50"
         )}
         onClick={onClick}
+        disabled={disabled}
       >
-        {title}
-      </Link>
-    </button>
+        <span
+          className={clsx(
+            fontSize,
+            color,
+            "font-bold flex justify-center items-center w-full h-full"
+          )}
+        >
+          {title}
+        </span>
+      </button>
+    </Link>
   );
 };
 

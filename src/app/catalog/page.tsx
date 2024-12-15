@@ -14,7 +14,10 @@ import AsideCategories from "../ui/components/AsideCategories";
 import { unstable_noStore as noStore } from "next/cache";
 import FilterComponent from "../ui/components/filter/FilterWrapper";
 import { getUsd } from "../utils";
-import ItemPerView from "../ui/components/ItemPerView";
+import Head from "next/head";
+import Script from "next/script";
+import { headers } from "next/headers";
+
 const ITEMS_PER_PAGE = 9;
 const page = async ({
   searchParams,
@@ -68,8 +71,30 @@ const page = async ({
     Number((await getRowCount({})).count) / rowPerPage || ITEMS_PER_PAGE
   );
 
+  const title = `Каталог товаров ${query ? `по запросу: ${query}` : ""}`;
+  const description = `Просмотр каталога товаров на нашем сайте${
+    query ? ` для запроса: ${query}` : ""
+  }. Найдите лучшие товары по выгодным ценам.`;
+  const currentUrl = new URL(
+    headers().get("host") || "",
+    "https://yourwebsite.com"
+  ).href;
   return (
     <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content={"/logo.webp"} />{" "}
+        <meta property="og:url" content={currentUrl} />{" "}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={"/logo.webp"} />
+      </Head>
+
       <Breadcrumbs
         breadcrumbs={[
           { label: "Главная", href: "/" },
@@ -81,7 +106,7 @@ const page = async ({
         ]}
       />
       <div className="flex flex-wrap bg-[#EDEDED] max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-5 md:w-full">
+        <div className="flex flex-col gap-5 tablet:w-full">
           <AsideCategories />
           <Suspense fallback={null}>
             <FilterComponent
@@ -90,42 +115,79 @@ const page = async ({
             />
           </Suspense>
         </div>
-        <Catalog>
-          <div
-            className={clsx(
-              {
-                "flex justify-center gap-6 flex-wrap py-5 flex-1":
-                  items.data?.length! <= 2,
-              },
-              {
-                "grid grid-cols-block gap-6 py-5": items.data?.length! > 2,
-              }
-            )}
-          >
-            {items.error ? (
-              <div>Извините произошла ошибка </div>
-            ) : (
-              items.data && (
-                <>
-                  {items.data.map((item: CatalogItemType) => (
-                    <CatalogItem key={item.id} {...item} />
-                  ))}
-                  {!items.data.length && <div>Такого товара нет</div>}
-                </>
-              )
-            )}
-          </div>
+        {!items && <div className="skeleton">Загрузка...</div>}
+        {items && (
+          <Catalog>
+            <div className="flex items-center justify-between w-full bg-white px-4 mt-3">
+              <Suspense fallback={null}>
+                <Pagination totalPages={totalPages} />
+              </Suspense>
+              {/* <Suspense fallback={null}>
+               <ItemPerView />
+             </Suspense> */}
+            </div>
+            <div
+              className={clsx(
+                {
+                  "flex justify-center gap-6 flex-wrap py-5 flex-1":
+                    items.data?.length! <= 2,
+                },
+                {
+                  "grid grid-cols-block gap-6 py-5": items.data?.length! > 2,
+                }
+              )}
+            >
+              {items.error ? (
+                <div>Извините произошла ошибка </div>
+              ) : (
+                items.data && (
+                  <>
+                    {items.data.map((item: CatalogItemType) => (
+                      <CatalogItem key={item.id} {...item} />
+                    ))}
+                    {!items.data.length && <div>Такого товара нет</div>}
+                  </>
+                )
+              )}
+            </div>
 
-          <div className="flex items-center justify-between w-full bg-white px-4">
-            <Suspense fallback={null}>
-              <Pagination totalPages={totalPages} />
-            </Suspense>
-            <Suspense fallback={null}>
-              <ItemPerView />
-            </Suspense>
-          </div>
-        </Catalog>
+            <div className="flex items-center justify-between w-full bg-white px-4">
+              <Suspense fallback={null}>
+                <Pagination totalPages={totalPages} />
+              </Suspense>
+              {/* <Suspense fallback={null}>
+               <ItemPerView />
+             </Suspense> */}
+            </div>
+          </Catalog>
+        )}
       </div>
+      <Script
+        id="structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            itemListElement: Array.isArray(items.data)
+              ? items.data.map((item, index) => ({
+                  "@type": "ListItem",
+                  position: index + 1,
+                  name: item.title,
+                  item: {
+                    "@type": "Product",
+                    name: item.title,
+                    image: item.image,
+                    description: item.description,
+                    priceCurrency: "BYN",
+                    price: item.price * course,
+                    url: `https://yourwebsite.com/product/${item.id}`,
+                  },
+                }))
+              : [],
+          }),
+        }}
+      />
     </>
   );
 };

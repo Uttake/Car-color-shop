@@ -36,6 +36,7 @@ const ImageContainer = ({
         alt={title}
         width={264}
         height={500}
+        priority
         onClick={openModal}
         className="max-w-full max-h-full object-contain cursor-pointer"
       />
@@ -50,9 +51,12 @@ const ImageContainer = ({
         <button onClick={closeModal} className="absolute top-2 right-2 ">
           <Close stroke="black" />
         </button>
-        <img
+        <Image
           src={src}
+          width={340}
+          height={340}
           alt={title}
+          loading="eager"
           className="max-w-full max-h-[500px] object-contain mx-auto"
         />
       </Modal>

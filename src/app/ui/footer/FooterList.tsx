@@ -4,23 +4,22 @@ import FooterItem from "./FooterItem";
 const footerData = [
   {
     maintitle: "КОМПАНИЯ",
-    subtitle: [
-      { title: "О КОМПАНИИ" },
-      { title: "ОТЗЫВЫ КЛИЕНТОВ" },
-      { title: "РЕКВИЗИТЫ" },
-    ],
+    href: "/company",
+    subtitle: [{ title: "О КОМПАНИИ", href: "/company" }],
   },
   {
     maintitle: "КАТАЛОГ",
+    href: "/catalog",
     subtitle: [
-      { title: "АККУМУЛЯТОРЫ" },
-      { title: "АВТОМАСЛА" },
-      { title: "АКСЕССУАРЫ" },
-      { title: "АВТОХИМИЯ" },
+      { title: "ЭМАЛИ", href: "/catalog/emali" },
+      { title: "Грунты", href: "/catalog/grunti" },
+      { title: "Лаки", href: "/catalog/laki" },
+      { title: "Шпатлевка", href: "/catalog/shpaklevka" },
     ],
   },
   {
     maintitle: "УСЛУГИ",
+    href: "/services",
     subtitle: [
       { title: "ДИАГНОСТИКА АККУМУЛЯТОРА" },
       { title: "ПРИЕМ АККУМУЛЯТОРОВ" },
@@ -28,6 +27,7 @@ const footerData = [
   },
   {
     maintitle: "ИНФОРМАЦИЯ",
+    href: "/info",
     subtitle: [
       { title: "АКЦИИ" },
       { title: "НОВОСТИ" },

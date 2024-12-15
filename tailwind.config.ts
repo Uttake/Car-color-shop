@@ -18,9 +18,13 @@ const config: Config = {
   		xl: {
   			max: '1130px'
   		},
+		
   		lg: {
   			max: '1023px'
   		},
+		tablet: {
+			max: '795px'
+		},
   		md: {
   			max: '767px'
   		},

@@ -8,15 +8,18 @@ import ToastProvider from "./ui/components/ToastProvider";
 import { BasketProvider } from "./ui/components/BasketContext";
 import GoogleCaptchaWrapper from "./ui/components/GoogleCaptchaWrapper";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import Script from "next/script";
 import dynamic from "next/dynamic";
-import YaMetrica from "./ui/components/YaMetrica";
+// import YaMetrica from "./ui/components/YaMetrica";
 import "react-toastify/dist/ReactToastify.css";
+import FooterContact from "./ui/footer/FooterContact";
+import Footer from "./ui/footer/Footer";
 
-const Footer = dynamic(() => import("./ui/footer/Footer"), { ssr: false });
+const YaMetrica = dynamic(() => import("./ui/components/YaMetrica"), {
+  ssr: false,
+});
 
 export const metadata: Metadata = {
-  title: "Car color shop",
+  title: "Tarcolor",
   description: "Goodya lox",
 };
 
@@ -36,6 +39,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ToastProvider>
           <BasketProvider>
             <GoogleCaptchaWrapper>
+              <div className="text-sm w-full bg-black pt-5">
+                <div className="wrapper">
+                  <FooterContact />
+                </div>
+              </div>
               <Header />
               {children}
             </GoogleCaptchaWrapper>

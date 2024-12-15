@@ -15,7 +15,10 @@ const ContactInfo = () => {
 
         <div className="text-white flex gap-4">
           <Time />
-          <span>Пн. – Вс.: с 9:00 до 18:00</span>
+          <div className="flex flex-wrap">
+            <span>Пн. – Сб.: с 9:00 до 17:00</span>
+            <span>Вс.: выходной</span>
+          </div>
         </div>
       </div>
     </div>

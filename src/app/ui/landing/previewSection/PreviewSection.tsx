@@ -19,7 +19,7 @@ const PreviewSection = () => {
           color="#1d1d1d"
         />
         <h3 className="text-[#1d1d1d] text-2xl text-center font-medium mb-9 md:text-lg">
-          Carpaints – это специализированный интернет-магазин автоэмалей и
+          TARCOLOR – это специализированный интернет-магазин автоэмалей и
           сопутствующих товаров.
         </h3>
         <PreviewList />

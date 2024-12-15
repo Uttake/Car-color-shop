@@ -9,6 +9,7 @@ import Image from "next/image";
 import { getUsd } from "@/app/utils";
 import MainButton from "../../components/MainButton";
 import ArrowIcon from "../../../_assets/arrow.svg";
+import { useRouter } from "next/navigation";
 
 interface NoveltySliderProps {
   data: CatalogItemType[];
@@ -18,6 +19,7 @@ const NoveltySlider: React.FC<NoveltySliderProps> = ({ data }) => {
   const [course, setCourse] = useState(0);
   const [maxHeight, setMaxHeight] = useState<number | null>(null);
   const slidesRef = useRef<HTMLDivElement[]>([]);
+  const router = useRouter();
 
   const getCourse = async () => {
     const res = await getUsd();
@@ -70,51 +72,53 @@ const NoveltySlider: React.FC<NoveltySliderProps> = ({ data }) => {
                     slidesRef.current[index] = el!;
                   }}
                   style={{ height: maxHeight ? `${maxHeight}px` : "auto" }}
-                  className="h-full"
+                  className="h-full cursor-pointer"
+                  onClick={() =>
+                    router.push(`/catalog/${item.category}/${item.id}`)
+                  }
                 >
-                  <Link
-                    href={`/catalog/${item.category}/${item.id}`}
-                    className="block h-full"
-                  >
-                    <div className="bg-white p-6 flex flex-col justify-between h-full">
-                      <div className="mb-4 h-[230px]">
-                        <Image
-                          src={item.images}
-                          alt={item.title}
-                          width={274}
-                          height={230}
-                          className="max-w-full max-h-full object-contain cursor-pointer"
-                        />
-                      </div>
-                      <h3 className="mb-5 text-base font-medium leading-5 overflow-hidden text-ellipsis max-h-[40px]">
-                        {item.title}
-                      </h3>
-                      <div className="mb-5">
-                        {item.discount ? (
-                          <div className="relative">
-                            <div className="absolute -top-5 text-[#A5A5A5] text-lg font-bold line-through">
-                              {(item.price * course).toFixed(2)} BYN
-                            </div>
-                            <div className="text-[#C53720] text-3xl font-bold">
-                              {(item.price * course - item.discount).toFixed(2)}{" "}
-                              BYN
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="text-[#1D1D1D] text-3xl font-bold">
-                            {(item.price * course).toFixed(2)} BYN
-                          </div>
-                        )}
-                      </div>
-                      <MainButton
-                        title="Подробнее"
-                        hgt="h-[52px]"
-                        fontSize="text-lg"
-                        hover="group-hover:bg-[#d42e12] group-hover:text-white"
-                        href={`/catalog/${item.category}/${item.id}`}
+                  <div className="bg-white p-6 flex flex-col justify-between h-full">
+                    <div className="mb-4 h-[230px]">
+                      <Image
+                        src={item.images}
+                        alt={item.title}
+                        width={274}
+                        height={230}
+                        loading="lazy"
+                        className="max-w-full max-h-full object-contain"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        placeholder="blur"
+                        blurDataURL={`${item.images}?width=10`}
                       />
                     </div>
-                  </Link>
+                    <h3 className="mb-5 text-base font-medium leading-5 overflow-hidden text-ellipsis max-h-[40px]">
+                      {item.title}
+                    </h3>
+                    <div className="mb-5">
+                      {item.discount ? (
+                        <div className="relative">
+                          <div className="absolute -top-5 text-[#A5A5A5] text-base font-bold line-through">
+                            {(item.price * course).toFixed(2)} BYN
+                          </div>
+                          <div className="text-[#C53720] text-2xl font-bold">
+                            {(item.price * course - item.discount).toFixed(2)}{" "}
+                            BYN
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-[#1D1D1D] text-2xl font-bold">
+                          {(item.price * course).toFixed(2)} BYN
+                        </div>
+                      )}
+                    </div>
+                    <MainButton
+                      title="Подробнее"
+                      hgt="h-[52px]"
+                      fontSize="text-lg"
+                      hover="group-hover:bg-[#d42e12] group-hover:text-white"
+                      href={`/catalog/${item.category}/${item.id}`}
+                    />
+                  </div>
                 </div>
               </SwiperSlide>
             ))}

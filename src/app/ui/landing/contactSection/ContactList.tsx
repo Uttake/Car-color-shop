@@ -5,9 +5,9 @@ import mail from "@/app/_assets/mail.svg";
 import adress from "@/app/_assets/adress.svg";
 
 let contactList = [
-  { img: tel, title: "+375297389264", type: "tel" },
-  { img: mail, title: "kazimirov.anton@mail.ru", type: "mailto" },
-  { img: adress, title: "Берёзовский пер., 5/1" },
+  { img: tel, title: "+375293888293", type: "tel" },
+  { img: mail, title: "workmail@example.com", type: "mailto" },
+  { img: adress, title: "улица Турова, 3к1" },
 ];
 
 const ContactList = () => {

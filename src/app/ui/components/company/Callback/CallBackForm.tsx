@@ -4,38 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
-import OrderInput from "./OrderInput";
-import Spinner from "../Spinner";
+
 import { toast } from "react-toastify";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { UserSchema, UserType } from "../../order/OrderForm";
+import OrderInput from "../../order/OrderInput";
+import Spinner from "../../Spinner";
+import { Textarea } from "@/components/ui/textarea";
 
-export const UserSchema = z.object({
-  name: z.string().min(1, { message: "Имя обязательно для заполнения" }),
-  tel: z
-    .string()
-    .min(1, { message: "Телефон обязателен для заполнения" })
-    .regex(/^\+375(25|29|33|44)\d{7}$/, {
-      message: "Введите корректный номер телефона в формате +375",
-    }),
-  email: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        val === "" || /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(val!),
-      {
-        message: "Введите корректный email",
-      }
-    ),
-  services: z.string().optional(),
-  message: z.string().optional(),
-});
-
-export type UserType = z.infer<typeof UserSchema>;
-
-const OrderForm = () => {
+const CallbackForm = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm<UserType>({
@@ -43,6 +22,8 @@ const OrderForm = () => {
       name: "",
       tel: "",
       email: "",
+      services: "",
+      message: "",
     },
     resolver: zodResolver(UserSchema),
     mode: "onChange",
@@ -51,12 +32,6 @@ const OrderForm = () => {
   const onSubmit = async (data: UserType) => {
     setIsLoading(true);
     try {
-      const cardData = JSON.parse(localStorage.getItem("basket")!);
-      if (!cardData.length) {
-        toast.error("Корзина пуста");
-        setIsLoading(false);
-        return;
-      }
       if (!executeRecaptcha) {
         toast.error("Ошибка при загрузке ReCaptcha");
         return;
@@ -73,11 +48,15 @@ const OrderForm = () => {
       });
 
       const res = await captchaResponse.json();
+      console.log(res);
       if (res.success) {
         const orderData = {
           ...data,
-          order: cardData,
           email: data.email || undefined,
+          order: undefined,
+          services: data.services || undefined,
+          message: data.message || undefined,
+          callback: true,
         };
 
         if (!data.email) {
@@ -94,9 +73,9 @@ const OrderForm = () => {
 
         if (response.ok) {
           setIsLoading(false);
-          toast.success("Заказ успешно оформлен");
+          toast.success("Заявка успешно отправлена");
           form.reset();
-          console.log("Заказ успешно отправлен");
+          console.log("Заявка успешно отправлена");
         }
       } else {
         setIsLoading(false);
@@ -111,13 +90,11 @@ const OrderForm = () => {
       localStorage.setItem("basket", JSON.stringify([]));
     }
   };
-
   return (
-    <div className="pt-6 text-base font-medium  max-w-[554px] w-full">
-      <h2 className=" mb-6">Получатель </h2>
+    <div>
       <Form {...form}>
         <form
-          className="space-y-6 sm:max-w-sm w-full"
+          className="space-y-4 sm:max-w-sm w-full"
           onSubmit={form.handleSubmit(onSubmit)}
         >
           <OrderInput
@@ -144,7 +121,24 @@ const OrderForm = () => {
             title="E-mail:"
             isLoading={isLoading}
           />
-          {/* <ReCAPTCHAComponent onChange={handleCaptchaChange} /> */}
+          <OrderInput
+            key="services"
+            form={form}
+            name="services"
+            type="text"
+            title="Интересующий товар / услуга:"
+            isLoading={isLoading}
+          />
+
+          <Textarea
+            {...form.register("message")}
+            id="message"
+            disabled={isLoading}
+            rows={3}
+            placeholder="Сообщение:"
+            className=" border-4 border-black focus:border-black focus-visible:ring-transparent"
+          />
+
           <Button
             type="submit"
             disabled={isLoading}
@@ -153,7 +147,7 @@ const OrderForm = () => {
             {isLoading ? (
               <Spinner fill="fill-orange-brdr" size="sm" />
             ) : (
-              "Заказать"
+              "Отправить"
             )}
           </Button>
         </form>
@@ -162,4 +156,4 @@ const OrderForm = () => {
   );
 };
 
-export default OrderForm;
+export default CallbackForm;

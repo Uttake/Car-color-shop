@@ -10,7 +10,7 @@ export const lists = [
   { title: "Контакты", href: "/contacts" },
 ];
 
-const HeaderList = () => {
+const HeaderList = async () => {
   return (
     <>
       <nav>
