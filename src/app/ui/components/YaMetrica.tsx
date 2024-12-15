@@ -1,8 +1,11 @@
 "use client";
+import { useState, useEffect } from "react";
 import Script from "next/script";
 import CookieConsent from "react-cookie-consent";
 
 const YaMetrica = () => {
+  const [showCookieConsent, setShowCookieConsent] = useState(false);
+
   const initYandexMetrica = () => {
     if (typeof window !== "undefined" && !window.ym) {
       (function (
@@ -45,40 +48,50 @@ const YaMetrica = () => {
     }
   };
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowCookieConsent(true);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
-      <CookieConsent
-        location="bottom"
-        buttonText="Принять"
-        declineButtonText="Отклонить"
-        enableDeclineButton
-        onAccept={() => {
-          console.log("Cookies accepted");
-          initYandexMetrica();
-        }}
-        onDecline={() => {
-          console.log("Cookies declined");
-        }}
-        cookieName="userConsent"
-        style={{ background: "#2B373B", color: "#fff" }}
-        buttonStyle={{
-          color: "#4e503b",
-          fontSize: "13px",
-          background: "#fff",
-          borderRadius: "5px",
-        }}
-        declineButtonStyle={{
-          fontSize: "13px",
-          background: "#f5f5f5",
-          color: "#4e503b",
-          borderRadius: "5px",
-        }}
-      >
-        <p>
-          Мы используем cookies для улучшения вашего опыта. Нажмите
-          &quot;Принять&quot;, чтобы дать согласие на использование cookies.
-        </p>
-      </CookieConsent>
+      {showCookieConsent && (
+        <CookieConsent
+          location="bottom"
+          buttonText="Принять"
+          declineButtonText="Отклонить"
+          enableDeclineButton
+          onAccept={() => {
+            console.log("Cookies accepted");
+            initYandexMetrica();
+          }}
+          onDecline={() => {
+            console.log("Cookies declined");
+          }}
+          cookieName="userConsent"
+          style={{ background: "#2B373B", color: "#fff" }}
+          buttonStyle={{
+            color: "#4e503b",
+            fontSize: "13px",
+            background: "#fff",
+            borderRadius: "5px",
+          }}
+          declineButtonStyle={{
+            fontSize: "13px",
+            background: "#f5f5f5",
+            color: "#4e503b",
+            borderRadius: "5px",
+          }}
+        >
+          <p>
+            Мы используем cookies для улучшения вашего опыта. Нажмите
+            &quot;Принять&quot;, чтобы дать согласие на использование cookies.
+          </p>
+        </CookieConsent>
+      )}
     </>
   );
 };

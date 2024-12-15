@@ -19,8 +19,9 @@ const PreviewItem = ({ item }: { item: previewItem }) => {
         objectFit="cover"
         quality={85}
         className={s.image}
-        loading="lazy"
-        priority={false}
+        placeholder="blur"
+        blurDataURL={item.image}
+        priority={true}
         sizes="(max-width: 768px) 100vw, 50vw"
       />
       <div className={s.hoverItem}>

@@ -30,6 +30,7 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
     <section className="w-full h-[350px] min-h-[350px]">
       <div className="h-full w-full">
         <Swiper
+          key={isLoopEnabled ? "loop-enabled" : "loop-disabled"}
           pagination={{
             type: "bullets",
             clickable: true,
