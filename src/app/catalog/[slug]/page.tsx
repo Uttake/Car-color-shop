@@ -19,6 +19,7 @@ import FilterComponent from "@/app/ui/components/filter/FilterWrapper";
 import Head from "next/head";
 import Script from "next/script";
 import { headers } from "next/headers";
+import CatalogSkeleton from "@/app/ui/components/catalog/CatalogSkeleton";
 const ITEMS_PER_PAGE = 9;
 const page = async ({
   params,
@@ -85,6 +86,9 @@ const page = async ({
     headers().get("host") || "",
     "https://yourwebsite.com"
   ).href;
+
+  const searchParamsKey = JSON.stringify(searchParams);
+
   return (
     <>
       <Head>
@@ -134,32 +138,37 @@ const page = async ({
               <ItemPerView />
             </Suspense> */}
           </div>
-          <div
-            className={clsx(
-              {
-                "flex justify-center gap-6 flex-wrap py-5 flex-1":
-                  items?.data?.length! <= 2,
-              },
-              {
-                "grid grid-cols-block gap-6 py-5": items?.data?.length! > 2,
-              }
-            )}
+          <Suspense
+            key={searchParamsKey}
+            fallback={<CatalogSkeleton count={9} />}
           >
-            {items?.error ? (
-              <div className="mt-4 text-center">
-                Нет товаров для выбранного фильтра
-              </div>
-            ) : (
-              items?.data && (
-                <>
-                  {items?.data.map((item: CatalogItemType) => (
-                    <CatalogItem key={item.id} {...item} />
-                  ))}
-                  {!items?.data.length && <div>Такого товара нет</div>}
-                </>
-              )
-            )}
-          </div>
+            <div
+              className={clsx(
+                {
+                  "flex justify-center gap-6 flex-wrap py-5 flex-1":
+                    items?.data?.length! <= 2,
+                },
+                {
+                  "grid grid-cols-block gap-6 py-5": items?.data?.length! > 2,
+                }
+              )}
+            >
+              {items?.error ? (
+                <div className="mt-4 text-center">
+                  Нет товаров для выбранного фильтра
+                </div>
+              ) : (
+                items?.data && (
+                  <>
+                    {items?.data.map((item: CatalogItemType) => (
+                      <CatalogItem key={item.id} {...item} />
+                    ))}
+                    {!items?.data.length && <div>Такого товара нет</div>}
+                  </>
+                )
+              )}
+            </div>
+          </Suspense>
 
           <div className="flex items-center justify-between w-full bg-white px-4">
             <Suspense fallback={null}>

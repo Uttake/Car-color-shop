@@ -17,6 +17,7 @@ import { getUsd } from "../utils";
 import Head from "next/head";
 import Script from "next/script";
 import { headers } from "next/headers";
+import CatalogSkeleton from "../ui/components/catalog/CatalogSkeleton";
 
 const ITEMS_PER_PAGE = 9;
 const page = async ({
@@ -33,7 +34,7 @@ const page = async ({
   };
 }) => {
   noStore();
-
+  console.log(searchParams);
   const course = await getUsd();
   const query = searchParams?.query || "";
   const currentPage = Number(searchParams?.page) || 1;
@@ -79,6 +80,8 @@ const page = async ({
     headers().get("host") || "",
     "https://yourwebsite.com"
   ).href;
+
+  const searchParamsKey = JSON.stringify(searchParams);
   return (
     <>
       <Head>
@@ -115,17 +118,20 @@ const page = async ({
             />
           </Suspense>
         </div>
-        {!items && <div className="skeleton">Загрузка...</div>}
-        {items && (
-          <Catalog>
-            <div className="flex items-center justify-between w-full bg-white px-4 mt-3">
-              <Suspense fallback={null}>
-                <Pagination totalPages={totalPages} />
-              </Suspense>
-              {/* <Suspense fallback={null}>
+
+        <Catalog>
+          <div className="flex items-center justify-between w-full bg-white px-4 mt-3">
+            <Suspense fallback={null}>
+              <Pagination totalPages={totalPages} />
+            </Suspense>
+            {/* <Suspense fallback={null}>
                <ItemPerView />
              </Suspense> */}
-            </div>
+          </div>
+          <Suspense
+            key={searchParamsKey}
+            fallback={<CatalogSkeleton count={9} />}
+          >
             <div
               className={clsx(
                 {
@@ -150,17 +156,16 @@ const page = async ({
                 )
               )}
             </div>
-
-            <div className="flex items-center justify-between w-full bg-white px-4">
-              <Suspense fallback={null}>
-                <Pagination totalPages={totalPages} />
-              </Suspense>
-              {/* <Suspense fallback={null}>
+          </Suspense>
+          <div className="flex items-center justify-between w-full bg-white px-4">
+            <Suspense fallback={null}>
+              <Pagination totalPages={totalPages} />
+            </Suspense>
+            {/* <Suspense fallback={null}>
                <ItemPerView />
              </Suspense> */}
-            </div>
-          </Catalog>
-        )}
+          </div>
+        </Catalog>
       </div>
       <Script
         id="structured-data"
