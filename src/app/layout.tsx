@@ -157,7 +157,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <GoogleCaptchaWrapper>
               <div className="text-sm w-full bg-black pt-5">
                 <div className="wrapper">
-                  <FooterContact />
+                  <FooterContact main={true} />
                 </div>
               </div>
               <Header />

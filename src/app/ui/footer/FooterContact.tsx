@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import MainButton from "../components/MainButton";
+import clsx from "clsx";
 
 const footerContactData = [
   {
@@ -15,11 +16,15 @@ const footerContactData = [
   },
 ];
 
-const FooterContact = async () => {
+const FooterContact = async ({ main }: { main?: boolean }) => {
   return (
-    <div>
+    <div
+      className={clsx({
+        "flex justify-center items-start gap-4 sm:flex-wrap": main,
+      })}
+    >
       {footerContactData.map((item) => (
-        <div key={item.title} className="flex gap-2 mb-3 last:mb-0">
+        <div key={item.title} className={clsx("flex gap-2 mb-3 last:mb-0")}>
           <Image src={item.tumb} alt={item.title} width={20} height={20} />
           <h3 className=" text-base text-white">
             <a href={`${item.type}:${item.title.replace(/[-\(\)\s]/g, "")}`}>
