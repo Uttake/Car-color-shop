@@ -36,7 +36,7 @@ const ImageContainer = ({
         alt={title}
         width={264}
         height={500}
-        priority
+        loading="lazy"
         onClick={openModal}
         className="max-w-full max-h-full object-contain cursor-pointer"
       />
