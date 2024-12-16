@@ -121,8 +121,7 @@
   opacity: 0.9;
 }
 
-
-@media screen and (max-width: 794px) {
+@media screen and (max-width: 795px) {
   .filterContainer {
     max-width: 100%;
     width: 100%;

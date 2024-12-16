@@ -23,8 +23,6 @@ const DropdownMenu = ({ data }: DropdownMenuProps): JSX.Element | null => {
   const [submenuOpen, setSubmenuOpen] = useState<string>("");
   const pathname = usePathname();
 
-  console.log(submenuOpen);
-
   useEffect(() => {
     if (pathname && pathname !== "") {
       const category = pathname.split("/")[2] || "";

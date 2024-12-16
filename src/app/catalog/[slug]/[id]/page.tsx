@@ -3,7 +3,7 @@ import CatalogItem from "@/app/ui/components/catalog/CatalogItem";
 import { getCatalogItem } from "@/app/utils/actions";
 import React from "react";
 import { unstable_noStore as noStore } from "next/cache";
-import { description } from "@/app/utils";
+import { translateCategories } from "@/app/utils";
 const page = async ({ params }: { params: { id: string } }) => {
   noStore();
   const id = params.id;
@@ -13,7 +13,7 @@ const page = async ({ params }: { params: { id: string } }) => {
     { label: "Главная", href: "/" },
     { label: "Каталог", href: "/catalog/#catalog" },
     {
-      label: description[item?.category as string],
+      label: translateCategories[item?.category as string],
       href: `/catalog/${item?.category}`,
     },
 

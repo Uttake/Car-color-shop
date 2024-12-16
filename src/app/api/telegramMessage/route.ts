@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 const token = process.env.TELEGRAM_TOKEN
 const user = process.env.TELEGRAM_USER
 export async function POST(req: Request) {
-    console.log(1)
     try {
         const body = await req.json();
         const items: CataloItemsType[] = body; 

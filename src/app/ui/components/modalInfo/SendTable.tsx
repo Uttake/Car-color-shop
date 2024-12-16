@@ -4,7 +4,6 @@ import React from "react";
 
 const SendTable = ({ items }: any) => {
   const handleSubmit = async () => {
-    console.log(items);
     const response = await fetch("/api/telegramMessage", {
       method: "POST",
       headers: {

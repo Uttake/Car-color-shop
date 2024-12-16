@@ -17,7 +17,8 @@ import { getUsd } from "../utils";
 import Head from "next/head";
 import Script from "next/script";
 import { headers } from "next/headers";
-import CatalogSkeleton from "../ui/components/catalog/CatalogSkeleton";
+import CatalogSkeleton from "../ui/components/skeletons/CatalogSkeleton";
+import ItemPerView from "../ui/components/ItemPerView";
 
 const ITEMS_PER_PAGE = 9;
 const page = async ({
@@ -66,11 +67,8 @@ const page = async ({
 
   const lowestPries = +(priceRange.minPrice * course).toFixed(2);
   const highestPries = +(priceRange.maxPrice * course).toFixed(2);
-  const co = await getRowCount({});
 
-  const totalPages =
-    Math.ceil(Number((await getRowCount({ query })).count || 0) / rowPerPage) ||
-    1;
+  const totalPages = items.count ? Math.ceil(items.count / rowPerPage) : 1;
 
   const title = `Каталог товаров ${query ? `по запросу: ${query}` : ""}`;
   const description = `Просмотр каталога товаров на нашем сайте${
@@ -125,8 +123,8 @@ const page = async ({
               <Pagination totalPages={totalPages} />
             </Suspense>
             {/* <Suspense fallback={null}>
-               <ItemPerView />
-             </Suspense> */}
+              <ItemPerView />
+            </Suspense> */}
           </div>
           <Suspense
             key={searchParamsKey}
@@ -162,8 +160,8 @@ const page = async ({
               <Pagination totalPages={totalPages} />
             </Suspense>
             {/* <Suspense fallback={null}>
-               <ItemPerView />
-             </Suspense> */}
+              <ItemPerView />
+            </Suspense> */}
           </div>
         </Catalog>
       </div>

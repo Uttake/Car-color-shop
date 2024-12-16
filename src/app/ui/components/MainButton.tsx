@@ -27,32 +27,34 @@ const MainButton = ({
   hover,
   onClick,
   disabled,
-  type,
 }: MainButtonType) => {
   return (
-    <Link href={href} scroll={false}>
-      <button
+    <Link
+      href={href}
+      scroll={false}
+      className={clsx(
+        "group",
+        maxW,
+        "border-4 border-orange-brdr w-full transition-all duration-300 flex justify-center items-center",
+        hgt,
+        classes,
+        disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+      )}
+    >
+      <span
+        onClick={!disabled ? onClick : undefined}
         className={clsx(
-          maxW,
-          "group border-4 border-orange-brdr w-full cursor-pointer hover:bg-[#d42e12] transition-all duration-300",
-          hgt,
-          classes,
+          "flex justify-center items-center w-full h-full font-bold transition-all duration-300",
+          fontSize,
+          color,
           hover,
-          disabled && "cursor-not-allowed opacity-50"
+          disabled
+            ? "pointer-events-none group-hover:none"
+            : "group-hover:bg-[#d42e12] group-hover:text-white"
         )}
-        onClick={onClick}
-        disabled={disabled}
       >
-        <span
-          className={clsx(
-            fontSize,
-            color,
-            "font-bold flex justify-center items-center w-full h-full"
-          )}
-        >
-          {title}
-        </span>
-      </button>
+        {title}
+      </span>
     </Link>
   );
 };

@@ -48,7 +48,7 @@ const CallbackForm = () => {
       });
 
       const res = await captchaResponse.json();
-      console.log(res);
+
       if (res.success) {
         const orderData = {
           ...data,

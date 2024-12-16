@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { usePathname, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useCallback } from "react";
 import ArrowIcon from "../../_assets/arrow.svg";
 import Link from "next/link";
 
@@ -35,11 +35,14 @@ export const Pagination = ({ totalPages }: { totalPages: number }) => {
   const currentPage = Number(searchParams.get("page")) || 1;
   const allPages = generatePagination(currentPage, totalPages);
 
-  const createPageURL = (pageNumber: number | string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", pageNumber.toString());
-    return `${pathname}?${params.toString()}`;
-  };
+  const createPageURL = useCallback(
+    (pageNumber: number | string) => {
+      const params = new URLSearchParams(searchParams);
+      params.set("page", pageNumber.toString());
+      return `${pathname}?${params.toString()}`;
+    },
+    [searchParams, pathname]
+  );
 
   return (
     <div>

@@ -2,7 +2,6 @@
 
 import React from "react";
 import Input from "./Input";
-import MainButton from "./MainButton";
 import { postData } from "@/app/utils/actions";
 import { useFormStatus } from "react-dom";
 import Spinner from "./Spinner";

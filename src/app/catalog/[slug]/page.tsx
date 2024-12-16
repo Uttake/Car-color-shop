@@ -19,7 +19,7 @@ import FilterComponent from "@/app/ui/components/filter/FilterWrapper";
 import Head from "next/head";
 import Script from "next/script";
 import { headers } from "next/headers";
-import CatalogSkeleton from "@/app/ui/components/catalog/CatalogSkeleton";
+import CatalogSkeleton from "@/app/ui/components/skeletons/CatalogSkeleton";
 const ITEMS_PER_PAGE = 9;
 const page = async ({
   params,
@@ -69,9 +69,8 @@ const page = async ({
     status: status.split(","),
   });
 
-  const totalPages =
-    Math.ceil(Number((await getRowCount({ query })).count || 0) / rowPerPage) ||
-    1;
+  const totalPages = items.count ? Math.ceil(items.count / rowPerPage) : 1;
+
   const priceRange = await getPriceRange();
 
   const lowestPries = +(priceRange.minPrice * course).toFixed(2);

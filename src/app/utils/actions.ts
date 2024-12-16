@@ -80,12 +80,19 @@ export const postData = async (formData: FormData) => {
 export const getRowCount = async ({
   slug,
   query,
+  minPrice, 
+  maxPrice,
+  status
 }: {
   slug?: string;
   query?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  status?:string[];
 }): Promise<{
   count?: number;
   error?: string;
+
 }> => {
   try {
     const productsQuery = supabase
@@ -102,6 +109,24 @@ export const getRowCount = async ({
 
     if(query) {
       productsQuery.ilike('title', `%${query}%`)
+    }
+
+    if (minPrice) {
+      productsQuery.gte("price", minPrice);
+      productsQuery.lte("price", maxPrice);
+    }
+
+    if (status && status.length > 0) {
+      const filters = [];
+      if (status.includes("available")) {
+        filters.push("avaiblity.eq.true");
+      }
+      if (status.includes("order")) {
+        filters.push("avaiblity.eq.false");
+      }
+      if (filters.length > 0) {
+        productsQuery.or(filters.join(","));
+      }
     }
     const { count, error } = await productsQuery;
 
@@ -277,7 +302,7 @@ export const getItemsByCategory = async ({
   row: number;
 }) => {
   try {
-    const { count } = await getRowCount(slug ? { slug } : {});
+    const { count } = await getRowCount({slug, query, minPrice, maxPrice, status});
     const totalItems = count ?? 0;
 
     const totalPages = Math.ceil(totalItems / row);
@@ -285,6 +310,8 @@ export const getItemsByCategory = async ({
 
     const rangeStart = (page - 1) * row;
     const rangeEnd = Math.min(rangeStart + row - 1, totalItems - 1);
+
+
     const productsQuery = supabase
       .from("Products")
       .select("*")
@@ -346,7 +373,7 @@ export const getItemsByCategory = async ({
     }
 
     if (data && data.length > 0) {
-      return { data };
+      return { data, count };
     } else {
       throw new Error("No products found");
     }
@@ -390,7 +417,6 @@ export const postInfo = async (formData: FormData) => {
 
 
     if(data) {
-      console.log(data)
       revalidatePath('/')
     }
 
