@@ -136,12 +136,12 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="geo.region" content="BY-MA" />
         <meta name="geo.placename" content="Могилев" />
         <meta name="geo.position" content="53.943925;30.364457" />
-        <Script
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
         ;
-        <Script
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
