@@ -19,9 +19,7 @@ const FilterComponent = ({
   const [status, setStatus] = useState({ available: false, order: false });
 
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(
-    typeof window !== "undefined" ? window.location.search : ""
-  );
+  const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
   const { replace } = useRouter();
 
@@ -47,20 +45,29 @@ const FilterComponent = ({
       params.delete("status");
     }
 
+    const currentPage = searchParams.get("page") || "1";
+    params.set("page", currentPage);
+
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   const handleResetFilters = () => {
     setPriceRange([lowestPries, highestPries]);
     setStatus({ available: false, order: false });
+
     params.delete("minPrice");
     params.delete("maxPrice");
     params.delete("status");
+
+    const currentPage = searchParams.get("page") || "1";
+    params.set("page", currentPage);
+
     replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   useEffect(() => {
     const statusParam = searchParams.get("status");
+
     if (statusParam) {
       const statuses = statusParam.split(",");
       setStatus({

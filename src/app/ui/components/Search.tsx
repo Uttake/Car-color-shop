@@ -16,9 +16,7 @@ const Search = ({ main }: { main?: boolean }) => {
 
   const handleSearch = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    const params = new URLSearchParams(
-      typeof window !== "undefined" ? window.location.search : ""
-    );
+    const params = new URLSearchParams(searchParams);
     params.set("page", "1");
     if (searchRef.current?.value) {
       params.set("query", searchRef.current.value);

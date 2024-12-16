@@ -37,9 +37,7 @@ export const Pagination = ({ totalPages }: { totalPages: number }) => {
 
   const createPageURL = useCallback(
     (pageNumber: number | string) => {
-      const params = new URLSearchParams(
-        typeof window !== "undefined" ? window.location.search : ""
-      );
+      const params = new URLSearchParams(searchParams.toString());
       params.set("page", pageNumber.toString());
       return `${pathname}?${params.toString()}`;
     },

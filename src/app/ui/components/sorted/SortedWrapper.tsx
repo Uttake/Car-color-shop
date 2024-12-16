@@ -1,15 +1,19 @@
 "use client";
 import React, { Suspense } from "react";
 import SortedItem from "./SortedItem";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const SortedWrapper = () => {
   const pathname = usePathname();
-  const router = useRouter();
+  const { replace } = useRouter();
+  const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
 
   const handleResetFilters = () => {
-    router.replace(pathname);
-    router.refresh();
+    params.delete("sortByprice");
+    params.delete("sortBystock");
+    params.delete("sortBynew");
+    replace(`${pathname}?${params.toString()}`, { scroll: false });
   };
 
   return (

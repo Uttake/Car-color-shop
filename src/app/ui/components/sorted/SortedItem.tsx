@@ -11,9 +11,7 @@ const SortedItem = ({ title, value }: { title: string; value: string }) => {
   const { replace } = useRouter();
 
   useEffect(() => {
-    const params = new URLSearchParams(
-      typeof window !== "undefined" ? window.location.search : ""
-    );
+    const params = new URLSearchParams(searchParams);
     setIsActive(params.has(value));
     setSortedValue(params.get(value) === "true");
   }, [searchParams, value]);
@@ -22,9 +20,7 @@ const SortedItem = ({ title, value }: { title: string; value: string }) => {
     const newSortedValue = !sortedValue;
     setSortedValue(newSortedValue);
 
-    const params = new URLSearchParams(
-      typeof window !== "undefined" ? window.location.search : ""
-    );
+    const params = new URLSearchParams(searchParams);
     for (const [key] of params.entries()) {
       if (key.startsWith("sort")) {
         params.delete(key);
