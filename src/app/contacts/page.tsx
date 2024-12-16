@@ -4,6 +4,12 @@ import Title from "../ui/components/Title";
 import ContactInfo from "../ui/landing/contactSection/ContactInfo";
 import MapY from "../ui/components/MapY";
 
+export const metadata = {
+  title: "Контакты | Tarcolor",
+  description:
+    "Контактная информация Tarcolor. Мы находимся в г. Могилеве, ул. Турова 3, корпус 1. Позвоните нам: +375 29 388-82-93.",
+};
+
 let path = [
   { label: "Главная", href: "/" },
   {

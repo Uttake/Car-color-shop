@@ -2,6 +2,18 @@ import withBundleAnalyzer from "@next/bundle-analyzer";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: "/sitemap.xml",
+        destination: "/api/sitemap",
+      },
+      {
+        source: "/robots.txt",
+        destination: "/api/robots",
+      },
+    ];
+  },
   productionBrowserSourceMaps: false,
   swcMinify: true,
   webpack(config) {

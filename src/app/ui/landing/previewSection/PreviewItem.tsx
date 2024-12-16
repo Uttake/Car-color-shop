@@ -15,8 +15,8 @@ const PreviewItem = ({ item }: { item: previewItem }) => {
       <Image
         src={item.image}
         alt={item.title}
-        layout="fill"
-        objectFit="cover"
+        fill
+        style={{ objectFit: "cover" }}
         quality={85}
         className={s.image}
         placeholder="blur"

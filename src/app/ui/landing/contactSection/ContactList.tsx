@@ -5,7 +5,7 @@ import mail from "@/app/_assets/mail.svg";
 import adress from "@/app/_assets/adress.svg";
 
 let contactList = [
-  { img: tel, title: "+375293888293", type: "tel" },
+  { img: tel, title: "+375 (29) 388-82-93", type: "tel" },
   { img: mail, title: "workmail@example.com", type: "mailto" },
   { img: adress, title: "улица Турова, 3к1" },
 ];

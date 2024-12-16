@@ -1,12 +1,6 @@
 import Breadcrumbs from "@/app/ui/components/Breadcrumb";
-import DemoSlider from "@/app/ui/components/sliders/SliderSwiper";
 import React, { Suspense } from "react";
-import dataSlider from "@/app/_data/slider-data.json";
-import {
-  getItemsByCategory,
-  getPriceRange,
-  getRowCount,
-} from "@/app/utils/actions";
+import { getItemsByCategory, getPriceRange } from "@/app/utils/actions";
 import AsideCategories from "@/app/ui/components/AsideCategories";
 import Catalog from "@/app/ui/components/catalog/Catalog";
 import clsx from "clsx";

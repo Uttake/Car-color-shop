@@ -3,7 +3,6 @@ import Image from "next/image";
 import HeaderList from "./HeaderList";
 import HeaderInfo from "./HeaderInfo";
 import Link from "next/link";
-import FooterContact from "../footer/FooterContact";
 const Header = async () => {
   return (
     <>

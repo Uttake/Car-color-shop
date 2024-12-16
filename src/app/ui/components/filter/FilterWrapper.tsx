@@ -19,7 +19,9 @@ const FilterComponent = ({
   const [status, setStatus] = useState({ available: false, order: false });
 
   const searchParams = useSearchParams();
-  const params = new URLSearchParams(searchParams);
+  const params = new URLSearchParams(
+    typeof window !== "undefined" ? window.location.search : ""
+  );
   const pathname = usePathname();
   const { replace } = useRouter();
 
