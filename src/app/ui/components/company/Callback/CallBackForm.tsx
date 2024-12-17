@@ -121,20 +121,11 @@ const CallbackForm = () => {
             title="E-mail:"
             isLoading={isLoading}
           />
-          <OrderInput
-            key="services"
-            form={form}
-            name="services"
-            type="text"
-            title="Интересующий товар / услуга:"
-            isLoading={isLoading}
-          />
-
           <Textarea
             {...form.register("message")}
             id="message"
             disabled={isLoading}
-            rows={3}
+            rows={2}
             placeholder="Сообщение:"
             className=" border-4 border-black focus:border-black focus-visible:ring-transparent"
           />

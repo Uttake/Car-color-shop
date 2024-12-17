@@ -12,15 +12,14 @@ const CallBackWrapper = ({
 }) => {
   return (
     <div className={styles.asideHeader}>
-      <div className="flex justify-between w-full gap-8 pt-5 px-6">
+      <div className="flex justify-between w-full gap-8 pt-5 pr-6 md:pt-2">
         <div className={styles.telContainer}>
           <TelIcon stroke="white" width={42} height={42} />
         </div>
         <div className="flex flex-col">
           <h2 className={styles.title}>Задать вопрос</h2>
           <p className={styles.subtitle}>
-            Менеджеры компании с радостью ответят на ваши вопросы и помогут с
-            выбором продукции.
+            Менеджеры компании с радостью ответят на ваши вопросы.
           </p>
         </div>
         <button

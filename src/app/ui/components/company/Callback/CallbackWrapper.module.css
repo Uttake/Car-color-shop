@@ -30,7 +30,7 @@
 
 .title {
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
   text-transform: uppercase;
   color: #fff;
 }
@@ -49,9 +49,9 @@
   }
 
   .telContainer {
-    margin-bottom: 1rem;
     display: flex;
     justify-content: center;
+    align-self: flex-end;
   }
 
   .closeAsideButton {
@@ -62,11 +62,14 @@
 
   .title {
     text-align: center;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
   }
 
   .subtitle {
     text-align: center;
-    font-size: 1rem;
+    font-size: 14px;
+    max-width: 280px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }
