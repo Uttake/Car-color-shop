@@ -13,8 +13,8 @@ html {
 }
 
 .sliderContainer .swiper-pagination-bullet {
-  width: 112px !important;
-  height: 4px !important;
+  width: 112px;
+  height: 4px;
   border-radius: 1px !important;
 }
 
@@ -213,7 +213,7 @@ input::-webkit-inner-spin-button {
 }
 
 @media screen and (max-width: 768px) {
-  .swiper-pagination-bullet {
-    width: 50px !important;
+  .sliderContainer .swiper-pagination-bullet {
+    width: 45px !important;
   }
 }

@@ -16,7 +16,7 @@ const HamburgerMenu = ({
   return (
     <div
       className={clsx(
-        "absolute top-[200px] w-96 bg-black z-50 flex flex-col right-0 p-5 gap-10 sm:w-full transition ease-in-out",
+        "absolute top-[175px] w-96 bg-black z-50 flex flex-col right-0 p-5 gap-10 sm:w-full transition ease-in-out",
         {
           "opacity-100 scale-100": isInitiallyOpen,
           "scale-0 opacity-0": !isInitiallyOpen,

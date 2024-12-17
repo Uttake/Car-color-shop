@@ -56,7 +56,7 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
               <div className="relative z-10 h-full flex items-center justify-center">
                 <div className="absolute top-[19.3%] left-[20%] max-w-[586px]">
                   <div
-                    className=" text-5xl mb-5"
+                    className=" text-5xl mb-5 tablet:text-3xl sm:text-2xl font-bold"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(title),
                     }}
