@@ -65,7 +65,7 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
                     title="ПЕРЕЙТИ В КАТАЛОГ"
                     fontSize="text-sm"
                     color="text-white"
-                    maxW="max-w-[216px]"
+                    maxW="w-[216px]"
                     hgt="h-[52px]"
                     href={link ? `/catalog/${link}` : "/catalog"}
                   />

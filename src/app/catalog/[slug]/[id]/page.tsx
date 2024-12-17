@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/app/ui/components/Breadcrumb";
 import CatalogItem from "@/app/ui/components/catalog/CatalogItem";
-import { getCatalogItem } from "@/app/utils/actions";
+import { getCatalogItem } from "@/app/utils/data";
 import React from "react";
 import { unstable_noStore as noStore } from "next/cache";
 import { translateCategories } from "@/app/utils";

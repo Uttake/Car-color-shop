@@ -1,5 +1,5 @@
 "use client";
-import { getInfo } from "@/app/utils/actions";
+import { getInfo } from "@/app/utils/data";
 import React, { useEffect, useState } from "react";
 import InfoItem from "./InfoItem";
 

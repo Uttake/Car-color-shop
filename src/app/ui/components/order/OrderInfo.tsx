@@ -60,7 +60,7 @@ const OrderInfo = ({ course }: { course: number }) => {
           title="ИЗМЕНИТЬ"
           href="/order"
           color="text-white"
-          maxW="max-w-[112px]"
+          maxW="w-[112px]"
           hgt="h-[40px]"
           fontSize="text-xs"
           onClick={handleChangeCart}

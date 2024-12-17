@@ -1,7 +1,7 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { getSearchItems } from "@/app/utils/actions";
+import { getSearchItems } from "@/app/utils/data";
 import clsx from "clsx";
 
 const Search = ({ main }: { main?: boolean }) => {

@@ -40,3 +40,33 @@
   font-size: 12px;
   color: #fff;
 }
+
+
+@media (max-width: 640px) {
+  .asideHeader {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .telContainer {
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+
+  .closeAsideButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .title {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 1rem;
+  }
+}

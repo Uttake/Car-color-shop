@@ -15,16 +15,6 @@ const ServicesSection = () => {
           выбором продукции.{" "}
         </h3>
         <ServicesList />
-        <div className=" text-center mt-[72px] font-bold">
-          <MainButton
-            title="ЗАДАТЬ ВОПРОС"
-            fontSize="text-sm"
-            color="text-white"
-            maxW="max-w-[236px]"
-            hgt="h-[56px]"
-            href="/"
-          />
-        </div>
       </div>
     </section>
   );

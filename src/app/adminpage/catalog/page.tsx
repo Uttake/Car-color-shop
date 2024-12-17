@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import Catalog from "../../ui/components/catalog/Catalog";
-import { getRowCount, getItemsByCategory, logout } from "../../utils/actions";
+import { getRowCount, getItemsByCategory } from "../../utils/data";
 import clsx from "clsx";
 import CatalogItem from "../../ui/components/catalog/CatalogItem";
 import { CatalogItemType } from "../../utils/definitions";

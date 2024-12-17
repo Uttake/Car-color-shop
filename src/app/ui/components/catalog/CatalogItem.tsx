@@ -73,7 +73,7 @@ const CatalogItem = async ({
 
           {!solo && (
             <MainButton
-              maxW="max-w-[224px]"
+              maxW="w-[224px]"
               hgt="h-[40px]"
               title="ПОДРОБНЕЕ"
               classes={clsx({ "border-alphablack": !avaiblity })}

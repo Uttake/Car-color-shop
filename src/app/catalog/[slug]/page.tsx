@@ -1,6 +1,6 @@
 import Breadcrumbs from "@/app/ui/components/Breadcrumb";
 import React, { Suspense } from "react";
-import { getItemsByCategory, getPriceRange } from "@/app/utils/actions";
+import { getItemsByCategory, getPriceRange } from "@/app/utils/data";
 import AsideCategories from "@/app/ui/components/AsideCategories";
 import Catalog from "@/app/ui/components/catalog/Catalog";
 import clsx from "clsx";

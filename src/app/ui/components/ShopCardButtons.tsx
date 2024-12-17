@@ -81,7 +81,7 @@ const ShopCardButton = ({
       {disabled || !avaiblity ? (
         <MainButton
           title={disabled ? "Товар в корзине" : "Нет в наличии"}
-          maxW="max-w-[164px]"
+          maxW="w-[164px]"
           hgt="h-[40px]"
           color={disabled ? "text-[#C53720]" : "text-alphablack"}
           classes={clsx({

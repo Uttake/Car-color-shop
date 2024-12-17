@@ -34,8 +34,7 @@ const MainButton = ({
       scroll={false}
       className={clsx(
         "group",
-        maxW,
-        "border-4 border-orange-brdr w-full transition-all duration-300 flex justify-center items-center",
+        `border-4 border-orange-brdr ${maxW} transition-all duration-300 flex justify-center items-center`,
         hgt,
         classes,
         disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"

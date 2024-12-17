@@ -1,11 +1,7 @@
 import React, { Suspense } from "react";
 import Breadcrumbs from "../ui/components/Breadcrumb";
 import Catalog from "../ui/components/catalog/Catalog";
-import {
-  getItemsByCategory,
-  getPriceRange,
-  getRowCount,
-} from "../utils/actions";
+import { getItemsByCategory, getPriceRange } from "../utils/data";
 import { Pagination } from "../ui/components/Pagination";
 import { CatalogItemType } from "../utils/definitions";
 import clsx from "clsx";

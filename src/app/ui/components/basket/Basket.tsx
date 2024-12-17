@@ -96,7 +96,7 @@ const Basket = ({
           <MainButton
             title="Оформить заказ"
             href="/order/#order"
-            maxW="max-w-[176px]"
+            maxW="w-[176px]"
             color="white"
             hgt="h-[40px]"
             onClick={() => setCartOpen(false)}

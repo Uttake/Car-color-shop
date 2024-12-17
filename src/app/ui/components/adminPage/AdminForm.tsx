@@ -5,11 +5,7 @@ import AdminInput from "./AdminInput";
 import catalogData from "@/app/_data/catalog-data.json";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  postData,
-  updateCatalogItem,
-  getItemsByCategory,
-} from "@/app/utils/actions";
+import { postData, updateCatalogItem } from "@/app/utils/actions";
 import { useFormStatus } from "react-dom";
 import Spinner from "../Spinner";
 import EditorBlock from "../EditorBlock/EditorBlock";
@@ -18,6 +14,7 @@ import DOMPurify from "isomorphic-dompurify";
 import Dropdown from "../DropDown";
 import Image from "next/image";
 import { toast } from "react-toastify";
+import { getItemsByCategory } from "@/app/utils/data";
 
 let avaiblity = [
   {

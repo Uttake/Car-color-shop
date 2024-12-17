@@ -13,7 +13,6 @@ const AboutItem = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
 
   if (typeof window !== "undefined") {
@@ -46,7 +45,7 @@ const AboutItem = ({
         onRequestClose={closeModal}
         contentLabel="Image Modal"
         overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-        className={`relative rounded-lg shadow-lg w-[90%] max-w-[500px] mx-auto border-t-4 border-t-orange-brdr
+        className={`relative rounded-lg shadow-lg w-[90%] max-w-[500px] mx-auto border-t-4 border-t-orange-brdr z-auto
         ${isOpen ? "animate-fadeIn" : "animate-fadeOut"}`}
       >
         {type === "callback" && <CallBackWrapper setIsOpen={setIsOpen} />}

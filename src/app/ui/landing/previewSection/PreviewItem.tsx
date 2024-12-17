@@ -32,7 +32,7 @@ const PreviewItem = ({ item }: { item: previewItem }) => {
           title="Заказать онлайн"
           fontSize="text-sm"
           color="text-white"
-          maxW="max-w-[216px]"
+          maxW="w-[216px]"
           hgt="h-[52px]"
           href={item.href}
         />

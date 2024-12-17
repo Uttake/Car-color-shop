@@ -30,10 +30,10 @@ const CompanyInfo = () => {
           title="УЗНАТЬ БОЛЬШЕ"
           fontSize="text-sm"
           color="text-white"
-          maxW="max-w-[216px]"
+          maxW="w-[216px]"
           hgt="h-[52px]"
           classes="sm:absolute sm:left-0 sm:bottom-[-12%]"
-          href="/"
+          href="/company"
         />
       </div>
     </div>

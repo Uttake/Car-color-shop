@@ -1,5 +1,5 @@
 import React from "react";
-import { getInfo } from "../../../utils/actions";
+import { getInfo } from "../../../utils/data";
 import DemoSlider from "./SliderSwiper";
 import Head from "next/head";
 
