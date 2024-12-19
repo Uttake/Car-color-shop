@@ -4,7 +4,6 @@ import DemoSlider from "./SliderSwiper";
 import Head from "next/head";
 const SwiperWrapper = async () => {
   const sliderData = await getInfo();
-
   return (
     <>
       <Head>
