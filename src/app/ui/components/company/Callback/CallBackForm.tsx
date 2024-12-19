@@ -16,7 +16,6 @@ const CallbackForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [captchaValue, setCaptchaValue] = useState<string | null>(null);
   const { executeRecaptcha } = useGoogleReCaptcha();
-
   const form = useForm<UserType>({
     defaultValues: {
       name: "",
@@ -63,7 +62,7 @@ const CallbackForm = () => {
           delete orderData.email;
         }
 
-        const response = await fetch("api/email", {
+        const response = await fetch("/api/email", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -72,10 +71,10 @@ const CallbackForm = () => {
         });
 
         if (response.ok) {
+          console.log("Заявка успешно отправлена");
           setIsLoading(false);
           toast.success("Заявка успешно отправлена");
           form.reset();
-          console.log("Заявка успешно отправлена");
         }
       } else {
         setIsLoading(false);

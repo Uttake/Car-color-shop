@@ -87,7 +87,7 @@ const PodborWrapper = () => {
           contentLabel="Callback modal"
           overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-[102]"
           className={`relative rounded-lg shadow-lg w-[90%] max-w-[500px] mx-auto border-t-4 border-t-orange-brdr z-[101]
-  ${modalOpen ? "animate-fadeIn" : "animate-fadeOut"}`}
+         ${modalOpen ? "animate-fadeIn" : "animate-fadeOut"}`}
         >
           <CallBackWrapper setIsOpen={setModalOpen} title="Заказать услугу" />
         </Modal>
