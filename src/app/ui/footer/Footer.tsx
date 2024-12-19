@@ -17,7 +17,7 @@ const Footer = async () => {
             loading="lazy"
           />
           <h3 className=" text-base opacity-50 text-white font-medium">
-            © 2019 PRO Auto.
+            © 2024 Tarcolor.
             <br />
             Все права защищены.
           </h3>
