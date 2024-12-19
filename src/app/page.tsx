@@ -4,6 +4,7 @@ import PreviewSection from "./ui/landing/previewSection/PreviewSection";
 import ServicesSection from "./ui/landing/servicesSection/ServicesSection";
 import SwiperWrapper from "./ui/components/sliders/SwiperWrapper";
 import NovetlyWrapper from "./ui/landing/newestSection/NovetlyWrapper";
+import AnimatedBlock from "./ui/components/animatedBlock/AnimatedBlock";
 
 export default async function Home() {
   return (
@@ -11,10 +12,18 @@ export default async function Home() {
       <SwiperWrapper />
       <main className="relative">
         <PreviewSection />
-        <ServicesSection />
-        <NovetlyWrapper />
-        <InfoSection />
-        <CompanySection />
+        <AnimatedBlock>
+          <ServicesSection />
+        </AnimatedBlock>
+        <AnimatedBlock>
+          <NovetlyWrapper />
+        </AnimatedBlock>
+        <AnimatedBlock>
+          <InfoSection />
+        </AnimatedBlock>
+        <AnimatedBlock>
+          <CompanySection />
+        </AnimatedBlock>
       </main>
     </>
   );
