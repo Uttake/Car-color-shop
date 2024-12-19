@@ -21,19 +21,14 @@ const footerData = [
     maintitle: "УСЛУГИ",
     href: "/services",
     subtitle: [
-      { title: "ДИАГНОСТИКА АККУМУЛЯТОРА" },
-      { title: "ПРИЕМ АККУМУЛЯТОРОВ" },
+      { title: "ПОДБОР КРАСКИ", href: "/services/podbor-kraski" },
+      { title: "ЗАПРАВКА АЭРОЗОЛЕЙ", href: "/services/zapravka-aerosolov" },
     ],
   },
   {
     maintitle: "ИНФОРМАЦИЯ",
     href: "/info",
-    subtitle: [
-      { title: "АКЦИИ" },
-      { title: "НОВОСТИ" },
-      { title: "СТАТЬИ" },
-      { title: "ВОПРОС - ОТВЕТ" },
-    ],
+    subtitle: [{ title: "АКЦИИ" }, { title: "НОВОСТИ" }],
   },
 ];
 

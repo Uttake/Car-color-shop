@@ -20,7 +20,25 @@ const InfoForm = () => {
   } = useForm();
 
   const [preview, setPreview] = useState<string>("");
-  const { pending } = useFormStatus();
+  const [infoData, setInfoData] = useState(catalogData);
+
+  let dopInfo = [
+    {
+      title: "Информация",
+      category: "info",
+      link: "/info",
+    },
+    {
+      title: "Подбор краски",
+      category: "podbor",
+      link: "/services/podbor-kraski",
+    },
+    {
+      title: "Заправка аэрозолей",
+      category: "zapravka-aerosoli",
+      link: "/services/zapravka-aerosolov",
+    },
+  ];
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -36,6 +54,7 @@ const InfoForm = () => {
   const onSubmit = async (data: any) => {
     const formData = new FormData();
     formData.append("image", data.images[0]);
+    formData.append("fulldescription", JSON.stringify(data.fulldescription));
     formData.append("title", data.title);
     formData.append("link", data.link);
     reset();
@@ -70,6 +89,12 @@ const InfoForm = () => {
               accept="image/*"
               onChange={handleImageChange}
             />
+            <Dropdown
+              options={[...dopInfo, ...infoData]}
+              label="Ссылка"
+              control={control}
+              name="link"
+            />
           </div>
           <div className="flex flex-col gap-3">
             <Controller
@@ -81,16 +106,23 @@ const InfoForm = () => {
                 <EditorBlock
                   value={field.value}
                   onChange={(newValue) => setValue("title", newValue)}
-                  title="Описание"
+                  title="Описание на слайде"
                 />
               )}
             />
 
-            <Dropdown
-              options={catalogData}
-              label="Ссылка"
+            <Controller
+              name="fulldescription"
               control={control}
-              name="link"
+              defaultValue={""}
+              rules={{ required: "Полное описание обязательно" }}
+              render={({ field }) => (
+                <EditorBlock
+                  value={field.value}
+                  onChange={(newValue) => setValue("fulldescription", newValue)}
+                  title="Полное описание"
+                />
+              )}
             />
           </div>
         </div>

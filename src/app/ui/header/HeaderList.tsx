@@ -6,7 +6,7 @@ export const lists = [
   { title: "О нас", href: "/company" },
   { title: "Каталог", href: "/catalog" },
   { title: "Услуги", href: "/services" },
-  { title: "Информация", href: "/info" },
+  { title: "Новости", href: "/info" },
   { title: "Контакты", href: "/contacts" },
 ];
 

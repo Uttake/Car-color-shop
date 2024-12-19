@@ -8,11 +8,12 @@ import Image from "next/image";
 import MainButton from "../MainButton";
 import DOMPurify from "isomorphic-dompurify";
 
-interface Slide {
+export interface Slide {
   id: number;
   title: string;
   image: string;
   link: string;
+  fulldescription?: string;
 }
 
 const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
@@ -52,22 +53,22 @@ const DemoSlider = ({ sliderData }: { sliderData: Slide[] }) => {
                 className="object-cover"
               />
 
-              <div className="absolute inset-0 bg-black opacity-30"></div>
+              <div className="absolute inset-0 bg-overlay"></div>
               <div className="relative z-10 h-full flex items-center justify-center">
                 <div className="absolute top-[19.3%] left-[20%] max-w-[586px]">
                   <div
-                    className=" text-5xl mb-5 tablet:text-3xl sm:text-2xl font-bold"
+                    className=" text-5xl mb-5 tablet:text-3xl sm:text-2xl font-bold text-white"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(title),
                     }}
                   ></div>
                   <MainButton
-                    title="ПЕРЕЙТИ В КАТАЛОГ"
+                    title={link === "info" ? "ПОДРОБНЕЕ" : "ПЕРЕЙТИ В КАТАЛОГ"}
                     fontSize="text-sm"
                     color="text-white"
                     maxW="w-[216px]"
                     hgt="h-[52px]"
-                    href={link ? `/catalog/${link}` : "/catalog"}
+                    href={link === "info" ? "/info" : `/catalog/${link}`}
                   />
                 </div>
               </div>

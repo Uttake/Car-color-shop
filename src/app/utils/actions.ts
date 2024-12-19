@@ -158,6 +158,9 @@ export const postInfo = async (formData: FormData) => {
   const title = formData.get("title");
   const link = formData.get("link");
   const image = formData.get("image");
+  const fulldescription = formData.get("fulldescription");
+
+
   let id = v1();
 
   try {
@@ -179,6 +182,7 @@ export const postInfo = async (formData: FormData) => {
         title,
         link,
         image: `https://invnbdbustikwbnttmdr.supabase.co/storage/v1/object/public/Info%20Images/${id}.webp`,
+        fulldescription
       },
     ])
     .select();
