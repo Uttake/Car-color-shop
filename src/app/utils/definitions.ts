@@ -20,3 +20,10 @@ export interface CatalogItemType extends CataloItemsType {
     article: any;
 }
 
+
+export interface ServiceItemType {
+    title: string;
+    desc?: string;
+    list?: { title?: string; desc: string }[];
+  }
+

@@ -7,8 +7,10 @@ import CallbackForm from "./CallBackForm";
 
 const CallBackWrapper = ({
   setIsOpen,
+  title = "Задать вопрос",
 }: {
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  title?: string;
 }) => {
   return (
     <div className={styles.asideHeader}>
@@ -17,7 +19,7 @@ const CallBackWrapper = ({
           <TelIcon stroke="white" width={42} height={42} />
         </div>
         <div className="flex flex-col">
-          <h2 className={styles.title}>Задать вопрос</h2>
+          <h2 className={styles.title}>{title}</h2>
           <p className={styles.subtitle}>
             Менеджеры компании с радостью ответят на ваши вопросы.
           </p>
