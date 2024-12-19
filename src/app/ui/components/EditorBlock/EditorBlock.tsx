@@ -6,7 +6,6 @@ import Color from "@tiptap/extension-color";
 import ListItem from "@tiptap/extension-list-item";
 import BulletList from "@tiptap/extension-bullet-list";
 import OrderedList from "@tiptap/extension-ordered-list";
-import { useFormContext } from "react-hook-form";
 import styles from "./EditorBlock.module.css";
 import {
   FiBold,
@@ -57,6 +56,20 @@ const EditorBlock: React.FC<EditorProps> = ({ value, onChange, title }) => {
       <div className={styles["editor"]}>
         <div className={styles["editor-toolbar"]}>
           <button
+            onClick={(e) => {
+              e.preventDefault();
+              editor.chain().focus().toggleHeading({ level: 3 }).run();
+            }}
+            style={{ fontSize: "12px" }}
+            className={
+              editor.isActive("heading", { level: 3 })
+                ? styles["is-active"]
+                : ""
+            }
+          >
+            H3
+          </button>
+          <button
             type="button"
             onClick={(e) => {
               e.preventDefault();
@@ -67,6 +80,7 @@ const EditorBlock: React.FC<EditorProps> = ({ value, onChange, title }) => {
           >
             <FiBold />
           </button>
+
           <button
             type="button"
             onClick={(e) => {

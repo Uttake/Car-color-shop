@@ -1,8 +1,10 @@
 import React from "react";
 import { getInfo } from "../../../utils/data";
-import DemoSlider from "./SliderSwiper";
+// import DemoSlider from "./SliderSwiper";
 import Head from "next/head";
+import dynamic from "next/dynamic";
 
+const DemoSlider = dynamic(() => import("./SliderSwiper"), { ssr: true });
 const SwiperWrapper = async () => {
   const sliderData = await getInfo();
 

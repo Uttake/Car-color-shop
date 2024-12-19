@@ -99,6 +99,7 @@ const CallbackForm = () => {
         >
           <OrderInput
             key="name"
+            required
             form={form}
             name="name"
             title="Имя:"
@@ -107,6 +108,7 @@ const CallbackForm = () => {
           />
           <OrderInput
             key="tel"
+            required
             form={form}
             name="tel"
             title="Телефон:"
@@ -115,6 +117,7 @@ const CallbackForm = () => {
           />
           <OrderInput
             key="email"
+            required={false}
             form={form}
             name="email"
             type="email"

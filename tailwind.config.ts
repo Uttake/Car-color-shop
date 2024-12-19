@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss";
 const config: Config = {
+	purge: ["./src/**/*.tsx", "./src/**/*.ts"],
     darkMode: ["class"],
     content: [
     "../colorcar/node_modules/flowbite-react/lib/**/*.js",

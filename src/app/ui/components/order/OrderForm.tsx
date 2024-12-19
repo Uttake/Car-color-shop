@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export const UserSchema = z.object({
-  name: z.string().min(1, { message: "Имя обязательно для заполнения" }),
+  name: z.string().min(3, { message: "Имя должно быть не короче 3 символов" }),
   tel: z
     .string()
     .min(1, { message: "Телефон обязателен для заполнения" })
@@ -124,6 +124,7 @@ const OrderForm = () => {
             key="name"
             form={form}
             name="name"
+            required
             title="Имя:"
             type="string"
             isLoading={isLoading}
@@ -132,6 +133,7 @@ const OrderForm = () => {
             key="tel"
             form={form}
             name="tel"
+            required
             title="Телефон:"
             type="tel"
             isLoading={isLoading}
@@ -139,12 +141,13 @@ const OrderForm = () => {
           <OrderInput
             key="email"
             form={form}
+            required={false}
             name="email"
             type="email"
             title="E-mail:"
             isLoading={isLoading}
           />
-          {/* <ReCAPTCHAComponent onChange={handleCaptchaChange} /> */}
+
           <Button
             type="submit"
             disabled={isLoading}
